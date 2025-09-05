@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Bank - Finance Moderne</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container" id="app-container">
+        <!-- En-tête -->
+        <div class="header">
+            <div class="header-title">KB</div>
+            <div class="header-actions">
+                <div class="header-icon" onclick="switchTab('profile')">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="notification-bell" onclick="switchTab('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="content" id="content">
+            <!-- Page Accueil -->
+            <div class="page home-page active" id="home-page">
+                <div class="balance-card">
+                    <div class="balance-title">Solde principal</div>
+                    <div class="balance-amount">XAF 780 245,<small>90</small></div>
+                    <div class="balance-details">
+                        <div class="balance-detail">
+                            <div>Revenus mensuels</div>
+                            <div class="detail-value">XAF 245 200</div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="balance-detail">
+                            <div>Dépenses mensuelles</div>
+                            <div class="detail-value">XAF 133 274,<small>10</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <div class="action-card" onclick="switchTab('transfer')">
+                        <div class="action-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="action-label">Transfert</div>
+                    </div>
+                    <div class="action-card" onclick="switchTab('iban')">
+                        <div class="action-icon">
+                            <span class="currency-text">XAF</span>
+                        </div>
+                        <div class="action-label">IBAN</div>
+                    </div>
+                    <div class="action-card" onclick="switchTab('topup')">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="action-label">Recharger</div>
+                    </div>
+                    <div class="action-card" onclick="switchTab('cards')">
+                        <div class="action-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="action-label">Cartes</div>
+                    </div>
+                </div>
+
+                <div class="transactions-section">
+                    <div class="section-header">
+                        <h3>Dernières transactions</h3>
+                        <a onclick="switchTab('transactions')">Tout voir</a>
+                    </div>
+                    <div class="transactions-list" id="transactions-list"></div>
+                </div>
+            </div>
+
+            <!-- Page Cartes -->
+            <div class="page cards-page" id="cards-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Mes cartes</h2>
+                </div>
+                
+                <div class="cards-container">
+                    <!-- Carte principale -->
+                    <div class="bank-card primary" id="main-card">
+                        <div class="card-header">
+                            <div class="card-logo">K-BANK</div>
+                            <div class="card-status" id="card-status">Active</div>
+                        </div>
+                        <div class="card-chip">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="card-number">•••• •••• •••• 4562</div>
+                        <div class="card-footer">
+                            <div class="card-details">
+                                <div>
+                                    <div class="card-label">Titulaire</div>
+                                    <div class="card-value">Godwin Batola</div>
+                                </div>
+                                <div>
+                                    <div class="card-label">Expire</div>
+                                    <div class="card-value">09/25</div>
+                                </div>
+                            </div>
+                            <div class="card-brand">VISA</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions cartes -->
+                    <div class="card-actions">
+                        <button class="card-action" onclick="toggleCardFreeze()">
+                            <i class="fas fa-snowflake"></i>
+                            <span id="freeze-text">Geler</span>
+                        </button>
+                        <button class="card-action" onclick="switchTab('order-card')">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Commander</span>
+                        </button>
+                        <button class="card-action" onclick="switchTab('card-settings')">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Paramètres</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Options de gestion de la carte -->
+                    <div class="section-header">
+                        <h3>Paramètres de la carte</h3>
+                    </div>
+                    
+                    <div class="card-item" onclick="adjustPaymentLimit()">
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">Plafond de paiement</div>
+                            <div class="card-meta">XAF 500 000 / jour</div>
+                        </div>
+                        <div class="card-toggle">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="card-item" onclick="adjustWithdrawalLimit()">
+                        <div class="card-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">Plafond de retrait</div>
+                            <div class="card-meta">XAF 200 000 / jour</div>
+                        </div>
+                        <div class="card-toggle">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="card-item" onclick="temporaryBlockCard()">
+                        <div class="card-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">Bloquer temporairement</div>
+                            <div class="card-meta">Désactiver la carte pour 24h</div>
+                        </div>
+                        <div class="card-toggle">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Commander une carte -->
+            <div class="page order-card-page" id="order-card-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('cards')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Commander une carte</h2>
+                </div>
+                
+                <div class="form-container">
+                    <div class="card-options">
+                        <div class="card-option selected">
+                            <i class="fab fa-cc-visa"></i>
+                            <span>Carte Visa</span>
+                            <div class="card-price">Gratuite</div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Point de retrait</label>
+                        <div class="input-field">
+                            <select id="pickup-location" required>
+                                <option value="" disabled selected>Choisir un point de retrait</option>
+                                <option value="main">Agence K-BANK</option>
+                                <option value="partner1">K-BANK partenaire 1 bord de mer</option>
+                                <option value="partner2">K-BANK partenaire 2 Centre-ville</option>
+                                <option value="partner3">K-BANK partenaire 3 en face du consulat de France</option>
+                                <option value="partner4">K-BANK partenaire marché Mont Bouet</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Date de livraison estimée</label>
+                        <div class="delivery-info">
+                            <i class="fas fa-truck"></i>
+                            <span>5-7 jours ouvrables</span>
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button" onclick="orderCard()">
+                        <i class="fas fa-check-circle"></i> Commander la carte
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Informations Personnelles -->
+            <div class="page personal-info-page" id="personal-info-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('profile')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Informations Personnelles</h2>
+                </div>
+                
+                <div class="form-container">
+                    <div class="input-group">
+                        <label>Nom complet</label>
+                        <div class="input-field">
+                            <input type="text" value="Godwin Batola" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Email</label>
+                        <div class="input-field">
+                            <input type="email" value="batolaalpha@gmail.com" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Téléphone</label>
+                        <div class="input-field">
+                            <input type="tel" placeholder="+237 6XX XXX XXX">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Adresse</label>
+                        <div class="input-field">
+                            <textarea placeholder="Votre adresse complète"></textarea>
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button">
+                        <i class="fas fa-save"></i> Enregistrer les modifications
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Sécurité -->
+            <div class="page security-page" id="security-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('profile')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Sécurité</h2>
+                </div>
+                
+                <div class="security-options">
+                    <div class="security-item" onclick="changePassword()">
+                        <div class="security-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="security-info">
+                            <div class="security-title">Changer le mot de passe</div>
+                            <div class="security-description">Mettre à jour votre mot de passe</div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="security-item" onclick="toggle2FA()">
+                        <div class="security-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="security-info">
+                            <div class="security-title">Authentification à deux facteurs</div>
+                            <div class="security-description">2FA activé</div>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="2fa-toggle" checked>
+                            <label for="2fa-toggle"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="security-item" onclick="viewSessions()">
+                        <div class="security-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="security-info">
+                            <div class="security-title">Sessions actives</div>
+                            <div class="security-description">2 appareils connectés</div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Notifications -->
+            <div class="page notifications-page" id="notifications-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Notifications</h2>
+                </div>
+                
+                <div class="notifications-list" id="notifications-list">
+                    <div class="notification-item unread" data-id="1">
+                        <div class="notification-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Tentative de connexion</div>
+                            <div class="notification-text">Une connexion a été détectée depuis un nouvel appareil à Libreville.</div>
+                            <div class="notification-time">Il y a 2 heures</div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item unread" data-id="2">
+                        <div class="notification-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Virement reçu</div>
+                            <div class="notification-text">Vous avez reçu un virement de 50,000 XAF de Marie Lambert.</div>
+                            <div class="notification-time">Il y a 5 heures</div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notification-icon info">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Carte prête</div>
+                            <div class="notification-text">Votre nouvelle carte est disponible à l'agence K-BANK Centre-ville.</div>
+                            <div class="notification-time">Hier</div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notification-icon primary">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Nouvelle offre</div>
+                            <div class="notification-text">Profitez de 0% de frais sur vos virements ce mois-ci!</div>
+                            <div class="notification-time">Il y a 2 jours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Profil -->
+            <div class="page profile-page" id="profile-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Mon profil</h2>
+                </div>
+                
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-name">Godwin Batola</div>
+                    <div class="profile-email">batolaalpha@gmail.com</div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3>Mon compte</h3>
+                    <div class="profile-item" onclick="switchTab('personal-info')">
+                        <div class="item-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">Informations personnelles</div>
+                            <div class="item-subtitle">Gérer vos données</div>
+                        </div>
+                        <div class="item-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-item" onclick="switchTab('security')">
+                        <div class="item-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">Sécurité</div>
+                            <div class="item-subtitle">Mot de passe, 2FA</div>
+                        </div>
+                        <div class="item-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="profile-item" onclick="switchTab('notifications')">
+                        <div class="item-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">Notifications</div>
+                            <div class="item-subtitle">Personnaliser les alertes</div>
+                        </div>
+                        <div class="item-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="logout-button" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </div>
+            </div>
+
+            <!-- Page Virement -->
+            <div class="page transfer-page" id="transfer-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Virement</h2>
+                </div>
+                
+                <div class="form-container">
+                    <div class="input-group">
+                        <label>Bénéficiaire</label>
+                        <div class="input-field">
+                            <select id="beneficiary-select">
+                                <option value="" disabled selected>Sélectionner un bénéficiaire</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Montant (XAF)</label>
+                        <div class="input-field">
+                            <input type="number" placeholder="0,00" id="transfer-amount">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Motif du virement</label>
+                        <div class="input-field">
+                            <input type="text" placeholder="Ex: Remboursement, Cadeau..." id="transfer-reason">
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button" onclick="confirmTransfer()">
+                        <i class="fas fa-paper-plane"></i> Effectuer le virement
+                    </button>
+                </div>
+                
+                <div class="beneficiaries-section">
+                    <div class="section-header">
+                        <h3>Bénéficiaires récents</h3>
+                    </div>
+                    
+                    <div class="beneficiaries-list" id="beneficiaries-list">
+                        <!-- Les bénéficiaires seront ajoutés dynamiquement -->
+                    </div>
+                    
+                    <button class="secondary-button" onclick="openAddBeneficiaryModal()">
+                        <i class="fas fa-plus-circle"></i> Ajouter un nouveau bénéficiaire
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal d'ajout de bénéficiaire -->
+            <div class="modal-overlay" id="add-beneficiary-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Nouveau bénéficiaire</h3>
+                        <button class="modal-close" onclick="closeAddBeneficiaryModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Nom complet</label>
+                        <div class="input-field">
+                            <input type="text" placeholder="Nom et prénom" id="beneficiary-name">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Numéro de compte</label>
+                        <div class="input-field">
+                            <input type="text" placeholder="Numéro de compte" id="beneficiary-account">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Banque</label>
+                        <div class="input-field">
+                            <input type="text" placeholder="Nom de la banque" id="beneficiary-bank">
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button" onclick="addBeneficiary()">
+                        <i class="fas fa-check-circle"></i> Ajouter le bénéficiaire
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Mon IBAN -->
+            <div class="page iban-page" id="iban-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Mon IBAN</h2>
+                </div>
+
+                <div class="iban-container">
+                    <div class="iban-card">
+                        <div class="iban-card-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/fr/0/09/CEMAC_Logo.png" alt="CEMAC" class="bank-logo">
+                            <div class="card-type">Compte Courant</div>
+                        </div>
+                        
+                        <div class="iban-number">
+                            <div class="iban-label">IBAN</div>
+                            <div class="iban-value">GA21 XXXX XXXX XXXX XXXXXXXX 304</div>
+                            <button class="copy-button" onclick="copyIban()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="account-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Titulaire</div>
+                                <div class="detail-value">Godwin Batola</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">BIC/SWIFT</div>
+                                <div class="detail-value">KBANKGAXXX</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Banque</div>
+                                <div class="detail-value">K-BANK GABON</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="iban-actions">
+                        <button class="action-button" onclick="shareIban()">
+                            <i class="fas fa-share-alt"></i>
+                            Partager
+                        </button>
+                        <button class="action-button" onclick="downloadIban()">
+                            <i class="fas fa-download"></i>
+                            Télécharger RIB
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Recharger -->
+            <div class="page topup-page" id="topup-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Recharger</h2>
+                </div>
+
+                <div class="topup-welcome">
+                    <h3>Recharger mon compte</h3>
+                    <p>Choisissez votre mode de paiement préféré</p>
+                </div>
+
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectPaymentMethod('moov')">
+                        <div class="payment-logo">
+                            <img src="https://www.moov-africa.ga/sites/default/files/2021-06/moov-money.png" alt="Moov Money">
+                        </div>
+                        <span>Moov Money</span>
+                        <div class="method-info">Instantané</div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectPaymentMethod('airtel')">
+                        <div class="payment-logo">
+                            <img src="https://www.airtel.africa/assets/img/airtel-money.png" alt="Airtel Money">
+                        </div>
+                        <span>Airtel Money</span>
+                        <div class="method-info">Instantané</div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectPaymentMethod('western')">
+                        <div class="payment-logo">
+                            <img src="https://brand.westernunion.com/content/dam/wu/logo/logo_wu_horizontal_white.png" alt="Western Union">
+                        </div>
+                        <span>Western Union</span>
+                        <div class="method-info">24-48h</div>
+                    </div>
+                </div>
+
+                <div class="topup-form">
+                    <div class="input-group">
+                        <label>Montant à recharger</label>
+                        <div class="input-field">
+                            <input type="number" id="topup-amount" placeholder="0">
+                            <span class="currency">XAF</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Numéro de téléphone</label>
+                        <div class="input-field">
+                            <input type="tel" id="phone-number" placeholder="+241">
+                        </div>
+                    </div>
+
+                    <button class="primary-button" onclick="processTopup()" id="topup-button" disabled>
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Recharger maintenant</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Autres pages... -->
+        </div>
+
+        <!-- Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home')">
+                <i class="fas fa-home"></i>
+                <span>Accueil</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('transfer')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Virements</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('cards')">
+                <i class="fas fa-credit-card"></i>
+                <span>Cartes</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('others')">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Autres</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
