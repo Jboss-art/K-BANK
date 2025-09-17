@@ -166,8 +166,8 @@
                             <i class="fas fa-ban"></i>
                         </div>
                         <div class="card-info">
-                            <div class="card-name">Bloquer temporairement</div>
-                            <div class="card-meta">Désactiver la carte pour 24h</div>
+                            <div class="card-name">Bloquer la carte</div>
+                            <div class="card-meta">Désactiver votre carte</div>
                         </div>
                         <div class="card-toggle">
                             <i class="fas fa-chevron-right"></i>
@@ -323,49 +323,14 @@
                     <h2>Notifications</h2>
                 </div>
                 
-                <div class="notifications-list" id="notifications-list">
-                    <div class="notification-item unread" data-id="1">
-                        <div class="notification-icon warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-title">Tentative de connexion</div>
-                            <div class="notification-text">Une connexion a été détectée depuis un nouvel appareil à Libreville.</div>
-                            <div class="notification-time">Il y a 2 heures</div>
-                        </div>
+                <div class="notifications-container">
+                    <div class="notifications-header">
+                        <div class="notifications-title">Vos alertes</div>
+                        <button class="mark-all-read" onclick="markAllAsRead()">Tout marquer comme lu</button>
                     </div>
-
-                    <div class="notification-item unread" data-id="2">
-                        <div class="notification-icon success">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-title">Virement reçu</div>
-                            <div class="notification-text">Vous avez reçu un virement de 50,000 XAF de Marie Lambert.</div>
-                            <div class="notification-time">Il y a 5 heures</div>
-                        </div>
-                    </div>
-
-                    <div class="notification-item">
-                        <div class="notification-icon info">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-title">Carte prête</div>
-                            <div class="notification-text">Votre nouvelle carte est disponible à l'agence K-BANK Centre-ville.</div>
-                            <div class="notification-time">Hier</div>
-                        </div>
-                    </div>
-
-                    <div class="notification-item">
-                        <div class="notification-icon primary">
-                            <i class="fas fa-percent"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-title">Nouvelle offre</div>
-                            <div class="notification-text">Profitez de 0% de frais sur vos virements ce mois-ci!</div>
-                            <div class="notification-time">Il y a 2 jours</div>
-                        </div>
+                    
+                    <div class="notifications-list" id="notifications-list">
+                        <!-- Les notifications seront générées dynamiquement -->
                     </div>
                 </div>
             </div>
@@ -595,7 +560,7 @@
                 <div class="payment-methods">
                     <div class="payment-method" onclick="selectPaymentMethod('moov')">
                         <div class="payment-logo">
-                            <img src="https://www.moov-africa.ga/sites/default/files/2021-06/moov-money.png" alt="Moov Money">
+                            <img src="./assets/logos/moov.png" alt="Moov Money">
                         </div>
                         <span>Moov Money</span>
                         <div class="method-info">Instantané</div>
@@ -603,7 +568,7 @@
 
                     <div class="payment-method" onclick="selectPaymentMethod('airtel')">
                         <div class="payment-logo">
-                            <img src="https://www.airtel.africa/assets/img/airtel-money.png" alt="Airtel Money">
+                            <img src="./assets/logos/airtel-money.png" alt="Airtel Money">
                         </div>
                         <span>Airtel Money</span>
                         <div class="method-info">Instantané</div>
@@ -611,7 +576,7 @@
 
                     <div class="payment-method" onclick="selectPaymentMethod('western')">
                         <div class="payment-logo">
-                            <img src="https://brand.westernunion.com/content/dam/wu/logo/logo_wu_horizontal_white.png" alt="Western Union">
+                            <img src="./assets/logos/western-union.png" alt="Western Union">
                         </div>
                         <span>Western Union</span>
                         <div class="method-info">24-48h</div>
@@ -638,6 +603,169 @@
                         <i class="fas fa-plus-circle"></i>
                         <span>Recharger maintenant</span>
                     </button>
+                </div>
+            </div>
+            
+            <!-- Page Autres -->
+            <div class="page others-page" id="others-page">
+                <div class="page-header">
+                    <h2>Menu</h2>
+                </div>
+
+                <div class="others-container">
+                    <!-- K-Shop Section -->
+                    <div class="menu-section">
+                        <div class="section-title">
+                            <i class="fas fa-store"></i>
+                            <h3>K-Shop</h3>
+                        </div>
+                        <div class="shop-grid">
+                            <div class="shop-item" onclick="openShop('ckdo')">
+                                <img src="assets/logos/ckdo-logo.png" alt="CKDO Gabon">
+                                <span>CKDO Gabon</span>
+                            </div>
+                            <div class="shop-item" onclick="openShop('kfc')">
+                                <img src="assets/logos/kfc-logo.png" alt="Pole KFC Gabon">
+                                <span>Pole KFC Gabon</span>
+                            </div>
+                            <div class="shop-item" onclick="openShop('mbolo')">
+                                <img src="assets/logos/mbolo-logo.png" alt="Mbolo Gabon">
+                                <span>Mbolo Gabon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Support Section -->
+                    <div class="menu-section">
+                        <div class="section-title">
+                            <i class="fas fa-headset"></i>
+                            <h3>Support</h3>
+                        </div>
+                        <div class="support-options">
+                            <button class="menu-button" onclick="callAdvisor()">
+                                <i class="fas fa-phone"></i>
+                                <span>Appeler un conseiller</span>
+                            </button>
+                            <button class="menu-button" onclick="openChat()">
+                                <i class="fas fa-comments"></i>
+                                <span>Chat en direct</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="menu-section">
+                        <div class="section-title">
+                            <i class="fas fa-question-circle"></i>
+                            <h3>FAQ</h3>
+                        </div>
+                        <div class="faq-list">
+                            <div class="faq-item" onclick="toggleFaq(this)">
+                                <div class="faq-question">
+                                    <span>Comment bloquer ma carte ?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    Rendez-vous dans la section "Cartes", sélectionnez votre carte et cliquez sur "Bloquer".
+                                </div>
+                            </div>
+                            <div class="faq-item" onclick="toggleFaq(this)">
+                                <div class="faq-question">
+                                    <span>Comment faire un virement ?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    Accédez à la section "Transfert", choisissez un bénéficiaire et suivez les étapes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton flottant K-Shop -->
+            <div class="kshop-float" onclick="switchTab('kshop')">
+                <div class="kshop-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="kshop-badge">3</div>
+            </div>
+
+            <!-- Nouvelle page K-Shop -->
+            <div class="page kshop-page" id="kshop-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>K-Shop</h2>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">3</span>
+                    </div>
+                </div>
+
+                <div class="kshop-container">
+                    <!-- Partenaires vedettes -->
+                    <div class="featured-partners">
+                        <h3>Partenaires vedettes</h3>
+                        <div class="partners-carousel">
+                            <div class="partner-card featured">
+                                <div class="partner-banner">
+                                    <img src="assets/logos/ckdo-banner.png" alt="CKDO">
+                                    <div class="partner-discount">-15%</div>
+                                </div>
+                                <div class="partner-info">
+                                    <img src="assets/logos/ckdo-logo.png" alt="CKDO" class="partner-logo">
+                                    <div class="partner-details">
+                                        <h4>CKDO Gabon</h4>
+                                        <p>Supermarché & Shopping</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Autres partenaires vedettes... -->
+                        </div>
+                    </div>
+
+                    <!-- Catégories -->
+                    <div class="shop-categories">
+                        <h3>Catégories</h3>
+                        <div class="category-grid">
+                            <div class="category-item">
+                                <div class="category-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <span>Restauration</span>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <span>Shopping</span>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-icon">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <span>Loisirs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Liste des partenaires -->
+                    <div class="partners-section">
+                        <h3>Nos partenaires</h3>
+                        <div class="partners-list">
+                            <div class="partner-item" onclick="openPartner('ckdo')">
+                                <img src="assets/logos/ckdo-logo.png" alt="CKDO" class="partner-logo">
+                                <div class="partner-info">
+                                    <h4>CKDO Gabon</h4>
+                                    <p>Supermarché & Shopping</p>
+                                    <span class="partner-badge">-15% avec K-Bank</span>
+                                </div>
+                            </div>
+                            <!-- Autres partenaires... -->
+                        </div>
+                    </div>
                 </div>
             </div>
 

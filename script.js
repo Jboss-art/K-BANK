@@ -211,7 +211,7 @@ const appData = {
             id: 1,
             title: "commercant alassane",
             date: "Aujourd'hui, 14:30",
-            amount: -42.99,
+            amount: -5000.00,
             icon: "🛒",
             category: "Shopping"
         },
@@ -227,28 +227,146 @@ const appData = {
             id: 3,
             title: "Caféteria du campus",
             date: "Hier, 17:45",
-            amount: -5.80,
+            amount: -500.00,
             icon: "☕",
             category: "Café"
         }
     ],
-    notifications: [
+     notifications: [
         {
             id: 1,
             title: "Virement reçu",
-            message: "Vous avez reçu 150,00XAF de Marie Lambert",
+            message: "Vous avez reçu 15000,00 XAF de Jean Mvoumbi",
             date: "Il y a 2 heures",
-            read: false
+            read: false,
+            type: "transaction"
         },
         {
             id: 2,
             title: "Paiement effectué",
-            message: "Paiement de 42,99XAF à Amazon Marketplace",
+            message: "Paiement de 35000,00 XAF à Supermarché ABC",
             date: "Il y a 5 heures",
-            read: false
+            read: false,
+            type: "transaction"
+        },
+        {
+            id: 3,
+            title: "Alerte de sécurité",
+            message: "Nouvelle connexion détectée sur votre compte",
+            date: "Hier",
+            read: true,
+            type: "security"
+        },
+        {
+            id: 4,
+            title: "Offre spéciale",
+            message: "Profitez de -15% chez nos partenaires ce week-end",
+            date: "Il y a 2 jours",
+            read: true,
+            type: "promotion"
         }
     ]
 };
+
+// Initialisation des notifications
+function initializeNotifications() {
+    renderNotifications();
+    updateNotificationBadge();
+    initializeSwipeListeners();
+}
+
+// Affiche les notifications
+function renderNotifications() {
+    const container = document.getElementById('notifications-list');
+    if (!container) return;
+    
+    if (appData.notifications.length === 0) {
+        container.innerHTML = `
+            <div class="empty-notifications">
+                <i class="fas fa-bell-slash"></i>
+                <p>Aucune notification</p>
+            </div>`;
+        return;
+    }
+    
+    container.innerHTML = appData.notifications.map(notification => `
+        <div class="notification-item ${notification.read ? '' : 'unread'}" data-id="${notification.id}">
+            <div class="notification-content">
+                <div class="notification-icon ${notification.type}">
+                    ${getNotificationIcon(notification.type)}
+                </div>
+                <div class="notification-text">
+                    <div class="notification-title">${notification.title}</div>
+                    <div class="notification-message">${notification.message}</div>
+                    <div class="notification-time">${notification.date}</div>
+                </div>
+            </div>
+            <div class="delete-indicator">
+                <i class="fas fa-trash"></i>
+            </div>
+        </div>
+    `).join('');
+    
+    initializeSwipeListeners();
+}
+
+// Retourne l'icône appropriée selon le type de notification
+function getNotificationIcon(type) {
+    switch(type) {
+        case 'transaction': return '💰';
+        case 'security': return '🔒';
+        case 'promotion': return '🎁';
+        default: return '📋';
+    }
+}
+
+// Met à jour le badge de notifications
+function updateNotificationBadge() {
+    const badge = document.getElementById('notification-badge');
+    const unreadCount = appData.notifications.filter(n => !n.read).length;
+    
+    if (badge) {
+        badge.textContent = unreadCount;
+        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+    }
+}
+
+// Marque toutes les notifications comme lues
+function markAllAsRead() {
+    let hasUnread = false;
+    appData.notifications.forEach(notification => {
+        if (!notification.read) {
+            notification.read = true;
+            hasUnread = true;
+        }
+    });
+    
+    if (hasUnread) {
+        renderNotifications();
+        updateNotificationBadge();
+        showToast('Toutes les notifications ont été marquées comme lues');
+    }
+}
+
+// Supprime une notification
+function deleteNotification(id) {
+    appData.notifications = appData.notifications.filter(n => n.id != id);
+    renderNotifications();
+    updateNotificationBadge();
+    showToast('Notification supprimée');
+}
+
+// Affiche un toast de confirmation
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
 
 // État de la carte
 let isCardFrozen = false;
@@ -257,6 +375,12 @@ let isCardFrozen = false;
 document.addEventListener('DOMContentLoaded', () => {
     renderTransactions();
     updateNotificationBadge();
+    
+    // Initialiser les notifications si on est sur la page notifications
+    if (document.getElementById('notifications-page').classList.contains('active')) {
+        renderNotifications();
+        initializeSwipeListeners();
+    }
 });
 
 // Affiche les transactions
@@ -281,35 +405,46 @@ function renderTransactions() {
     });
 }
 
-// Met à jour le badge de notification
-function updateNotificationBadge() {
-    const unreadCount = appData.notifications.filter(n => !n.read).length;
-    const badge = document.querySelector('.notification-badge');
-    badge.textContent = unreadCount;
-    badge.style.display = unreadCount > 0 ? 'flex' : 'none';
-}
-
 // Change de page
 function switchTab(tab) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
     });
+    
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
     
     document.getElementById(`${tab}-page`).classList.add('active');
     document.querySelector(`.nav-item[onclick="switchTab('${tab}')"]`).classList.add('active');
-
+    
     // Initialiser les bénéficiaires quand on accède à la page de transfert
     if (tab === 'transfer') {
         renderBeneficiaries();
         populateBeneficiarySelect();
     }
+
+    if (tab === 'notifications') {
+        setTimeout(() => {
+            initializeNotifications();
+        }, 100);
+    }
+
+    if (tab === 'iban') {
+        // Initialize IBAN page if needed
+        document.querySelector('.iban-page').classList.add('active');
+    }
 }
 
 // Fonction pour geler/dégeler la carte
 function toggleCardFreeze() {
+    const card = document.querySelector('.bank-card');
+    
+    // Si la carte est bloquée, ne rien faire
+    if (card.classList.contains('blocked')) {
+        return;
+    }
+
     if (!isCardFrozen) {
         showConfirmationModal(
             "Geler la carte",
@@ -386,19 +521,6 @@ function showConfirmationModal(title, message, confirmText, cancelText, onConfir
     };
 }
 
-// Toast notification
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        document.body.removeChild(toast);
-    }, 3000);
-}
-
 // Commander une carte
 function selectCardType(type) {
     document.querySelectorAll('.card-option').forEach(option => {
@@ -429,14 +551,6 @@ function toggle2FA() {
 
 function viewSessions() {
     showToast('Affichage des sessions actives');
-}
-
-// Fonction de déconnexion
-function logout() {
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        alert('Déconnexion réussie');
-        // Redirection vers la page de login dans une vraie app
-    }
 }
 
 // Variables pour la recharge
@@ -513,22 +627,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Fonctions pour la page IBAN
+// Functions for IBAN page
 function copyIban() {
     const iban = document.querySelector('.iban-value').textContent;
-    navigator.clipboard.writeText(iban).then(() => {
-        showToast('IBAN copié dans le presse-papier');
-    });
+    navigator.clipboard.writeText(iban)
+        .then(() => {
+            showToast('IBAN copié dans le presse-papier');
+        })
+        .catch(() => {
+            showToast('Impossible de copier l\'IBAN');
+        });
 }
 
 function shareIban() {
     const iban = document.querySelector('.iban-value').textContent;
+    const bankName = 'K-BANK GABON';
+    const shareText = `Mon IBAN ${bankName}:\n${iban}`;
+
     if (navigator.share) {
         navigator.share({
             title: 'Mon IBAN K-BANK',
-            text: `Voici mon IBAN: ${iban}`
+            text: shareText
         }).catch(() => {
-            showToast('Partage non disponible');
+            copyIban();
         });
     } else {
         copyIban();
@@ -536,9 +657,371 @@ function shareIban() {
 }
 
 function downloadIban() {
-    showToast('Téléchargement du RIB en cours...');
-    // Simulation du téléchargement
-    setTimeout(() => {
-        showToast('RIB téléchargé avec succès');
-    }, 1500);
+    showConfirmDialog(
+        'Télécharger RIB',
+        'Voulez-vous télécharger votre RIB au format PDF ?',
+        'Télécharger',
+        'Annuler',
+        () => {
+            showToast('Téléchargement du RIB en cours...');
+            // Simulate download
+            setTimeout(() => {
+                showToast('RIB téléchargé avec succès');
+            }, 1500);
+        }
+    );
 }
+
+// Functions for Others page
+function openShop(shop) {
+    switch(shop) {
+        case 'ckdo':
+            showToast('Redirection vers CKDO Gabon...');
+            break;
+        case 'kfc':
+            showToast('Redirection vers Pole KFC Gabon...');
+            break;
+        case 'mbolo':
+            showToast('Redirection vers Mbolo Gabon...');
+            break;
+    }
+}
+
+function callAdvisor() {
+    showToast('Appel du conseiller en cours...');
+}
+
+function openChat() {
+    showToast('Ouverture du chat en direct...');
+}
+
+function toggleFaq(element) {
+    element.classList.toggle('active');
+}
+
+// Utility function to show toast messages
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Show confirmation dialog
+function showConfirmDialog(title, message, confirmText, cancelText, onConfirm) {
+    const modal = document.createElement('div');
+    modal.className = 'confirmation-modal';
+    
+    // Changement ici : utilisation de l'icône fa-ban au lieu de fa-file-pdf
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-ban" style="color: #ff3b30; font-size: 32px;"></i>
+            </div>
+            <h3>${title}</h3>
+            <p>${message}</p>
+            <div class="modal-buttons">
+                <button class="modal-button primary" onclick="handleConfirm(this)">${confirmText}</button>
+                <button class="modal-button secondary" onclick="handleCancel(this)">${cancelText}</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.dataset.callback = onConfirm.toString();
+}
+
+// Handle confirmation
+function handleConfirm(button) {
+    const modal = button.closest('.confirmation-modal');
+    const callback = new Function('return ' + modal.dataset.callback)();
+    modal.remove();
+    callback();
+}
+
+// Handle cancellation
+function handleCancel(button) {
+    button.closest('.confirmation-modal').remove();
+}
+
+// Variables pour le glissement
+let touchStartX = 0;
+let touchStartY = 0;
+let isSwiping = false;
+let currentNotification = null;
+
+// Initialise les écouteurs de glissement
+function initializeSwipeListeners() {
+    const notifications = document.querySelectorAll('.notification-item');
+    
+    notifications.forEach(notification => {
+        // Événements tactiles
+        notification.addEventListener('touchstart', handleTouchStart, false);
+        notification.addEventListener('touchmove', handleTouchMove, false);
+        notification.addEventListener('touchend', handleTouchEnd, false);
+        
+        // Événements souris (pour le desktop)
+        notification.addEventListener('mousedown', handleMouseDown, false);
+        notification.addEventListener('mousemove', handleMouseMove, false);
+        notification.addEventListener('mouseup', handleMouseUp, false);
+        notification.addEventListener('mouseleave', handleMouseUp, false);
+        
+        // Gestion du clic pour marquer comme lu
+        notification.addEventListener('click', (e) => {
+            if (!isSwiping) {
+                const id = parseInt(notification.getAttribute('data-id'));
+                markAsRead(id);
+            }
+        });
+    });
+}
+
+// Gestion du début du glissement
+function handleTouchStart(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    currentNotification = e.currentTarget;
+    isSwiping = false;
+}
+
+function handleMouseDown(e) {
+    touchStartX = e.clientX;
+    touchStartY = e.clientY;
+    currentNotification = e.currentTarget;
+    isSwiping = false;
+}
+
+// Gestion du mouvement de glissement
+function handleTouchMove(e) {
+    if (!touchStartX || !touchStartY || !currentNotification) return;
+    
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    
+    const diffX = touchStartX - touchX;
+    const diffY = touchStartY - touchY;
+    
+    // Vérifier si c'est un glissement horizontal (pas vertical)
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+        e.preventDefault();
+        isSwiping = true;
+        
+        // Seulement permettre le glissement vers la gauche
+        if (diffX > 0) {
+            currentNotification.style.transform = `translateX(-${diffX}px)`;
+            
+            // Afficher l'indicateur de suppression après un certain seuil
+            if (diffX > 60) {
+                currentNotification.classList.add('deleting');
+            } else {
+                currentNotification.classList.remove('deleting');
+            }
+        }
+    }
+}
+
+function handleMouseMove(e) {
+    if (!touchStartX || !touchStartY || !currentNotification) return;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const diffX = touchStartX - mouseX;
+    const diffY = touchStartY - mouseY;
+    
+    // Vérifier si c'est un glissement horizontal (pas vertical)
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+        isSwiping = true;
+        
+        // Seulement permettre le glissement vers la gauche
+        if (diffX > 0) {
+            currentNotification.style.transform = `translateX(-${diffX}px)`;
+            
+            // Afficher l'indicateur de suppression après un certain seuil
+            if (diffX > 60) {
+                currentNotification.classList.add('deleting');
+            } else {
+                currentNotification.classList.remove('deleting');
+            }
+        }
+    }
+}
+
+// Gestion de la fin du glissement
+function handleTouchEnd() {
+    if (!currentNotification) return;
+    
+    const computedStyle = window.getComputedStyle(currentNotification);
+    const matrix = new DOMMatrixReadOnly(computedStyle.transform);
+    const currentTranslateX = matrix.m41;
+    
+    // Si on a glissé suffisamment, supprimer la notification
+    if (Math.abs(currentTranslateX) > 100) {
+        currentNotification.style.animation = 'slideOut 0.3s forwards';
+        
+        setTimeout(() => {
+            const id = parseInt(currentNotification.getAttribute('data-id'));
+            deleteNotification(id);
+        }, 300);
+    } else {
+        // Sinon, remettre en place
+        currentNotification.style.transform = 'translateX(0)';
+        currentNotification.classList.remove('deleting');
+    }
+    
+    // Réinitialiser
+    touchStartX = 0;
+    touchStartY = 0;
+    currentNotification = null;
+}
+
+function handleMouseUp() {
+    handleTouchEnd();
+}
+
+// Supprime une notification
+function deleteNotification(id) {
+    appData.notifications = appData.notifications.filter(n => n.id !== id);
+    renderNotifications();
+    updateNotificationBadge();
+    initializeSwipeListeners();
+    
+    // Animation de confirmation
+    showToast('Notification supprimée');
+}
+
+// Marque une notification comme lue
+function markAsRead(id) {
+    const notification = appData.notifications.find(n => n.id === id);
+    if (notification && !notification.read) {
+        notification.read = true;
+        renderNotifications();
+        updateNotificationBadge();
+        initializeSwipeListeners();
+    }
+}
+
+// Marque toutes les notifications comme lues
+function markAllAsRead() {
+    let hasUnread = false;
+    
+    appData.notifications.forEach(notification => {
+        if (!notification.read) {
+            notification.read = true;
+            hasUnread = true;
+        }
+    });
+    
+    if (hasUnread) {
+        renderNotifications();
+        updateNotificationBadge();
+        showToast('Toutes les notifications marquées comme lues');
+    } else {
+        showToast('Toutes les notifications sont déjà lues');
+    }
+}
+// Initialisation de l'application
+document.addEventListener('DOMContentLoaded', () => {
+    renderTransactions();
+    updateNotificationBadge();
+    
+    // Initialiser les notifications si on est sur la page notifications
+    if (document.getElementById('notifications-page').classList.contains('active')) {
+        renderNotifications();
+        initializeSwipeListeners();
+    }
+});
+
+function temporaryBlockCard() {
+    showConfirmDialog(
+        'Bloquer la carte',
+        'Voulez-vous bloquer votre carte ? Celle-ci ne pourra plus être utilisée. Veillez en commander une nouvelle.',
+        'Bloquer',
+        'Annuler',
+        () => {
+            const card = document.querySelector('.bank-card');
+            const statusElement = document.querySelector('#card-status');
+            const freezeButton = document.querySelector('.freeze-button');
+            
+            card.classList.add('blocked');
+            
+            // Ajouter l'icône de blocage rouge
+            if (!card.querySelector('.block-indicator')) {
+                const blockIcon = document.createElement('div');
+                blockIcon.className = 'block-indicator';
+                blockIcon.innerHTML = '<i class="fas fa-ban"></i>';
+                card.appendChild(blockIcon);
+            }
+            
+            // Mettre à jour le statut
+            if (statusElement) {
+                statusElement.textContent = 'Bloquée';
+                statusElement.className = 'card-status blocked-status';
+            }
+
+            // Désactiver le bouton geler
+            if (freezeButton) {
+                freezeButton.disabled = true;
+                freezeButton.style.opacity = '0.5';
+                freezeButton.style.cursor = 'not-allowed';
+                freezeButton.onclick = null; // Enlever l'événement click
+            }
+
+            showToast('Carte bloquée avec succès');
+            
+            // Redirection vers la page de commande après un court délai
+            setTimeout(() => {
+                showConfirmDialog(
+                    'Commander une nouvelle carte',
+                    'Votre carte a été bloquée. Souhaitez-vous commander une nouvelle carte maintenant ?',
+                    'Commander',
+                    'Plus tard',
+                    () => {
+                        switchTab('order-card');
+                    }
+                );
+            }, 1500);
+        }
+    );
+}
+
+// Modifier la fonction toggleCardFreeze pour vérifier si la carte est bloquée
+function toggleCardFreeze() {
+    const card = document.querySelector('.bank-card');
+    
+    // Si la carte est bloquée, ne rien faire
+    if (card.classList.contains('blocked')) {
+        return;
+    }
+
+    if (!isCardFrozen) {
+        showConfirmationModal(
+            "Geler la carte",
+            "Êtes-vous sûr de vouloir geler votre carte ? Elle ne pourra plus être utilisée temporairement pour les paiements.",
+            "Geler",
+            "Annuler",
+            freezeCard
+        );
+    } else {
+        unfreezeCard();
+    }
+}
+
+// K-Shop Functions
+function openPartner(partnerId) {
+    showToast('Redirection vers la boutique du partenaire...');
+    // Logique de redirection à implémenter
+}
+
+function updateKShopBadge(count) {
+    const badge = document.querySelector('.kshop-badge');
+    if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
