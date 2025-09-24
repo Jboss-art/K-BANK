@@ -191,11 +191,11 @@ function confirmTransfer() {
     
     showConfirmDialog(
         'Confirmer le virement',
-        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} XAF vers ${beneficiary.name} ?`,
+        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} FCFA vers ${beneficiary.name} ?`,
         'Confirmer',
         'Annuler',
         () => {
-            showNotification(`Virement de ${Number(amount).toLocaleString()} XAF effectué avec succès`);
+            showNotification(`Virement de ${Number(amount).toLocaleString()} FCFA effectué avec succès`);
             document.getElementById('beneficiary-select').value = '';
             document.getElementById('transfer-amount').value = '';
             document.getElementById('transfer-reason').value = '';
@@ -211,7 +211,7 @@ const appData = {
             id: 1,
             title: "commercant alassane",
             date: "Aujourd'hui, 14:30",
-            amount: -5000.00,
+            amount: 5000.00,
             icon: "🛒",
             category: "Shopping"
         },
@@ -289,23 +289,35 @@ function renderNotifications() {
         return;
     }
     
-    container.innerHTML = appData.notifications.map(notification => `
-        <div class="notification-item ${notification.read ? '' : 'unread'}" data-id="${notification.id}">
-            <div class="notification-content">
-                <div class="notification-icon ${notification.type}">
-                    ${getNotificationIcon(notification.type)}
+    container.innerHTML = appData.notifications.map(notification => {
+        // Extract amount from message if it contains one
+        const amountMatch = notification.message.match(/(-?\d+(?:\.\d{2})?)/);
+        let formattedMessage = notification.message;
+        
+        if (amountMatch) {
+            const amount = parseFloat(amountMatch[0]);
+            const formattedAmount = `${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} F <h5>CFA</h5>`;
+            formattedMessage = notification.message.replace(amountMatch[0], formattedAmount);
+        }
+
+        return `
+            <div class="notification-item ${notification.read ? '' : 'unread'}" data-id="${notification.id}">
+                <div class="notification-content">
+                    <div class="notification-icon ${notification.type}">
+                        ${getNotificationIcon(notification.type)}
+                    </div>
+                    <div class="notification-text">
+                        <div class="notification-title">${notification.title}</div>
+                        <div class="notification-message">${formattedMessage}</div>
+                        <div class="notification-time">${notification.date}</div>
+                    </div>
                 </div>
-                <div class="notification-text">
-                    <div class="notification-title">${notification.title}</div>
-                    <div class="notification-message">${notification.message}</div>
-                    <div class="notification-time">${notification.date}</div>
+                <div class="delete-indicator">
+                    <i class="fas fa-trash"></i>
                 </div>
             </div>
-            <div class="delete-indicator">
-                <i class="fas fa-trash"></i>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
     
     initializeSwipeListeners();
 }
@@ -398,7 +410,7 @@ function renderTransactions() {
                 <div class="transaction-date">${transaction.date}</div>
             </div>
             <div class="transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}">
-                ${transaction.amount > 0 ? '+' : ''}XAF ${Math.abs(transaction.amount).toLocaleString()}
+                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h5>CFA</h5>
             </div>
         `;
         container.appendChild(element);
@@ -1022,6 +1034,24 @@ function updateKShopBadge(count) {
     if (badge) {
         badge.textContent = count;
         badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
+function openKShop() {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    const kshopPage = document.querySelector('.kshop-page');
+    if (kshopPage) {
+        kshopPage.classList.add('active');
+        
+        // Reset navigation active state
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+    } else {
+        showToast('Page K-Shop en construction');
     }
 }
 

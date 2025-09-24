@@ -69,6 +69,14 @@ body {
     cursor: pointer;
 }
 
+.notification-bell {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .notification-badge {
     position: absolute;
     top: -5px;
@@ -262,55 +270,179 @@ body {
 
 /* Ajustements responsive pour le contenu */
 @media screen and (max-width: 420px) {
+    .app-container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    /* Header */
+    .header {
+        padding: 0 10px;
+        height: 50px;
+    }
+
+    .header-title {
+        font-size: 18px;
+    }
+
     /* Carte de solde */
     .balance-card {
         margin: 10px;
-        padding: 20px;
+        padding: 15px;
     }
 
     .balance-amount {
-        font-size: 32px;
+        font-size: 24px;
+    }
+
+    .balance-details {
+        margin-top: 15px;
+        padding-top: 15px;
     }
 
     /* Actions rapides */
     .quick-actions {
-        padding: 15px 10px;
-        gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        padding: 10px;
     }
 
     .action-icon {
         width: 40px;
         height: 40px;
-        font-size: 18px;
     }
 
     .action-label {
-        font-size: 11px;
+        font-size: 10px;
+    }
+
+    /* Navigation */
+    .bottom-nav {
+        height: 55px;
+        padding: 5px 0;
+    }
+
+    .nav-item {
+        font-size: 9px;
+    }
+
+    .nav-item i {
+        font-size: 16px;
+        margin-bottom: 2px;
+    }
+
+    /* K-Shop flottant */
+    .kshop-float {
+        bottom: 65px;
+        right: 10px;
+    }
+
+    .kshop-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .kshop-icon i {
+        font-size: 18px;
+    }
+
+    /* Contenu */
+    .content {
+        margin-top: 50px;
+        margin-bottom: 55px;
+        height: calc(100vh - 105px);
     }
 
     /* Transactions */
-    .transactions-section {
-        padding: 0 10px;
-    }
-
-    .section-header h3 {
-        font-size: 16px;
-    }
-
     .transaction-item {
         padding: 12px;
     }
+
+    .transaction-title {
+        font-size: 13px;
+    }
+
+    .transaction-amount {
+        font-size: 13px;
+    }
 }
 
-/* Ajuster l'espacement des modales */
-.toast {
-    bottom: 55px; /* Ajusté pour la nouvelle hauteur de navbar */
+@media screen and (max-width: 360px) {
+    /* Réduction supplémentaire pour très petits écrans */
+    .quick-actions {
+        gap: 5px;
+        padding: 8px;
+    }
+
+    .action-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .action-label {
+        font-size: 9px;
+    }
+
+    .balance-card {
+        padding: 12px;
+    }
+
+    .balance-amount {
+        font-size: 22px;
+    }
+
+    .detail-value {
+        font-size: 12px;
+    }
 }
 
-/* Ajuster les conteneurs de page */
-.page {
-    padding: 10px;
-    padding-bottom: 55px;
+@media screen and (max-width: 320px) {
+    /* Ajustements pour iPhone 5/SE */
+    .quick-actions {
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .action-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .action-label {
+        font-size: 8px;
+    }
+}
+
+/* Ajustements pour la hauteur */
+@media screen and (max-height: 700px) {
+    .content {
+        margin-bottom: 55px;
+    }
+
+    .balance-card {
+        margin-bottom: 10px;
+    }
+}
+
+/* Mode paysage */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .content {
+        margin-top: 45px;
+    }
+
+    .balance-card {
+        margin: 8px;
+        padding: 12px;
+    }
+
+    .quick-actions {
+        padding: 8px;
+    }
+
+    .bottom-nav {
+        height: 45px;
+    }
 }
 
 /* Pages */
@@ -1619,355 +1751,42 @@ input[type="number"] {
     border-radius: 50%;
 }
 
+/* Style spécifique pour l'icône de la banque sur l'IBAN */
+.bank-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.bank-icon i {
+    font-size: 20px;
+    color: white;
+}
+
 .iban-card-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 30px;
-}
-
-.bank-logo {
-    height: 40px;
-    filter: brightness(0) invert(1);
-}
-
-.card-type {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-.iban-number {
-    position: relative;
-    margin: 25px 0;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.iban-label {
-    font-size: 11px;
-    opacity: 0.8;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.iban-value {
-    font-size: 18px;
-    letter-spacing: 2px;
-    font-family: 'Courier New', monospace;
-    word-break: break-all;
-    padding-right: 40px; /* Espace pour le bouton copier */
-}
-
-.account-details {
-    margin-top: 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 20px;
-}
-
-/* Nouvelle grille pour les détails */
-.account-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.detail-item {
-    margin-bottom: 0;
-}
-
-/* Style des boutons d'action IBAN */
-.action-button {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 12px;
-    color: white;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1;
-}
-
-.action-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.action-button:active {
-    transform: scale(0.98);
-}
-
-.action-button i {
-    font-size: 16px;
-}
-
-.iban-actions {
-    display: flex;
-    gap: 15px;
-    margin: 0 15px;
-    margin-top: 25px;
-}
-
-/* Styles pour la page Autres */
-.others-container {
-    padding: 15px;
-}
-
-.menu-section {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.section-title i {
-    font-size: 24px;
-    color: var(--primary-color);
-}
-
-.section-title h3 {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-/* K-Shop styles */
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.shop-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.shop-item:hover {
-    transform: translateY(-2px);
-}
-
-.shop-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Style de remplacement si l'image ne charge pas */
-.payment-logo img:not([src]),
-.payment-logo img[src=""],
-.shop-item img:not([src]),
-.shop-item img[src=""] {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    min-height: 40px;
-}
-
-/* Support styles */
-.support-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.menu-button {
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    color: var(--text-light);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.menu-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* FAQ styles */
-.faq-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px 0;
-}
-
-.faq-question {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.faq-answer {
-    display: none;
-    padding: 15px 0;
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.faq-item.active .faq-answer {
-    display: block;
-}
-
-.faq-item.active .fa-chevron-down {
-    transform: rotate(180deg);
-}
-
-/* Bouton flottant K-Shop avec taille réduite */
-.kshop-float {
-    position: fixed;
-    bottom: 70px;
-    right: 15px;
-    z-index: 1000;
-    transform: translateZ(0);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    animation: bounce 1s infinite alternate;
-}
-
-.kshop-icon {
-    width: 45px; /* Réduit de 56px à 45px */
-    height: 45px; /* Réduit de 56px à 45px */
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
-    transition: transform 0.3s ease;
-}
-
-.kshop-icon i {
-    font-size: 20px; /* Réduit de 24px à 20px */
-    color: white;
-}
-
-.kshop-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #ff3b30;
-    color: white;
-    width: 18px; /* Réduit de 22px à 18px */
-    height: 18px; /* Réduit de 22px à 18px */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px; /* Réduit de 12px à 11px */
-    font-weight: bold;
-    animation: pulse 2s infinite;
-}
-
-/* Animation de rebond */
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-    }
-}
-
-/* Animation de pulsation pour le badge */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
-    }
-    70% {
-        transform: scale(1.1);
-        box-shadow: 0 0 0 10px rgba(255, 59, 48, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
-    }
-}
-
-/* Effet au survol */
-.kshop-float:hover .kshop-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-
-/* Media queries pour la responsivité */
-@media screen and (max-width: 768px) {
-    .kshop-float {
-        bottom: 70px;
-        right: 15px;
-    }
-
-    .kshop-icon {
-        width: 50px;
-        height: 50px;
-    }
-
-    .kshop-icon i {
-        font-size: 20px;
-    }
-}
-
-/* Styles pour la page K-Shop */
-.kshop-page {
-    display: none;
-    padding: 0;
-    height: 100%;
-}
-
-.kshop-page.active {
-    display: block;
-}
-
-.kshop-container {
-    padding: 15px;
-}
-
-/* Section des partenaires vedettes */
-.featured-partners {
     margin-bottom: 25px;
 }
 
-.featured-partners h3 {
+.bank-info {
+    flex: 1;
+}
+
+.bank-name {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 15px;
-    padding: 0 5px;
+    margin-bottom: 4px;
 }
 
-.partners-carousel {
-    overflow-x: auto;
-    padding: 10px 0;
-    display: flex;
-    gap: 15px;
-    margin: 0 -15px;
-    padding: 0 15px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
-
-.partners-carousel::-webkit-scrollbar {
-    display: none;
+.bank-type {
+    font-size: 12px;
+    opacity: 0.8;
 }
 
 .partner-card {
@@ -2106,3 +1925,90 @@ input[type="number"] {
     margin-top: 5px;
 }
 
+h5 {
+    display: inline;
+    font-size: inherit;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.detail-value,
+.balance-amount,
+.card-meta {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+/* Styles pour le bouton flottant K-Shop */
+.kshop-float {
+    position: fixed;
+    bottom: 70px;
+    right: 15px;
+    z-index: 1000;
+    transform: translateZ(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    animation: bounce 1s infinite alternate;
+}
+
+.kshop-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.kshop-icon i {
+    font-size: 20px;
+    color: white;
+}
+
+.kshop-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff3b30;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(255, 59, 48, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+    }
+}
+
+.kshop-float:hover .kshop-icon {
+    transform: scale(1.1);
+}
