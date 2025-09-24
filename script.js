@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         populateBeneficiarySelect();
     }
     
+    // Initialiser les écouteurs de glissement pour la page d'accueil
+    initializeHomeSwipeListeners();
+    
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -1053,5 +1056,174 @@ function openKShop() {
     } else {
         showToast('Page K-Shop en construction');
     }
+}
+
+// Variables pour le glissement vers compte-pro
+let homeSwipeTouchStartX = 0;
+let homeSwipeTouchStartY = 0;
+let homeSwipeIsActive = false;
+let swipeIndicator = null;
+
+// Fonction pour naviguer vers compte-pro.html
+function navigateToComptePro() {
+    window.location.href = 'compte-pro.html';
+}
+
+// Créer l'indicateur de glissement
+function createSwipeIndicator() {
+    if (!swipeIndicator) {
+        swipeIndicator = document.createElement('div');
+        swipeIndicator.className = 'swipe-indicator';
+        swipeIndicator.innerHTML = '<i class="fas fa-arrow-left"></i> Glisser pour Compte Pro';
+        document.body.appendChild(swipeIndicator);
+    }
+}
+
+// Afficher l'indicateur
+function showSwipeIndicator() {
+    createSwipeIndicator();
+    swipeIndicator.classList.add('show');
+}
+
+// Masquer l'indicateur
+function hideSwipeIndicator() {
+    if (swipeIndicator) {
+        swipeIndicator.classList.remove('show');
+    }
+}
+
+// Initialise les écouteurs de glissement pour la page d'accueil
+function initializeHomeSwipeListeners() {
+    const homePage = document.getElementById('home-page');
+    if (!homePage) return;
+    
+    // Événements tactiles
+    homePage.addEventListener('touchstart', handleHomeSwipeTouchStart, { passive: true });
+    homePage.addEventListener('touchmove', handleHomeSwipeTouchMove, { passive: false });
+    homePage.addEventListener('touchend', handleHomeSwipeTouchEnd, { passive: true });
+    
+    // Événements souris (pour le desktop)
+    homePage.addEventListener('mousedown', handleHomeSwipeMouseDown, false);
+    homePage.addEventListener('mousemove', handleHomeSwipeMouseMove, false);
+    homePage.addEventListener('mouseup', handleHomeSwipeMouseUp, false);
+    homePage.addEventListener('mouseleave', handleHomeSwipeMouseUp, false);
+}
+
+// Gestion du début du glissement (tactile)
+function handleHomeSwipeTouchStart(e) {
+    homeSwipeTouchStartX = e.touches[0].clientX;
+    homeSwipeTouchStartY = e.touches[0].clientY;
+    homeSwipeIsActive = false;
+}
+
+// Gestion du début du glissement (souris)
+function handleHomeSwipeMouseDown(e) {
+    homeSwipeTouchStartX = e.clientX;
+    homeSwipeTouchStartY = e.clientY;
+    homeSwipeIsActive = false;
+}
+
+// Gestion du mouvement de glissement (tactile)
+function handleHomeSwipeTouchMove(e) {
+    if (!homeSwipeTouchStartX || !homeSwipeTouchStartY) return;
+    
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    
+    const diffX = homeSwipeTouchStartX - touchX;
+    const diffY = homeSwipeTouchStartY - touchY;
+    
+    // Vérifier si c'est un glissement horizontal vers la gauche
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+        if (diffX > 0) { // Glissement vers la gauche
+            homeSwipeIsActive = true;
+            e.preventDefault(); // Empêcher le scroll
+            
+            const homePage = document.getElementById('home-page');
+            if (homePage) {
+                homePage.classList.add('swiping-left');
+            }
+            
+            // Afficher l'indicateur après un seuil
+            if (diffX > 80) {
+                showSwipeIndicator();
+            }
+        }
+    }
+}
+
+// Gestion du mouvement de glissement (souris)
+function handleHomeSwipeMouseMove(e) {
+    if (!homeSwipeTouchStartX || !homeSwipeTouchStartY) return;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const diffX = homeSwipeTouchStartX - mouseX;
+    const diffY = homeSwipeTouchStartY - mouseY;
+    
+    // Vérifier si c'est un glissement horizontal vers la gauche
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+        if (diffX > 0) { // Glissement vers la gauche
+            homeSwipeIsActive = true;
+            
+            const homePage = document.getElementById('home-page');
+            if (homePage) {
+                homePage.classList.add('swiping-left');
+            }
+            
+            // Afficher l'indicateur après un seuil
+            if (diffX > 80) {
+                showSwipeIndicator();
+            }
+        }
+    }
+}
+
+// Gestion de la fin du glissement (tactile)
+function handleHomeSwipeTouchEnd() {
+    const homePage = document.getElementById('home-page');
+    
+    if (homeSwipeIsActive) {
+        // Navigation vers compte-pro si le glissement était suffisant
+        const diffX = homeSwipeTouchStartX - (homeSwipeTouchStartX); // Calculé pendant le mouvement
+        if (swipeIndicator && swipeIndicator.classList.contains('show')) {
+            navigateToComptePro();
+        }
+    }
+    
+    // Nettoyer les styles et indicateur
+    if (homePage) {
+        homePage.classList.remove('swiping-left');
+    }
+    hideSwipeIndicator();
+    
+    // Réinitialiser les variables
+    homeSwipeTouchStartX = 0;
+    homeSwipeTouchStartY = 0;
+    homeSwipeIsActive = false;
+}
+
+// Gestion de la fin du glissement (souris)
+function handleHomeSwipeMouseUp() {
+    const homePage = document.getElementById('home-page');
+    
+    if (homeSwipeIsActive) {
+        // Navigation vers compte-pro si l'indicateur est visible
+        if (swipeIndicator && swipeIndicator.classList.contains('show')) {
+            navigateToComptePro();
+        }
+    }
+    
+    // Nettoyer les styles et indicateur
+    if (homePage) {
+        homePage.classList.remove('swiping-left');
+    }
+    hideSwipeIndicator();
+    
+    // Réinitialiser les variables
+    homeSwipeTouchStartX = 0;
+    homeSwipeTouchStartY = 0;
+    homeSwipeIsActive = false;
 }
 

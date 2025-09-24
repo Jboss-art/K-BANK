@@ -3383,3 +3383,41 @@ input[type="number"] {
         margin-right: 8px;
     }
 }
+
+/* Styles pour le glissement vers compte-pro depuis la page d'accueil */
+.home-page {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.home-page.swiping-left {
+    transform: translateX(-10px);
+}
+
+/* Indicateur de glissement */
+.swipe-indicator {
+    position: fixed;
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    background: rgba(106, 17, 203, 0.9);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1000;
+    transition: right 0.3s ease;
+    box-shadow: 0 5px 20px rgba(106, 17, 203, 0.4);
+}
+
+.swipe-indicator.show {
+    right: 20px;
+}
+
+.swipe-indicator i {
+    font-size: 18px;
+}
