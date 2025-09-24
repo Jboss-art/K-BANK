@@ -54,11 +54,18 @@ const beneficiaries = [
 
 // Initialisation de l'application
 document.addEventListener('DOMContentLoaded', () => {
-    // Vérifier si nous sommes sur la page de transfert
+    // Vérifier si nous sommes sur la page de transfert (ancien)
     const transferPage = document.getElementById('transfer-page');
     if (transferPage && transferPage.classList.contains('active')) {
         renderBeneficiaries();
         populateBeneficiarySelect();
+    }
+    
+    // Vérifier si nous sommes sur la page de virement
+    const virementPage = document.getElementById('virement-page');
+    if (virementPage && virementPage.classList.contains('active')) {
+        renderVirementBeneficiaries();
+        populateVirementBeneficiarySelect();
     }
     
     // Initialiser les écouteurs de glissement pour la page d'accueil
@@ -67,10 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
-            if (item.getAttribute('onclick').includes('transfer')) {
+            const onclick = item.getAttribute('onclick');
+            if (onclick && onclick.includes('transfer')) {
                 setTimeout(() => {
                     renderBeneficiaries();
                     populateBeneficiarySelect();
+                }, 100);
+            }
+            if (onclick && onclick.includes('virement')) {
+                setTimeout(() => {
+                    renderVirementBeneficiaries();
+                    populateVirementBeneficiarySelect();
                 }, 100);
             }
         });
@@ -106,9 +120,55 @@ function renderBeneficiaries() {
     });
 }
 
+// Affiche la liste des bénéficiaires pour la page virement
+function renderVirementBeneficiaries() {
+    const container = document.getElementById('virement-beneficiaries-list');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    beneficiaries.forEach(beneficiary => {
+        const element = document.createElement('div');
+        element.className = 'beneficiary-item';
+        element.innerHTML = `
+            <div class="beneficiary-avatar">${beneficiary.avatar}</div>
+            <div class="beneficiary-details">
+                <div class="beneficiary-name">${beneficiary.name}</div>
+                <div class="beneficiary-info">${beneficiary.account} • ${beneficiary.bank}</div>
+            </div>
+            <div class="beneficiary-action">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        `;
+        
+        element.addEventListener('click', () => {
+            selectVirementBeneficiary(beneficiary);
+        });
+        
+        container.appendChild(element);
+    });
+}
+
 // Remplit la liste déroulante des bénéficiaires
 function populateBeneficiarySelect() {
     const select = document.getElementById('beneficiary-select');
+    if (!select) return;
+    
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    beneficiaries.forEach(beneficiary => {
+        const option = document.createElement('option');
+        option.value = beneficiary.id;
+        option.textContent = `${beneficiary.name} (${beneficiary.account})`;
+        select.appendChild(option);
+    });
+}
+
+// Fonction pour peupler le select de la page virement
+function populateVirementBeneficiarySelect() {
+    const select = document.getElementById('virement-beneficiary-select');
     if (!select) return;
     
     while (select.options.length > 1) {
@@ -130,6 +190,20 @@ function selectBeneficiary(beneficiary) {
     
     select.value = beneficiary.id;
     document.getElementById('transfer-amount').focus();
+}
+
+// Sélectionne un bénéficiaire pour la page virement
+function selectVirementBeneficiary(beneficiary) {
+    const select = document.getElementById('virement-beneficiary-select');
+    if (!select) return;
+    
+    select.value = beneficiary.id;
+    document.getElementById('virement-amount').focus();
+}
+
+// Ouvre la modal d'ajout de bénéficiaire pour les virements
+function openAddVirementBeneficiaryModal() {
+    showNotification('Fonctionnalité d\'ajout de bénéficiaire à venir');
 }
 
 // Ouvre le modal d'ajout de bénéficiaire
@@ -174,11 +248,11 @@ function addBeneficiary() {
     showNotification('Bénéficiaire ajouté avec succès');
 }
 
-// Confirme le virement
-function confirmTransfer() {
-    const beneficiaryId = document.getElementById('beneficiary-select').value;
-    const amount = document.getElementById('transfer-amount').value;
-    const reason = document.getElementById('transfer-reason').value;
+// Confirme le virement (ancienne fonction transfer renommée)
+function confirmVirement() {
+    const beneficiaryId = document.getElementById('virement-beneficiary-select').value;
+    const amount = document.getElementById('virement-amount').value;
+    const reason = document.getElementById('virement-reason').value;
     
     if (!beneficiaryId) {
         showNotification('Veuillez sélectionner un bénéficiaire', 'error');
@@ -198,14 +272,141 @@ function confirmTransfer() {
         'Confirmer',
         'Annuler',
         () => {
-            showNotification(`Virement de ${Number(amount).toLocaleString()} FCFA effectué avec succès`);
-            document.getElementById('beneficiary-select').value = '';
-            document.getElementById('transfer-amount').value = '';
-            document.getElementById('transfer-reason').value = '';
-            switchTab('home');
+            // Simuler le virement
+            showNotification('Virement effectué avec succès');
+            document.getElementById('virement-amount').value = '';
+            document.getElementById('virement-reason').value = '';
+            document.getElementById('virement-beneficiary-select').selectedIndex = 0;
+            
+            // Ajouter à l'historique
+            const transaction = {
+                id: Date.now(),
+                type: 'expense',
+                title: `Virement vers ${beneficiary.name}`,
+                details: reason || 'Virement bancaire',
+                amount: Number(amount),
+                date: new Date().toLocaleDateString(),
+                icon: 'fa-paper-plane',
+                color: '#ef4444'
+            };
+            
+            // Ajouter à la liste des transactions si elle existe
+            if (typeof addTransaction === 'function') {
+                addTransaction(transaction);
+            }
         }
     );
 }
+
+// Fonctions pour la nouvelle page transfert
+let selectedTransferMethod = null;
+
+function selectTransferMethod(method) {
+    // Désélectionner toutes les méthodes
+    document.querySelectorAll('.payment-method').forEach(pm => {
+        pm.classList.remove('selected');
+    });
+    
+    // Sélectionner la méthode choisie
+    document.querySelector(`.payment-method[onclick*="${method}"]`).classList.add('selected');
+    selectedTransferMethod = method;
+    
+    // Activer le bouton si un montant est aussi renseigné
+    validateTransferForm();
+}
+
+function validateTransferForm() {
+    const amount = document.getElementById('transfer-amount').value;
+    const phone = document.getElementById('transfer-phone-number').value;
+    const name = document.getElementById('transfer-recipient-name').value;
+    const button = document.getElementById('transfer-button');
+    
+    if (amount && phone && name && selectedTransferMethod) {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+    }
+}
+
+function processTransfer() {
+    const amount = document.getElementById('transfer-amount').value;
+    const phone = document.getElementById('transfer-phone-number').value;
+    const name = document.getElementById('transfer-recipient-name').value;
+    
+    if (!selectedTransferMethod) {
+        showNotification('Veuillez sélectionner une méthode de transfert', 'error');
+        return;
+    }
+    
+    if (!amount || amount <= 0) {
+        showNotification('Veuillez saisir un montant valide', 'error');
+        return;
+    }
+    
+    if (!phone) {
+        showNotification('Veuillez saisir le numéro de téléphone', 'error');
+        return;
+    }
+    
+    if (!name) {
+        showNotification('Veuillez saisir le nom du destinataire', 'error');
+        return;
+    }
+    
+    const methodNames = {
+        'moov': 'Moov Money',
+        'airtel': 'Airtel Money',
+        'western': 'Western Union'
+    };
+    
+    showConfirmDialog(
+        'Confirmer le transfert',
+        `Transférer ${Number(amount).toLocaleString()} FCFA vers ${name} (${phone}) via ${methodNames[selectedTransferMethod]} ?`,
+        'Confirmer',
+        'Annuler',
+        () => {
+            showNotification('Transfert initié avec succès');
+            
+            // Réinitialiser le formulaire
+            document.getElementById('transfer-amount').value = '';
+            document.getElementById('transfer-phone-number').value = '';
+            document.getElementById('transfer-recipient-name').value = '';
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.classList.remove('selected');
+            });
+            selectedTransferMethod = null;
+            document.getElementById('transfer-button').disabled = true;
+            
+            // Ajouter à l'historique
+            const transaction = {
+                id: Date.now(),
+                type: 'expense',
+                title: `Transfert ${methodNames[selectedTransferMethod]}`,
+                details: `Vers ${name} - ${phone}`,
+                amount: Number(amount),
+                date: new Date().toLocaleDateString(),
+                icon: 'fa-exchange-alt',
+                color: '#3b82f6'
+            };
+            
+            // Ajouter à la liste des transactions si elle existe
+            if (typeof addTransaction === 'function') {
+                addTransaction(transaction);
+            }
+        }
+    );
+}
+
+// Ajouter les écouteurs d'événements pour la validation du formulaire transfert
+document.addEventListener('DOMContentLoaded', function() {
+    const transferAmountField = document.getElementById('transfer-amount');
+    const transferPhoneField = document.getElementById('transfer-phone-number');
+    const transferNameField = document.getElementById('transfer-recipient-name');
+    
+    if (transferAmountField) transferAmountField.addEventListener('input', validateTransferForm);
+    if (transferPhoneField) transferPhoneField.addEventListener('input', validateTransferForm);
+    if (transferNameField) transferNameField.addEventListener('input', validateTransferForm);
+});
 
 // Données de l'application
 const appData = {

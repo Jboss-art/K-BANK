@@ -1722,53 +1722,166 @@ input[type="number"] {
 }
 
 /* Styles pour la page IBAN */
-.iban-container {
+.iban-page .iban-container {
     padding: 20px;
+    max-width: 100%;
 }
 
-.iban-card {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border-radius: 16px;
-    padding: 20px;
-    margin: 15px;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3);
+.iban-page .iban-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 15px 0;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(106, 17, 203, 0.1);
     position: relative;
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.iban-card::before {
+.iban-page .iban-card::before {
     content: "";
     position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: rgba(255, 255, 255, 0.1);
+    top: -30%;
+    right: -30%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(106, 17, 203, 0.1) 0%, transparent 70%);
     border-radius: 50%;
 }
 
-/* Style spécifique pour l'icône de la banque sur l'IBAN */
-.bank-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+.iban-page .iban-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.iban-page .gabon-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.iban-page .card-type {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.iban-page .iban-number {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.iban-page .iban-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.iban-page .iban-value {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.iban-page .copy-button {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.iban-page .copy-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+}
+
+.iban-page .account-details {
+    display: grid;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.iban-page .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.iban-page .detail-item:last-child {
+    border-bottom: none;
+}
+
+.iban-page .detail-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.iban-page .detail-value {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.iban-page .iban-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.iban-page .action-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    gap: 8px;
 }
 
-.bank-icon i {
-    font-size: 20px;
-    color: white;
+.iban-page .action-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.iban-card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
+.iban-page .action-button i {
+    font-size: 16px;
 }
 
 .bank-info {

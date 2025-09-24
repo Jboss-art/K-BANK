@@ -401,7 +401,7 @@
             </div>
 
             <!-- Page Virement -->
-            <div class="page transfer-page" id="transfer-page">
+            <div class="page virement-page" id="virement-page">
                 <div class="page-header">
                     <button class="back-button" onclick="switchTab('home')">
                         <i class="fas fa-chevron-left"></i>
@@ -413,7 +413,7 @@
                     <div class="input-group">
                         <label>Bénéficiaire</label>
                         <div class="input-field">
-                            <select id="beneficiary-select">
+                            <select id="virement-beneficiary-select">
                                 <option value="" disabled selected>Sélectionner un bénéficiaire</option>
                             </select>
                         </div>
@@ -422,18 +422,18 @@
                     <div class="input-group">
                         <label>Montant (XAF)</label>
                         <div class="input-field">
-                            <input type="number" placeholder="0,00" id="transfer-amount">
+                            <input type="number" placeholder="0,00" id="virement-amount">
                         </div>
                     </div>
                     
                     <div class="input-group">
                         <label>Motif du virement</label>
                         <div class="input-field">
-                            <input type="text" placeholder="Ex: Remboursement, Cadeau..." id="transfer-reason">
+                            <input type="text" placeholder="Ex: Remboursement, Cadeau..." id="virement-reason">
                         </div>
                     </div>
                     
-                    <button class="primary-button" onclick="confirmTransfer()">
+                    <button class="primary-button" onclick="confirmVirement()">
                         <i class="fas fa-paper-plane"></i> Effectuer le virement
                     </button>
                 </div>
@@ -443,11 +443,11 @@
                         <h3>Bénéficiaires récents</h3>
                     </div>
                     
-                    <div class="beneficiaries-list" id="beneficiaries-list">
+                    <div class="beneficiaries-list" id="virement-beneficiaries-list">
                         <!-- Les bénéficiaires seront ajoutés dynamiquement -->
                     </div>
                     
-                    <button class="secondary-button" onclick="openAddBeneficiaryModal()">
+                    <button class="secondary-button" onclick="openAddVirementBeneficiaryModal()">
                         <i class="fas fa-plus-circle"></i> Ajouter un nouveau bénéficiaire
                     </button>
                 </div>
@@ -502,7 +502,7 @@
                 <div class="iban-container">
                     <div class="iban-card">
                         <div class="iban-card-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/fr/0/09/CEMAC_Logo.png" alt="CEMAC" class="bank-logo">
+                            <img src="assets/logos/gabon-logo.png" alt="Gabon" class="gabon-logo">
                             <div class="card-type">Compte Courant</div>
                         </div>
                         
@@ -602,6 +602,76 @@
                     <button class="primary-button" onclick="processTopup()" id="topup-button" disabled>
                         <i class="fas fa-plus-circle"></i>
                         <span>Recharger maintenant</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Transfert (nouvelle) -->
+            <div class="page transfer-page" id="transfer-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Transfert</h2>
+                </div>
+
+                <div class="transfer-welcome">
+                    <h3>Transférer de l'argent</h3>
+                    <p>Choisissez votre mode de transfert préféré</p>
+                </div>
+
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectTransferMethod('moov')">
+                        <div class="payment-logo">
+                            <img src="./assets/logos/moov.png" alt="Moov Money">
+                        </div>
+                        <span>Moov Money</span>
+                        <div class="method-info">Instantané</div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectTransferMethod('airtel')">
+                        <div class="payment-logo">
+                            <img src="./assets/logos/airtel-money.png" alt="Airtel Money">
+                        </div>
+                        <span>Airtel Money</span>
+                        <div class="method-info">Instantané</div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectTransferMethod('western')">
+                        <div class="payment-logo">
+                            <img src="./assets/logos/western-union.png" alt="Western Union">
+                        </div>
+                        <span>Western Union</span>
+                        <div class="method-info">24-48h</div>
+                    </div>
+                </div>
+
+                <div class="transfer-form">
+                    <div class="input-group">
+                        <label>Montant à transférer</label>
+                        <div class="input-field">
+                            <input type="number" id="transfer-amount" placeholder="0">
+                            <span class="currency">XAF</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Numéro de téléphone du destinataire</label>
+                        <div class="input-field">
+                            <input type="tel" id="transfer-phone-number" placeholder="+241">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nom du destinataire</label>
+                        <div class="input-field">
+                            <input type="text" id="transfer-recipient-name" placeholder="Nom complet">
+                        </div>
+                    </div>
+
+                    <button class="primary-button" onclick="processTransfer()" id="transfer-button" disabled>
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transférer maintenant</span>
                     </button>
                 </div>
             </div>
@@ -778,8 +848,8 @@
                 <i class="fas fa-home"></i>
                 <span>Accueil</span>
             </div>
-            <div class="nav-item" onclick="switchTab('transfer')">
-                <i class="fas fa-exchange-alt"></i>
+            <div class="nav-item" onclick="switchTab('virement')">
+                <i class="fas fa-paper-plane"></i>
                 <span>Virements</span>
             </div>
             <div class="nav-item" onclick="switchTab('cards')">
