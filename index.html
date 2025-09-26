@@ -839,6 +839,234 @@
                 </div>
             </div>
 
+            <!-- Page Coffre-Fort -->
+            <div class="page vault-page" id="coffre-fort-page">
+                
+                <!-- Carte de solde du coffre-fort -->
+                <div class="vault-balance-card">
+                    <div class="balance-title">
+                        <i class="fas fa-key" style="margin-right: 10px;"></i>
+                        Coffre-Fort Sécurisé
+                    </div>
+                    <div class="balance-amount" id="vault-total">F <h6>cfa</h6> 1 250 000,<small>00</small></div>
+                    <div class="balance-details">
+                        <div class="balance-detail">
+                            <div>Rendement annuel</div>
+                            <div class="detail-value">+5.2%</div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="balance-detail">
+                            <div>Gains cette année</div>
+                            <div class="detail-value">F <h6>cfa</h6> 62 500,<small>00</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions du coffre -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="openVaultDepositModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="action-label">Déposer</div>
+                    </div>
+                    <div class="action-card" onclick="openVaultWithdrawModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-minus-circle"></i>
+                        </div>
+                        <div class="action-label">Retirer</div>
+                    </div>
+                    <div class="action-card" onclick="openVaultAddGoalModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="action-label">Objectifs</div>
+                    </div>
+                    <div class="action-card" onclick="showVaultHistory()">
+                        <div class="action-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="action-label">Historique</div>
+                    </div>
+                </div>
+
+                <!-- Section objectifs d'épargne -->
+                <div class="transactions-section">
+                    <div class="section-header">
+                        <h3>Mes objectifs d'épargne</h3>
+                        <a onclick="openVaultAddGoalModal()">Ajouter</a>
+                    </div>
+                    <div class="transactions-list" id="vault-savings-list">
+                        <!-- Les objectifs d'épargne seront générés dynamiquement -->
+                    </div>
+                </div>
+
+                <!-- Section historique -->
+                <div class="transactions-section" style="margin-bottom: 100px;">
+                    <div class="section-header">
+                        <h3>Historique récent</h3>
+                        <a onclick="showAllVaultHistory()">Tout voir</a>
+                    </div>
+                    <div class="transactions-list" id="vault-history-list">
+                        <!-- L'historique sera généré dynamiquement -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals pour le coffre-fort -->
+            
+            <!-- Modal de dépôt -->
+            <div class="vault-modal-overlay" id="vault-deposit-modal">
+                <div class="vault-modal-content">
+                    <div class="vault-modal-header">
+                        <h3 class="vault-modal-title">Déposer dans le coffre-fort</h3>
+                        <button class="vault-modal-close" onclick="closeVaultDepositModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Montant à déposer</label>
+                        <div class="vault-amount-input">
+                            <span class="vault-currency-symbol">F</span>
+                            <input type="number" placeholder="0,00" id="vault-deposit-amount">
+                        </div>
+                    </div>
+                    
+                    <div class="vault-quick-amounts">
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(50000)">F CFA 50 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(100000)">F CFA 100 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(200000)">F CFA 200 000</div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Compte source</label>
+                        <div class="vault-input-field">
+                            <select id="vault-deposit-source">
+                                <option value="main">Compte principal (F CFA 780 245)</option>
+                                <option value="professional">Compte professionnel (F CFA 450 800)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Objectif d'épargne (optionnel)</label>
+                        <div class="vault-input-field">
+                            <select id="vault-deposit-goal">
+                                <option value="">Aucun objectif spécifique</option>
+                                <option value="vacation">Vacances</option>
+                                <option value="car">Nouvelle voiture</option>
+                                <option value="house">Achat immobilier</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="vault-primary-button" onclick="confirmVaultDeposit()">
+                        <i class="fas fa-lock"></i> Déposer en sécurité
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal de retrait -->
+            <div class="vault-modal-overlay" id="vault-withdraw-modal">
+                <div class="vault-modal-content">
+                    <div class="vault-modal-header">
+                        <h3 class="vault-modal-title">Retirer du coffre-fort</h3>
+                        <button class="vault-modal-close" onclick="closeVaultWithdrawModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Montant à retirer</label>
+                        <div class="vault-amount-input">
+                            <span class="vault-currency-symbol">F</span>
+                            <input type="number" placeholder="0,00" id="vault-withdraw-amount">
+                        </div>
+                    </div>
+                    
+                    <div class="vault-quick-amounts">
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(50000)">F CFA 50 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(100000)">F CFA 100 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(200000)">F CFA 200 000</div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Compte de destination</label>
+                        <div class="vault-input-field">
+                            <select id="vault-withdraw-destination">
+                                <option value="main">Compte principal</option>
+                                <option value="professional">Compte professionnel</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Motif de retrait (optionnel)</label>
+                        <div class="vault-input-field">
+                            <input type="text" placeholder="Raison du retrait" id="vault-withdraw-reason">
+                        </div>
+                    </div>
+                    
+                    <button class="vault-primary-button" onclick="confirmVaultWithdrawal()">
+                        <i class="fas fa-unlock"></i> Retirer des fonds
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal d'ajout d'objectif -->
+            <div class="vault-modal-overlay" id="vault-add-goal-modal">
+                <div class="vault-modal-content">
+                    <div class="vault-modal-header">
+                        <h3 class="vault-modal-title">Nouvel objectif d'épargne</h3>
+                        <button class="vault-modal-close" onclick="closeVaultAddGoalModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Nom de l'objectif</label>
+                        <div class="vault-input-field">
+                            <input type="text" placeholder="Ex: Vacances à Paris" id="vault-goal-name">
+                        </div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Montant cible</label>
+                        <div class="vault-amount-input">
+                            <span class="vault-currency-symbol">F</span>
+                            <input type="number" placeholder="0,00" id="vault-goal-target">
+                        </div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Date cible</label>
+                        <div class="vault-input-field">
+                            <input type="date" id="vault-goal-date">
+                        </div>
+                    </div>
+                    
+                    <div class="vault-input-group">
+                        <label>Icône de l'objectif</label>
+                        <div class="vault-quick-amounts">
+                            <div class="vault-quick-amount" onclick="selectVaultGoalIcon('plane')">
+                                <i class="fas fa-plane"></i> Voyage
+                            </div>
+                            <div class="vault-quick-amount" onclick="selectVaultGoalIcon('car')">
+                                <i class="fas fa-car"></i> Voiture
+                            </div>
+                            <div class="vault-quick-amount" onclick="selectVaultGoalIcon('home')">
+                                <i class="fas fa-home"></i> Maison
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="vault-primary-button" onclick="addVaultSavingsGoal()">
+                        <i class="fas fa-bullseye"></i> Créer l'objectif
+                    </button>
+                </div>
+            </div>
+
             <!-- Autres pages... -->
         </div>
 
@@ -852,9 +1080,9 @@
                 <i class="fas fa-paper-plane"></i>
                 <span>Virements</span>
             </div>
-            <div class="nav-item" onclick="switchTab('cards')">
-                <i class="fas fa-credit-card"></i>
-                <span>Cartes</span>
+            <div class="nav-item" onclick="switchTab('coffre-fort')">
+                <i class="fas fa-key"></i>
+                <span>Coffre-fort</span>
             </div>
             <div class="nav-item" onclick="switchTab('others')">
                 <i class="fas fa-ellipsis-h"></i>
