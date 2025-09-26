@@ -928,15 +928,14 @@ function showToast(message) {
 }
 
 // Show confirmation dialog
-function showConfirmDialog(title, message, confirmText, cancelText, onConfirm) {
+function showConfirmDialog(title, message, confirmText, cancelText, onConfirm, iconClass = 'fas fa-ban', iconColor = '#ff3b30') {
     const modal = document.createElement('div');
     modal.className = 'confirmation-modal';
     
-    // Changement ici : utilisation de l'icône fa-ban au lieu de fa-file-pdf
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-icon">
-                <i class="fas fa-ban" style="color: #ff3b30; font-size: 32px;"></i>
+                <i class="${iconClass}" style="color: ${iconColor}; font-size: 32px;"></i>
             </div>
             <h3>${title}</h3>
             <p>${message}</p>
@@ -1198,7 +1197,9 @@ function temporaryBlockCard() {
                     'Plus tard',
                     () => {
                         switchTab('order-card');
-                    }
+                    },
+                    'fas fa-credit-card',
+                    '#6a11cb'
                 );
             }, 1500);
         }
