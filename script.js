@@ -1779,7 +1779,7 @@ function formatVaultDate(dateString) {
     return date.toLocaleDateString('fr-FR', options);
 }
 
-// Initialisation du coffre-fort
+// Initialisation de l'application
 document.addEventListener('DOMContentLoaded', () => {
     const originalSwitchTab = window.switchTab;
     window.switchTab = function(tabName) {
@@ -1792,6 +1792,863 @@ document.addEventListener('DOMContentLoaded', () => {
                 initializeVaultPage();
             }, 100);
         }
+        
+        if (tabName === 'others') {
+            setTimeout(() => {
+                initializeOthersPage();
+            }, 100);
+        }
     };
 });
+
+// ===== FONCTIONS PAGE AUTRES =====
+
+// Initialisation de la page Autres
+function initializeOthersPage() {
+    // Animation d'entrée pour les sections
+    const sections = document.querySelectorAll('.services-section');
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+            section.style.transition = 'all 0.6s ease';
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+}
+
+// Services Bancaires
+function openService(serviceType) {
+    const messages = {
+        'account': 'Ouverture de la gestion de compte...',
+        'cards': 'Accès à la gestion des cartes...',
+        'loans': 'Redirection vers les services de crédit...',
+        'insurance': 'Ouverture des services d\'assurance...'
+    };
+    
+    showToast(messages[serviceType] || 'Service en cours d\'ouverture...', 'info');
+    
+    // Ici vous pourriez rediriger vers des pages spécifiques
+    setTimeout(() => {
+        switch(serviceType) {
+            case 'account':
+                switchTab('profile');
+                break;
+            case 'cards':
+                // Ouvrir une page dédiée aux cartes
+                break;
+            case 'loans':
+                // Ouvrir une page de demande de crédit
+                break;
+            case 'insurance':
+                // Ouvrir une page d'assurance
+                break;
+        }
+    }, 1500);
+}
+
+// K-Shop
+function openShop(shopType) {
+    const shops = {
+        'kfc': {
+            name: 'KFC Gabon',
+            message: 'Redirection vers KFC Gabon...',
+            url: 'https://kfc-gabon.com'
+        },
+        'mbolo': {
+            name: 'Mbolo Gabon',
+            message: 'Redirection vers Mbolo Gabon...',
+            url: 'https://mbolo-gabon.com'
+        }
+    };
+    
+    const shop = shops[shopType];
+    if (shop) {
+        showToast(shop.message, 'success');
+        // Simuler l'ouverture du shop
+        setTimeout(() => {
+            showToast(`Bienvenue chez ${shop.name}!`, 'success');
+        }, 1500);
+    }
+}
+
+function suggestPartner() {
+    showConfirmDialog(
+        'Suggérer un partenaire',
+        'Voulez-vous proposer un nouveau partenaire pour K-Shop ?',
+        () => {
+            showToast('Merci pour votre suggestion ! Nous examinerons votre demande.', 'success');
+            // Ici vous pourriez ouvrir un formulaire ou rediriger vers un email
+        },
+        'fas fa-handshake'
+    );
+}
+
+// Outils Financiers
+function openTool(toolType) {
+    const tools = {
+        'budget': {
+            name: 'Calculateur Budget',
+            message: 'Ouverture du calculateur de budget...'
+        },
+        'exchange': {
+            name: 'Taux de Change',
+            message: 'Chargement des taux de change...'
+        },
+        'investment': {
+            name: 'Simulateur Épargne',
+            message: 'Lancement du simulateur d\'épargne...'
+        }
+    };
+    
+    const tool = tools[toolType];
+    if (tool) {
+        showToast(tool.message, 'info');
+        
+        setTimeout(() => {
+            // Simuler l'ouverture de l'outil
+            switch(toolType) {
+                case 'budget':
+                    openBudgetCalculator();
+                    break;
+                case 'exchange':
+                    openExchangeRates();
+                    break;
+                case 'investment':
+                    openInvestmentSimulator();
+                    break;
+            }
+        }, 1500);
+    }
+}
+
+function openBudgetCalculator() {
+    showToast('Calculateur de budget disponible prochainement!', 'info');
+    // Ici vous pourriez ouvrir une modal ou une nouvelle page
+}
+
+function openExchangeRates() {
+    showToast('Taux de change - USD: 656 FCFA | EUR: 724 FCFA', 'info');
+    // Ici vous pourriez afficher les vrais taux
+}
+
+function openInvestmentSimulator() {
+    showToast('Simulateur d\'épargne disponible prochainement!', 'info');
+    // Ici vous pourriez ouvrir un simulateur
+}
+
+// Support
+function openFAQ() {
+    showToast('Ouverture de la FAQ...', 'info');
+    // Ici vous pourriez ouvrir une page FAQ dédiée
+}
+
+function openChat() {
+    showToast('Chat en direct démarré! Un conseiller va vous répondre.', 'success');
+    // Ici vous pourriez intégrer un widget de chat
+}
+
+function callSupport() {
+    const phoneNumber = '+241 01 23 45 67';
+    showConfirmDialog(
+        'Appeler le Support',
+        `Voulez-vous appeler le ${phoneNumber} ?`,
+        () => {
+            window.open(`tel:${phoneNumber}`);
+            showToast('Appel en cours...', 'success');
+        },
+        'fas fa-phone'
+    );
+}
+
+function scheduleCallback() {
+    showToast('Planification de rappel disponible prochainement!', 'info');
+    // Ici vous pourriez ouvrir un calendrier de réservation
+}
+
+// Paramètres
+function toggleNotifications() {
+    const toggle = document.getElementById('notif-toggle');
+    const isEnabled = toggle.checked;
+    
+    showToast(
+        isEnabled ? 'Notifications activées' : 'Notifications désactivées',
+        isEnabled ? 'success' : 'info'
+    );
+}
+
+function toggleBiometric() {
+    const toggle = document.getElementById('bio-toggle');
+    const isEnabled = toggle.checked;
+    
+    if (isEnabled) {
+        // Simuler l'authentification biométrique
+        showToast('Configuration de l\'empreinte digitale...', 'info');
+        setTimeout(() => {
+            showToast('Empreinte digitale configurée avec succès!', 'success');
+        }, 2000);
+    } else {
+        showToast('Authentification biométrique désactivée', 'info');
+    }
+}
+
+function openSecuritySettings() {
+    showToast('Ouverture des paramètres de sécurité...', 'info');
+    setTimeout(() => {
+        switchTab('profile'); // Rediriger vers le profil pour les paramètres
+    }, 1500);
+}
+
+// Fonction toast améliorée si elle n'existe pas
+if (typeof showToast !== 'function') {
+    function showToast(message, type = 'info') {
+        // Supprimer les anciens toasts
+        const existingToasts = document.querySelectorAll('.dynamic-toast');
+        existingToasts.forEach(toast => toast.remove());
+        
+        // Créer le nouveau toast
+        const toast = document.createElement('div');
+        toast.className = `dynamic-toast toast-${type}`;
+        
+        const colors = {
+            'success': '#4CAF50',
+            'error': '#f44336',
+            'info': '#2196F3',
+            'warning': '#ff9800'
+        };
+        
+        toast.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-20px);
+                background: ${colors[type] || colors.info};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                z-index: 10000;
+                opacity: 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(10px);
+                font-weight: 500;
+                font-size: 14px;
+                max-width: 300px;
+                text-align: center;
+            ">
+                ${message}
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Animation d'entrée
+        requestAnimationFrame(() => {
+            const toastElement = toast.firstElementChild;
+            toastElement.style.opacity = '1';
+            toastElement.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        
+        // Animation de sortie
+        setTimeout(() => {
+            const toastElement = toast.firstElementChild;
+            if (toastElement) {
+                toastElement.style.opacity = '0';
+                toastElement.style.transform = 'translateX(-50%) translateY(-20px)';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }
+        }, 3000);
+    }
+}
+
+// Fonction pour faire basculer les éléments FAQ
+function toggleFAQItem(element) {
+    const isActive = element.classList.contains('active');
+    
+    // Fermer tous les autres éléments FAQ
+    document.querySelectorAll('.faq-item.active').forEach(item => {
+        if (item !== element) {
+            item.classList.remove('active');
+        }
+    });
+    
+    // Basculer l'élément courant
+    if (isActive) {
+        element.classList.remove('active');
+    } else {
+        element.classList.add('active');
+    }
+}
+
+// Nouvelles fonctions d'assistance améliorées
+function openLiveChat() {
+    // Simuler l'ouverture du chat en direct
+    showModal({
+        title: "Chat en Direct",
+        content: `
+            <div style="text-align: center; padding: 20px;">
+                <div style="background: rgba(0, 255, 136, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <i class="fas fa-comments" style="color: #00ff88; font-size: 32px; margin-bottom: 10px;"></i>
+                    <h3 style="color: white; margin: 10px 0;">Agent en ligne</h3>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin: 0;">Un agent va vous répondre dans quelques secondes...</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <div style="width: 32px; height: 32px; background: #7456ff; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-robot" style="color: white; font-size: 14px;"></i>
+                        </div>
+                        <div>
+                            <strong style="color: white;">Agent K-Bank</strong>
+                            <div style="color: rgba(255, 255, 255, 0.6); font-size: 12px;">En ligne</div>
+                        </div>
+                    </div>
+                    <p style="color: white; margin: 0; background: rgba(116, 86, 255, 0.2); padding: 10px; border-radius: 8px;">
+                        👋 Bonjour ! Je suis là pour vous aider. Comment puis-je vous assister aujourd'hui ?
+                    </p>
+                </div>
+            </div>
+        `,
+        buttons: [
+            { text: "Démarrer le chat", action: () => showToast("Redirection vers le chat...", "success") },
+            { text: "Fermer", action: () => {} }
+        ]
+    });
+}
+
+function callSupport() {
+    // Simuler l'appel
+    showModal({
+        title: "Appel K-Bank Support",
+        content: `
+            <div style="text-align: center; padding: 20px;">
+                <div style="background: rgba(116, 86, 255, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <i class="fas fa-phone-alt" style="color: #7456ff; font-size: 32px; margin-bottom: 15px;"></i>
+                    <h3 style="color: white; margin-bottom: 10px;">+241 01 23 45 67</h3>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin: 0;">Service disponible 24h/24, 7j/7</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px;">
+                    <h4 style="color: white; margin-bottom: 10px;">Avant d'appeler :</h4>
+                    <ul style="color: rgba(255, 255, 255, 0.8); text-align: left; padding-left: 20px;">
+                        <li>Préparez votre numéro de compte</li>
+                        <li>Ayez votre pièce d'identité à portée</li>
+                        <li>Décrivez précisément votre problème</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        buttons: [
+            { text: "Appeler maintenant", action: () => { 
+                showToast("Ouverture du composeur...", "success");
+                // En production, cela ouvrirait le composeur du téléphone
+                // window.location.href = "tel:+24101234567";
+            }},
+            { text: "Annuler", action: () => {} }
+        ]
+    });
+}
+
+function requestCallback() {
+    // Simuler la demande de rappel
+    showModal({
+        title: "Demande de Rappel Gratuit",
+        content: `
+            <div style="padding: 20px;">
+                <div style="background: rgba(116, 86, 255, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-phone-alt" style="color: #7456ff; font-size: 24px; margin-bottom: 10px;"></i>
+                    <h4 style="color: white; margin: 0;">Nous vous rappelons gratuitement</h4>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: white; display: block; margin-bottom: 5px;">Motif de l'appel :</label>
+                    <select id="callback-reason" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                        <option value="general">Question générale</option>
+                        <option value="technical">Problème technique</option>
+                        <option value="transaction">Question sur une transaction</option>
+                        <option value="card">Problème de carte</option>
+                        <option value="account">Gestion de compte</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: white; display: block; margin-bottom: 5px;">Moment préféré :</label>
+                    <select id="callback-time" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                        <option value="now">Maintenant (dans 2-5 min)</option>
+                        <option value="morning">Ce matin (8h-12h)</option>
+                        <option value="afternoon">Cet après-midi (14h-18h)</option>
+                        <option value="evening">Ce soir (18h-20h)</option>
+                    </select>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px; margin-top: 15px;">
+                    <p style="color: rgba(255, 255, 255, 0.8); margin: 0; font-size: 14px;">
+                        <i class="fas fa-info-circle" style="color: #7456ff; margin-right: 8px;"></i>
+                        Le rappel est entièrement gratuit. Nous vous contacterons au numéro associé à votre compte.
+                    </p>
+                </div>
+            </div>
+        `,
+        buttons: [
+            { text: "Demander le rappel", action: () => {
+                const reason = document.getElementById('callback-reason').value;
+                const time = document.getElementById('callback-time').value;
+                showToast("Demande de rappel enregistrée ! Nous vous contactons bientôt.", "success");
+            }},
+            { text: "Annuler", action: () => {} }
+        ]
+    });
+}
+
+function sendEmail() {
+    // Simuler l'envoi d'email
+    showModal({
+        title: "Contact par Email",
+        content: `
+            <div style="padding: 20px;">
+                <div style="background: rgba(116, 86, 255, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-envelope" style="color: #7456ff; font-size: 24px; margin-bottom: 10px;"></i>
+                    <h4 style="color: white; margin-bottom: 5px;">support@k-bank.ga</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 14px;">Réponse sous 2h en moyenne</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: white; display: block; margin-bottom: 5px;">Sujet :</label>
+                    <input type="text" id="email-subject" placeholder="Décrivez brièvement votre demande" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" />
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: white; display: block; margin-bottom: 5px;">Message :</label>
+                    <textarea id="email-message" rows="4" placeholder="Décrivez votre problème ou votre question en détail..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; resize: vertical;"></textarea>
+                </div>
+                <div style="background: rgba(0, 255, 136, 0.1); padding: 12px; border-radius: 8px;">
+                    <p style="color: rgba(255, 255, 255, 0.8); margin: 0; font-size: 14px;">
+                        <i class="fas fa-check-circle" style="color: #00ff88; margin-right: 8px;"></i>
+                        Votre email sera envoyé depuis l'adresse associée à votre compte K-Bank.
+                    </p>
+                </div>
+            </div>
+        `,
+        buttons: [
+            { text: "Envoyer l'email", action: () => {
+                const subject = document.getElementById('email-subject').value;
+                const message = document.getElementById('email-message').value;
+                if (subject && message) {
+                    showToast("Email envoyé avec succès ! Nous vous répondrons rapidement.", "success");
+                } else {
+                    showToast("Veuillez remplir tous les champs", "error");
+                }
+            }},
+            { text: "Annuler", action: () => {} }
+        ]
+    });
+}
+
+// Fonction pour afficher une modale personnalisée
+function showModal(config) {
+    // Créer la modale
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 20px;
+        animation: fadeIn 0.3s ease;
+    `;
+
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+        background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(45, 45, 45, 0.95));
+        border-radius: 20px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        animation: slideInUp 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+        padding: 20px 20px 0 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 0;
+        flex-shrink: 0;
+    `;
+    header.innerHTML = `<h3 style="color: white; margin: 0; padding-bottom: 15px; font-size: 20px;">${config.title}</h3>`;
+
+    const body = document.createElement('div');
+    body.style.cssText = `
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+    `;
+    body.innerHTML = config.content;
+
+    const footer = document.createElement('div');
+    footer.style.cssText = `
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 20px;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+    `;
+
+    config.buttons.forEach(button => {
+        const btn = document.createElement('button');
+        btn.textContent = button.text;
+        btn.style.cssText = `
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            ${button.text.includes('Fermer') || button.text.includes('Annuler') 
+                ? 'background: rgba(255, 255, 255, 0.1); color: white;' 
+                : 'background: linear-gradient(135deg, #7456ff, #8b5af6); color: white;'
+            }
+        `;
+        btn.onclick = () => {
+            document.body.removeChild(modal);
+            button.action();
+        };
+        footer.appendChild(btn);
+    });
+
+    modalContent.appendChild(header);
+    modalContent.appendChild(body);
+    modalContent.appendChild(footer);
+    modal.appendChild(modalContent);
+
+    // Fermer en cliquant à l'extérieur
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
+
+    document.body.appendChild(modal);
+
+    // Ajuster pour mobile
+    if (window.innerWidth <= 768) {
+        modal.style.padding = '10px';
+        modalContent.style.maxHeight = '95vh';
+        modalContent.style.borderRadius = '16px';
+        header.style.padding = '15px 15px 0 15px';
+        footer.style.padding = '15px';
+        footer.style.justifyContent = 'center';
+    }
+}
+
+// Ajouter les styles d'animation CSS si pas déjà présents
+if (!document.querySelector('#modal-styles')) {
+    const style = document.createElement('style');
+    style.id = 'modal-styles';
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .custom-modal input::placeholder,
+        .custom-modal textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .custom-modal input:focus,
+        .custom-modal textarea:focus,
+        .custom-modal select:focus {
+            outline: none;
+            border-color: #7456ff;
+            box-shadow: 0 0 0 2px rgba(116, 86, 255, 0.2);
+        }
+        
+        /* Responsive modal styles */
+        @media (max-width: 768px) {
+            .custom-modal {
+                padding: 10px !important;
+                align-items: flex-start !important;
+                padding-top: 20px !important;
+            }
+            .custom-modal > div {
+                max-height: 95vh !important;
+                border-radius: 16px !important;
+                margin-top: 0 !important;
+            }
+            .custom-modal h3 {
+                font-size: 18px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .custom-modal {
+                padding: 5px !important;
+                padding-top: 10px !important;
+            }
+            .custom-modal > div {
+                border-radius: 12px !important;
+            }
+            .custom-modal h3 {
+                font-size: 16px !important;
+            }
+            .custom-modal button {
+                padding: 10px 16px !important;
+                font-size: 13px !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Mise à jour des anciennes fonctions pour utiliser les nouvelles
+function openChat() {
+    openLiveChat();
+}
+
+function scheduleCallback() {
+    requestCallback();
+}
+
+function openFAQ() {
+    // Ouvrir la modale FAQ avec toutes les questions
+    showModal({
+        title: "Questions Fréquentes",
+        content: `
+            <div style="padding: 10px;">
+                <div style="margin-bottom: 20px; text-align: center;">
+                    <div style="background: rgba(116, 86, 255, 0.1); padding: 15px; border-radius: 12px;">
+                        <i class="fas fa-question-circle" style="color: #7456ff; font-size: 32px; margin-bottom: 10px;"></i>
+                        <p style="color: rgba(255, 255, 255, 0.8); margin: 0; font-size: 14px;">Trouvez rapidement les réponses à vos questions</p>
+                    </div>
+                </div>
+                
+                <div class="modal-faq-container">
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-lock" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Comment bloquer/débloquer ma carte ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Pour bloquer votre carte :</strong></p>
+                            <ol>
+                                <li>Appuyez longuement sur votre carte bancaire sur l'écran d'accueil</li>
+                                <li>Sélectionnez "Geler la carte"</li>
+                                <li>Confirmez l'action avec votre code PIN</li>
+                                <li>Votre carte sera immédiatement bloquée</li>
+                            </ol>
+                            <p><strong>Pour débloquer :</strong> Répétez la même procédure et sélectionnez "Dégeler la carte".</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-exchange-alt" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Comment effectuer un virement ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Étapes pour faire un virement :</strong></p>
+                            <ol>
+                                <li>Allez dans l'onglet "Virements"</li>
+                                <li>Choisissez un bénéficiaire ou ajoutez-en un nouveau</li>
+                                <li>Saisissez le montant à transférer</li>
+                                <li>Ajoutez un motif (optionnel)</li>
+                                <li>Vérifiez les informations</li>
+                                <li>Confirmez avec votre code PIN</li>
+                            </ol>
+                            <p><strong>Limites :</strong> 500 000 F CFA par jour, 2 000 000 F CFA par mois.</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-user-plus" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Comment ajouter un bénéficiaire ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Trois méthodes pour ajouter un bénéficiaire :</strong></p>
+                            <h4>1. Via le numéro de téléphone :</h4>
+                            <ul>
+                                <li>Cliquez sur "Nouveau bénéficiaire"</li>
+                                <li>Saisissez le nom et le numéro</li>
+                                <li>Validez l'ajout</li>
+                            </ul>
+                            <h4>2. Via QR Code :</h4>
+                            <ul>
+                                <li>Cliquez sur l'icône de scan</li>
+                                <li>Scannez le QR code du bénéficiaire</li>
+                            </ul>
+                            <h4>3. Via les contacts :</h4>
+                            <ul>
+                                <li>Sélectionnez dans votre répertoire</li>
+                                <li>Confirmez l'ajout</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-key" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Comment changer mon code PIN ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Pour modifier votre code PIN :</strong></p>
+                            <ol>
+                                <li>Allez dans "Profil" depuis l'accueil</li>
+                                <li>Sélectionnez "Sécurité"</li>
+                                <li>Choisissez "Changer le code PIN"</li>
+                                <li>Saisissez votre ancien code PIN</li>
+                                <li>Créez un nouveau code (4 chiffres)</li>
+                                <li>Confirmez le nouveau code</li>
+                            </ol>
+                            <p><strong>Conseils :</strong> Évitez les codes évidents comme 0000, 1234. Choisissez une combinaison que vous seul connaissez.</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-piggy-bank" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Comment fonctionne le coffre-fort ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Le coffre-fort vous aide à épargner :</strong></p>
+                            <h4>Fonctionnalités :</h4>
+                            <ul>
+                                <li><strong>Objectifs d'épargne :</strong> Définissez vos projets avec échéances</li>
+                                <li><strong>Versements automatiques :</strong> Programmez des virements réguliers</li>
+                                <li><strong>Visualisation :</strong> Suivez vos progrès en temps réel</li>
+                                <li><strong>Sécurité :</strong> Fonds bloqués jusqu'à l'objectif atteint</li>
+                            </ul>
+                            <p><strong>Taux d'intérêt :</strong> 3% annuel sur les épargnes bloquées.</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-faq-item" onclick="toggleModalFAQ(this)">
+                        <div class="modal-faq-question">
+                            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                <i class="fas fa-exclamation-triangle" style="color: #7456ff; width: 20px;"></i>
+                                <span style="color: white; font-weight: 600;">Que faire en cas de transaction suspecte ?</span>
+                            </div>
+                            <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="modal-faq-answer" style="display: none;">
+                            <p><strong>Actions immédiates à prendre :</strong></p>
+                            <ol>
+                                <li><strong>Bloquez votre carte</strong> immédiatement via l'application</li>
+                                <li><strong>Contactez-nous</strong> via le chat ou par téléphone</li>
+                                <li><strong>Signalez la transaction</strong> dans votre historique</li>
+                                <li><strong>Conservez les preuves</strong> (captures d'écran, SMS, etc.)</li>
+                            </ol>
+                            <p><strong>Notre engagement :</strong> Enquête sous 24h, remboursement sous 48h si fraude confirmée.</p>
+                            <p><strong>Numéro d'urgence :</strong> +241 01 23 45 67 (24h/24, 7j/7)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-align: center;">
+                    <p style="color: rgba(255, 255, 255, 0.8); margin: 0; font-size: 14px;">
+                        <i class="fas fa-lightbulb" style="color: #7456ff; margin-right: 8px;"></i>
+                        Vous ne trouvez pas votre réponse ? Contactez notre support 24h/24
+                    </p>
+                </div>
+            </div>
+        `,
+        buttons: [
+            { text: "Contacter le support", action: () => openLiveChat() },
+            { text: "Fermer", action: () => {} }
+        ]
+    });
+}
+
+// Fonction pour toggler les questions dans la modale FAQ
+function toggleModalFAQ(element) {
+    const answer = element.querySelector('.modal-faq-answer');
+    const arrow = element.querySelector('.fas.fa-chevron-down');
+    const isOpen = answer.style.display === 'block';
+    
+    // Fermer toutes les autres réponses
+    const allAnswers = element.parentElement.querySelectorAll('.modal-faq-answer');
+    const allArrows = element.parentElement.querySelectorAll('.modal-faq-question .fas.fa-chevron-down');
+    
+    allAnswers.forEach(ans => {
+        ans.style.display = 'none';
+        ans.classList.remove('scrollable-content');
+    });
+    allArrows.forEach(arr => arr.style.transform = 'rotate(0deg)');
+    
+    // Ouvrir/fermer la réponse cliquée
+    if (!isOpen) {
+        answer.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+        
+        // Vérifier si le contenu est scrollable et ajouter un indicateur
+        setTimeout(() => {
+            if (answer.scrollHeight > answer.clientHeight) {
+                answer.classList.add('scrollable-content');
+                // Ajouter un indicateur de scroll si pas déjà présent
+                if (!answer.querySelector('.scroll-indicator')) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'scroll-indicator';
+                    indicator.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                    indicator.style.cssText = `
+                        position: absolute;
+                        bottom: 5px;
+                        right: 20px;
+                        color: rgba(116, 86, 255, 0.7);
+                        font-size: 12px;
+                        animation: bounce 2s infinite;
+                        pointer-events: none;
+                    `;
+                    answer.style.position = 'relative';
+                    answer.appendChild(indicator);
+                    
+                    // Masquer l'indicateur quand on scroll
+                    answer.addEventListener('scroll', function() {
+                        if (this.scrollTop > 10) {
+                            indicator.style.opacity = '0';
+                        } else {
+                            indicator.style.opacity = '1';
+                        }
+                    });
+                }
+            }
+        }, 100);
+    }
+}
+
+// Fonction pour ouvrir la page FAQ dédiée
+function openFAQPage() {
+    window.location.href = 'faq.html';
+}
 

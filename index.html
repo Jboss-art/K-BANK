@@ -679,73 +679,108 @@
             <!-- Page Autres -->
             <div class="page others-page" id="others-page">
                 <div class="page-header">
-                    <h2>Menu</h2>
+                    <h2>Services & Plus</h2>
+                    <div class="header-subtitle">Découvrez tous nos services</div>
                 </div>
 
                 <div class="others-container">
-                    <!-- K-Shop Section -->
-                    <div class="menu-section">
-                        <div class="section-title">
-                            <i class="fas fa-store"></i>
-                            <h3>K-Shop</h3>
-                        </div>
-                        <div class="shop-grid">
-                            <div class="shop-item" onclick="openShop('ckdo')">
-                                <img src="assets/logos/ckdo-logo.png" alt="CKDO Gabon">
-                                <span>CKDO Gabon</span>
-                            </div>
-                            <div class="shop-item" onclick="openShop('kfc')">
-                                <img src="assets/logos/kfc-logo.png" alt="Pole KFC Gabon">
-                                <span>Pole KFC Gabon</span>
-                            </div>
-                            <div class="shop-item" onclick="openShop('mbolo')">
-                                <img src="assets/logos/mbolo-logo.png" alt="Mbolo Gabon">
-                                <span>Mbolo Gabon</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Support Section -->
-                    <div class="menu-section">
-                        <div class="section-title">
+                    <div class="services-section">
+                        <div class="section-header">
                             <i class="fas fa-headset"></i>
-                            <h3>Support</h3>
+                            <h3>Assistance</h3>
                         </div>
-                        <div class="support-options">
-                            <button class="menu-button" onclick="callAdvisor()">
-                                <i class="fas fa-phone"></i>
-                                <span>Appeler un conseiller</span>
+                        <div class="support-grid">
+                            <button class="support-card" onclick="openFAQ()">
+                                <div class="support-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="support-content">
+                                    <h4>FAQ</h4>
+                                    <p>Questions fréquentes</p>
+                                </div>
                             </button>
-                            <button class="menu-button" onclick="openChat()">
-                                <i class="fas fa-comments"></i>
-                                <span>Chat en direct</span>
+
+                            <button class="support-card" onclick="openChat()">
+                                <div class="support-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="support-content">
+                                    <h4>Chat en Direct</h4>
+                                    <p>Assistance instantanée</p>
+                                </div>
+                                <div class="support-status online">
+                                    <span></span>
+                                </div>
+                            </button>
+
+                            <button class="support-card" onclick="callSupport()">
+                                <div class="support-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="support-content">
+                                    <h4>Appel</h4>
+                                    <p>+241 01 23 45 67</p>
+                                </div>
+                            </button>
+
+                            <button class="support-card" onclick="scheduleCallback()">
+                                <div class="support-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="support-content">
+                                    <h4>Rendez-vous</h4>
+                                    <p>Planifier un appel</p>
+                                </div>
                             </button>
                         </div>
                     </div>
 
-                    <!-- FAQ Section -->
-                    <div class="menu-section">
-                        <div class="section-title">
-                            <i class="fas fa-question-circle"></i>
-                            <h3>FAQ</h3>
+                    <!-- Paramètres rapides -->
+                    <div class="services-section">
+                        <div class="section-header">
+                            <i class="fas fa-cog"></i>
+                            <h3>Paramètres</h3>
                         </div>
-                        <div class="faq-list">
-                            <div class="faq-item" onclick="toggleFaq(this)">
-                                <div class="faq-question">
-                                    <span>Comment bloquer ma carte ?</span>
-                                    <i class="fas fa-chevron-down"></i>
+                        <div class="settings-list">
+                            <div class="setting-item" onclick="toggleNotifications()">
+                                <div class="setting-icon">
+                                    <i class="fas fa-bell"></i>
                                 </div>
-                                <div class="faq-answer">
-                                    Rendez-vous dans la section "Cartes", sélectionnez votre carte et cliquez sur "Bloquer".
+                                <div class="setting-content">
+                                    <h4>Notifications</h4>
+                                    <p>Alertes et rappels</p>
+                                </div>
+                                <div class="setting-toggle">
+                                    <input type="checkbox" id="notif-toggle" checked>
+                                    <label for="notif-toggle" class="toggle-slider"></label>
                                 </div>
                             </div>
-                            <div class="faq-item" onclick="toggleFaq(this)">
-                                <div class="faq-question">
-                                    <span>Comment faire un virement ?</span>
-                                    <i class="fas fa-chevron-down"></i>
+
+                            <div class="setting-item" onclick="toggleBiometric()">
+                                <div class="setting-icon">
+                                    <i class="fas fa-fingerprint"></i>
                                 </div>
-                                <div class="faq-answer">
-                                    Accédez à la section "Transfert", choisissez un bénéficiaire et suivez les étapes.
+                                <div class="setting-content">
+                                    <h4>Biométrie</h4>
+                                    <p>Empreinte digitale</p>
+                                </div>
+                                <div class="setting-toggle">
+                                    <input type="checkbox" id="bio-toggle">
+                                    <label for="bio-toggle" class="toggle-slider"></label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item" onclick="openSecuritySettings()">
+                                <div class="setting-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="setting-content">
+                                    <h4>Sécurité</h4>
+                                    <p>Codes et protection</p>
+                                </div>
+                                <div class="setting-arrow">
+                                    <i class="fas fa-chevron-right"></i>
                                 </div>
                             </div>
                         </div>
