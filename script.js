@@ -1,3 +1,147 @@
+// ===========================================
+// SYSTÈME D'AUTHENTIFICATION
+// ===========================================
+
+class PinAuth {
+    constructor() {
+        this.pin = '';
+        this.correctPin = '123456'; // Code PIN à 6 chiffres
+        this.pinInputs = document.querySelectorAll('.pin-input');
+        this.keyButtons = document.querySelectorAll('.key-button');
+        this.errorMessage = document.querySelector('.error-message');
+        this.loading = document.querySelector('.loading');
+        this.authCard = document.querySelector('.auth-card');
+        this.authOverlay = document.getElementById('auth-overlay');
+        this.appContainer = document.getElementById('app-container');
+        
+        this.initEventListeners();
+    }
+
+    initEventListeners() {
+        this.keyButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const key = e.currentTarget.dataset.key;
+                this.handleKeyPress(key);
+            });
+        });
+
+        // Gestion du clavier physique
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') {
+                this.handleKeyPress(e.key);
+            } else if (e.key === 'Backspace') {
+                this.handleKeyPress('delete');
+            } else if (e.key === 'Enter') {
+                if (this.pin.length === 6) {
+                    this.verifyPin();
+                }
+            }
+        });
+    }
+
+    handleKeyPress(key) {
+        if (key === 'delete') {
+            this.deleteDigit();
+        } else if (this.pin.length < 6) {
+            this.addDigit(key);
+        }
+    }
+
+    addDigit(digit) {
+        this.pin += digit;
+        this.updateDisplay();
+        
+        if (this.pin.length === 6) {
+            setTimeout(() => this.verifyPin(), 500);
+        }
+    }
+
+    deleteDigit() {
+        this.pin = this.pin.slice(0, -1);
+        this.updateDisplay();
+        this.hideError();
+    }
+
+    updateDisplay() {
+        this.pinInputs.forEach((input, index) => {
+            if (index < this.pin.length) {
+                input.value = '•';
+                input.classList.add('filled');
+            } else {
+                input.value = '';
+                input.classList.remove('filled');
+            }
+        });
+    }
+
+    verifyPin() {
+        this.showLoading();
+        
+        setTimeout(() => {
+            if (this.pin === this.correctPin) {
+                this.onSuccess();
+            } else {
+                this.onError();
+            }
+        }, 1500);
+    }
+
+    onSuccess() {
+        this.hideLoading();
+        this.authOverlay.classList.add('fade-out');
+        
+        setTimeout(() => {
+            this.authOverlay.style.display = 'none';
+            this.appContainer.style.display = 'block';
+            // Initialiser l'application après l'authentification
+            this.initializeApp();
+        }, 800);
+    }
+
+    onError() {
+        this.hideLoading();
+        this.showError();
+        this.shakeCard();
+        this.clearPin();
+    }
+
+    showLoading() {
+        this.loading.classList.add('show');
+    }
+
+    hideLoading() {
+        this.loading.classList.remove('show');
+    }
+
+    showError() {
+        this.errorMessage.classList.add('show');
+    }
+
+    hideError() {
+        this.errorMessage.classList.remove('show');
+    }
+
+    shakeCard() {
+        this.authCard.classList.add('shake');
+        setTimeout(() => {
+            this.authCard.classList.remove('shake');
+        }, 500);
+    }
+
+    clearPin() {
+        this.pin = '';
+        this.updateDisplay();
+    }
+
+    initializeApp() {
+        // Initialiser l'application principale après l'authentification
+        renderTransactions();
+        updateNotificationBadge();
+        initializeSpecificPages();
+        console.log('Application initialisée après authentification');
+    }
+}
+
 // Variables globales pour la gestion des cartes
 let isCardFrozen = false;
 
@@ -139,13 +283,14 @@ const beneficiaries = [
 
 // Initialisation de l'application
 document.addEventListener('DOMContentLoaded', () => {
-    // Vérifier si nous sommes sur la page de transfert (ancien)
-    const transferPage = document.getElementById('transfer-page');
-    if (transferPage && transferPage.classList.contains('active')) {
-        renderBeneficiaries();
-        populateBeneficiarySelect();
-    }
+    // Initialiser le système d'authentification
+    new PinAuth();
     
+    // Le reste de l'initialisation se fera après l'authentification
+});
+
+// Fonction pour initialiser les pages spécifiques
+function initializeSpecificPages() {
     // Vérifier si nous sommes sur la page de virement
     const virementPage = document.getElementById('virement-page');
     if (virementPage && virementPage.classList.contains('active')) {
@@ -174,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
+}
 
 // Affiche la liste des bénéficiaires
 function renderBeneficiaries() {

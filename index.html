@@ -8,7 +8,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container" id="app-container">
+    <!-- Page d'authentification -->
+    <div class="auth-overlay" id="auth-overlay">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-logo">K-BANK</div>
+                <div class="auth-subtitle">Banque digitale sécurisée</div>
+                
+                <h2 class="auth-title">Entrez votre code PIN</h2>
+                
+                <div class="pin-container">
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                    <input type="password" class="pin-input" maxlength="1" readonly>
+                </div>
+
+                <div class="keypad">
+                    <button class="key-button" data-key="1">1</button>
+                    <button class="key-button" data-key="2">2</button>
+                    <button class="key-button" data-key="3">3</button>
+                    <button class="key-button" data-key="4">4</button>
+                    <button class="key-button" data-key="5">5</button>
+                    <button class="key-button" data-key="6">6</button>
+                    <button class="key-button" data-key="7">7</button>
+                    <button class="key-button" data-key="8">8</button>
+                    <button class="key-button" data-key="9">9</button>
+                    <button class="key-button" style="visibility: hidden;"></button>
+                    <button class="key-button" data-key="0">0</button>
+                    <button class="key-button delete" data-key="delete">
+                        <i class="fas fa-backspace"></i>
+                    </button>
+                </div>
+
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 15px;">Vérification en cours...</p>
+                </div>
+
+                <div class="error-message">Code PIN incorrect. Veuillez réessayer.</div>
+
+                <div class="auth-footer">
+                    <i class="fas fa-shield-alt"></i>
+                    Votre sécurité est notre priorité
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container" style="display: none;">
         <!-- En-tête -->
         <div class="header">
             <div class="header-title">KB</div>
