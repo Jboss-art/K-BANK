@@ -1,3 +1,98 @@
+// Variables globales pour la gestion des cartes
+let isCardFrozen = false;
+
+// Fonction pour geler/dégeler la carte - accessible globalement
+window.toggleCardFreeze = function() {
+    console.log('toggleCardFreeze called, isCardFrozen:', isCardFrozen);
+    const card = document.querySelector('.modern-card') || document.querySelector('.bank-card');
+    
+    // Si la carte est bloquée, ne rien faire
+    if (card && card.classList.contains('blocked')) {
+        console.log('Card is blocked, cannot freeze/unfreeze');
+        return;
+    }
+
+    if (!isCardFrozen) {
+        console.log('Attempting to freeze card');
+        if (typeof showConfirmDialog === 'function') {
+            showConfirmDialog(
+                "Geler la carte",
+                "Êtes-vous sûr de vouloir geler votre carte ? Elle ne pourra plus être utilisée temporairement pour les paiements.",
+                "Geler",
+                "Annuler",
+                freezeCard,
+                'fas fa-snowflake',
+                '#007bff'
+            );
+        } else {
+            // Fallback si showConfirmDialog n'est pas disponible
+            if (confirm("Êtes-vous sûr de vouloir geler votre carte ?")) {
+                freezeCard();
+            }
+        }
+    } else {
+        console.log('Attempting to unfreeze card');
+        unfreezeCard();
+    }
+};
+
+// Fonctions de gel/dégel
+function freezeCard() {
+    console.log('freezeCard called');
+    isCardFrozen = true;
+    const card = document.getElementById('main-card');
+    const status = document.getElementById('card-status');
+    const freezeText = document.getElementById('freeze-text');
+    
+    console.log('Elements found:', { card, status, freezeText });
+    
+    if (card) {
+        card.classList.add('frozen');
+    }
+    if (status) {
+        status.textContent = 'Gelée';
+        status.classList.add('frozen');
+    }
+    if (freezeText) {
+        freezeText.textContent = 'Dégeler';
+    }
+    
+    // Fallback pour notification
+    if (typeof showToast === 'function') {
+        showToast('Carte gelée avec succès');
+    } else {
+        console.log('Carte gelée avec succès');
+    }
+}
+
+function unfreezeCard() {
+    console.log('unfreezeCard called');
+    isCardFrozen = false;
+    const card = document.getElementById('main-card');
+    const status = document.getElementById('card-status');
+    const freezeText = document.getElementById('freeze-text');
+    
+    console.log('Elements found:', { card, status, freezeText });
+    
+    if (card) {
+        card.classList.remove('frozen');
+    }
+    if (status) {
+        status.textContent = 'Active';
+        status.classList.remove('frozen');
+    }
+    if (freezeText) {
+        freezeText.textContent = 'Geler';
+    }
+    
+    // Fallback pour notification
+    if (typeof showToast === 'function') {
+        showToast('Carte dégelée avec succès');
+    } else {
+        console.log('Carte dégelée avec succès');
+    }
+}
+
 // Données des bénéficiaires
 const beneficiaries = [
     {
@@ -584,9 +679,6 @@ function showToast(message) {
     }, 3000);
 }
 
-// État de la carte
-let isCardFrozen = false;
-
 // Initialisation de l'application
 document.addEventListener('DOMContentLoaded', () => {
     renderTransactions();
@@ -650,56 +742,6 @@ function switchTab(tab) {
         // Initialize IBAN page if needed
         document.querySelector('.iban-page').classList.add('active');
     }
-}
-
-// Fonction pour geler/dégeler la carte
-function toggleCardFreeze() {
-    const card = document.querySelector('.bank-card');
-    
-    // Si la carte est bloquée, ne rien faire
-    if (card.classList.contains('blocked')) {
-        return;
-    }
-
-    if (!isCardFrozen) {
-        showConfirmationModal(
-            "Geler la carte",
-            "Êtes-vous sûr de vouloir geler votre carte ? Elle ne pourra plus être utilisée temporairement pour les paiements.",
-            "Geler",
-            "Annuler",
-            freezeCard
-        );
-    } else {
-        unfreezeCard();
-    }
-}
-
-function freezeCard() {
-    isCardFrozen = true;
-    const card = document.getElementById('main-card');
-    const status = document.getElementById('card-status');
-    const freezeText = document.getElementById('freeze-text');
-    
-    card.classList.add('frozen');
-    status.textContent = 'Gelée';
-    status.classList.add('frozen');
-    freezeText.textContent = 'Dégeler';
-    
-    showToast('Carte gelée avec succès');
-}
-
-function unfreezeCard() {
-    isCardFrozen = false;
-    const card = document.getElementById('main-card');
-    const status = document.getElementById('card-status');
-    const freezeText = document.getElementById('freeze-text');
-    
-    card.classList.remove('frozen');
-    status.textContent = 'Active';
-    status.classList.remove('frozen');
-    freezeText.textContent = 'Geler';
-    
-    showToast('Carte dégelée avec succès');
 }
 
 // Modal de confirmation
@@ -1158,24 +1200,16 @@ function temporaryBlockCard() {
         'Bloquer',
         'Annuler',
         () => {
-            const card = document.querySelector('.bank-card');
-            const statusElement = document.querySelector('#card-status');
+            const card = document.getElementById('main-card');
+            const statusElement = document.getElementById('card-status');
             const freezeButton = document.querySelector('.freeze-button');
             
             card.classList.add('blocked');
             
-            // Ajouter l'icône de blocage rouge
-            if (!card.querySelector('.block-indicator')) {
-                const blockIcon = document.createElement('div');
-                blockIcon.className = 'block-indicator';
-                blockIcon.innerHTML = '<i class="fas fa-ban"></i>';
-                card.appendChild(blockIcon);
-            }
-            
             // Mettre à jour le statut
             if (statusElement) {
                 statusElement.textContent = 'Bloquée';
-                statusElement.className = 'card-status blocked-status';
+                statusElement.className = 'card-status blocked';
             }
 
             // Désactiver le bouton geler
