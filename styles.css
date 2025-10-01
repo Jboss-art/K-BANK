@@ -6103,9 +6103,9 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     width: 200%;
     height: 200%;
     background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 193, 7, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(220, 201, 142, 0.25) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 107, 192, 0.3) 0%, transparent 50%);
+        radial-gradient(circle at 40% 40%, rgba(150, 143, 147, 0.3) 0%, transparent 50%);
     animation: float 15s ease-in-out infinite;
     z-index: -1;
 }
