@@ -2103,15 +2103,24 @@ input[type="number"] {
 }
 
 .category-icon {
-    width: 45px;
-    height: 45px;
+    width: 70px;
+    height: 70px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 8px;
+    margin: 0 auto 12px;
     font-size: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .category-item span {
