@@ -5969,12 +5969,12 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     align-items: flex-end;
 }
 
-.card-holder-info, .card-expiry-info {
+.card-holder-info, .card-expiry-info, .card-cvc-info {
     display: inline-block;
     text-transform: uppercase;
 }
 
-.card-holder-name, .card-expiry-date {
+.card-holder-name, .card-expiry-date, .card-cvc {
     font-size: 16px;
     font-weight: 600;
     margin-top: 4px;
@@ -6034,4 +6034,85 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 .modern-card .card-status.blocked {
     background: rgba(220, 53, 69, 0.8);
     color: white;
+}
+
+/* Correction pour rapprocher les boutons de carte */
+.card-actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 60px !important;
+    margin: 25px 0 !important;
+}
+
+/* Espacement entre la date d'expiration et VISA */
+.card-brand-spacer {
+    flex: 1;
+    min-width: 20px;
+}
+
+/* Style pour le code CVC */
+.card-cvc-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.card-cvc-info .label {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.card-cvc {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+/* Style pour VISA en bas de carte */
+.card-brand-bottom {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    z-index: 2;
+}
+
+.card-brand-bottom .card-brand {
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* Style pour K-BANK à gauche */
+.bank-name-left {
+    position: absolute;
+    top: 35px;
+    left: 65px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    z-index: 3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Style pour K-BANK au-dessus de la puce */
+.bank-name-top {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+}
+
+/* Style pour l'image de la puce */
+.chip-image {
+    width: 40px;
+    height: 30px;
+    display: block;
 }

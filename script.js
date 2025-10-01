@@ -41,17 +41,12 @@ function freezeCard() {
     console.log('freezeCard called');
     isCardFrozen = true;
     const card = document.getElementById('main-card');
-    const status = document.getElementById('card-status');
     const freezeText = document.getElementById('freeze-text');
     
-    console.log('Elements found:', { card, status, freezeText });
+    console.log('Elements found:', { card, freezeText });
     
     if (card) {
         card.classList.add('frozen');
-    }
-    if (status) {
-        status.textContent = 'Gelée';
-        status.classList.add('frozen');
     }
     if (freezeText) {
         freezeText.textContent = 'Dégeler';
@@ -69,17 +64,12 @@ function unfreezeCard() {
     console.log('unfreezeCard called');
     isCardFrozen = false;
     const card = document.getElementById('main-card');
-    const status = document.getElementById('card-status');
     const freezeText = document.getElementById('freeze-text');
     
-    console.log('Elements found:', { card, status, freezeText });
+    console.log('Elements found:', { card, freezeText });
     
     if (card) {
         card.classList.remove('frozen');
-    }
-    if (status) {
-        status.textContent = 'Active';
-        status.classList.remove('frozen');
     }
     if (freezeText) {
         freezeText.textContent = 'Geler';
@@ -1201,16 +1191,9 @@ function temporaryBlockCard() {
         'Annuler',
         () => {
             const card = document.getElementById('main-card');
-            const statusElement = document.getElementById('card-status');
             const freezeButton = document.querySelector('.freeze-button');
             
             card.classList.add('blocked');
-            
-            // Mettre à jour le statut
-            if (statusElement) {
-                statusElement.textContent = 'Bloquée';
-                statusElement.className = 'card-status blocked';
-            }
 
             // Désactiver le bouton geler
             if (freezeButton) {
