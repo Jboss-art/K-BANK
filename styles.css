@@ -6015,7 +6015,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     /* ARRIÈRE-PLAN: UTILISATION DE L'IMAGE mont_blanc.jpg */
     background-image: url('./assets/mont_blanc.jpg');
     background-size: cover; /* S'assure que l'image couvre toute la surface */
-    background-position: center; /* Centre l'image */
+    background-position: center 21%; /* Remonte l'image vers le haut (21% du haut) */
     background-repeat: no-repeat; /* Empêche la répétition de l'image */
     
     /* Léger filtre sombre pour améliorer la lisibilité du texte blanc sur l'image */
