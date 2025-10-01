@@ -706,69 +706,116 @@ const appData = {
 function initializeNotifications() {
     renderNotifications();
     updateNotificationBadge();
-    initializeSwipeListeners();
 }
 
-// Affiche les notifications
+// Affiche les notifications dans les sections appropriées
 function renderNotifications() {
-    const container = document.getElementById('notifications-list');
-    if (!container) return;
+    const unreadContainer = document.getElementById('unread-notifications');
+    const readContainer = document.getElementById('read-notifications');
+    const emptyState = document.getElementById('empty-notifications');
+    const unreadSection = document.getElementById('unread-section');
+    const readSection = document.getElementById('read-section');
+    const unreadCountElement = document.getElementById('unread-count');
     
+    if (!unreadContainer || !readContainer) return;
+    
+    // Séparer les notifications lues et non lues
+    const unreadNotifications = appData.notifications.filter(n => !n.read);
+    const readNotifications = appData.notifications.filter(n => n.read);
+    
+    // Mettre à jour le compteur de notifications non lues
+    if (unreadCountElement) {
+        unreadCountElement.textContent = unreadNotifications.length;
+        unreadCountElement.style.display = unreadNotifications.length > 0 ? 'inline-block' : 'none';
+    }
+    
+    // Si aucune notification
     if (appData.notifications.length === 0) {
-        container.innerHTML = `
-            <div class="empty-notifications">
-                <i class="fas fa-bell-slash"></i>
-                <p>Aucune notification</p>
-            </div>`;
+        emptyState.style.display = 'block';
+        unreadSection.style.display = 'none';
+        readSection.style.display = 'none';
         return;
     }
     
-    container.innerHTML = appData.notifications.map(notification => {
-        // Extract amount from message if it contains one
-        const amountMatch = notification.message.match(/(-?\d+(?:\.\d{2})?)/);
+    emptyState.style.display = 'none';
+    
+    // Afficher/masquer les sections selon le contenu
+    unreadSection.style.display = unreadNotifications.length > 0 ? 'block' : 'none';
+    readSection.style.display = readNotifications.length > 0 ? 'block' : 'none';
+    
+    // Rendre les notifications non lues
+    unreadContainer.innerHTML = unreadNotifications.length > 0 
+        ? renderNotificationItems(unreadNotifications) 
+        : '<div class="no-notifications"><p>Aucune nouvelle notification</p></div>';
+    
+    // Rendre les notifications lues
+    readContainer.innerHTML = readNotifications.length > 0 
+        ? renderNotificationItems(readNotifications) 
+        : '<div class="no-notifications"><p>Aucune notification lue</p></div>';
+}
+
+// Génère le HTML pour une liste de notifications
+function renderNotificationItems(notifications) {
+    return notifications.map((notification, index) => {
+        // Extraire le montant du message s'il y en a un
+        const amountMatch = notification.message.match(/(-?\d+(?:[.,]\d{2})?)/);
         let formattedMessage = notification.message;
         
         if (amountMatch) {
-            const amount = parseFloat(amountMatch[0]);
-            const formattedAmount = `${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} F <h5>CFA</h5>`;
+            const amount = parseFloat(amountMatch[0].replace(',', '.'));
+            const formattedAmount = `<strong>${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} XAF</strong>`;
             formattedMessage = notification.message.replace(amountMatch[0], formattedAmount);
         }
 
         return `
-            <div class="notification-item ${notification.read ? '' : 'unread'}" data-id="${notification.id}">
+            <div class="notification-item ${notification.read ? '' : 'unread'}" 
+                 data-id="${notification.id}" 
+                 style="animation-delay: ${index * 0.1}s"
+                 onclick="markNotificationAsRead(${notification.id})">
                 <div class="notification-content">
                     <div class="notification-icon ${notification.type}">
-                        ${getNotificationIcon(notification.type)}
+                        <i class="${getNotificationIcon(notification.type)}"></i>
                     </div>
                     <div class="notification-text">
                         <div class="notification-title">${notification.title}</div>
                         <div class="notification-message">${formattedMessage}</div>
-                        <div class="notification-time">${notification.date}</div>
+                        <div class="notification-time">
+                            <i class="fas fa-clock"></i>
+                            ${notification.date}
+                        </div>
                     </div>
-                </div>
-                <div class="delete-indicator">
-                    <i class="fas fa-trash"></i>
                 </div>
             </div>
         `;
     }).join('');
-    
-    initializeSwipeListeners();
 }
 
 // Retourne l'icône appropriée selon le type de notification
 function getNotificationIcon(type) {
     switch(type) {
-        case 'transaction': return '💰';
-        case 'security': return '🔒';
-        case 'promotion': return '🎁';
-        default: return '📋';
+        case 'transaction': return 'fas fa-exchange-alt';
+        case 'security': return 'fas fa-shield-alt';
+        case 'promotion': return 'fas fa-gift';
+        default: return 'fas fa-bell';
+    }
+}
+
+// Marque une notification spécifique comme lue
+function markNotificationAsRead(id) {
+    const notification = appData.notifications.find(n => n.id === id);
+    if (notification && !notification.read) {
+        notification.read = true;
+        renderNotifications();
+        updateNotificationBadge();
+        
+        // Animation de feedback
+        showToast('Notification marquée comme lue');
     }
 }
 
 // Met à jour le badge de notifications
 function updateNotificationBadge() {
-    const badge = document.getElementById('notification-badge');
+    const badge = document.querySelector('.notification-badge');
     const unreadCount = appData.notifications.filter(n => !n.read).length;
     
     if (badge) {
@@ -791,6 +838,8 @@ function markAllAsRead() {
         renderNotifications();
         updateNotificationBadge();
         showToast('Toutes les notifications ont été marquées comme lues');
+    } else {
+        showToast('Aucune nouvelle notification à marquer');
     }
 }
 
@@ -819,10 +868,12 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTransactions();
     updateNotificationBadge();
     
+    // Toujours initialiser les notifications au chargement
+    initializeNotifications();
+    
     // Initialiser les notifications si on est sur la page notifications
     if (document.getElementById('notifications-page').classList.contains('active')) {
         renderNotifications();
-        initializeSwipeListeners();
     }
 });
 

@@ -370,16 +370,48 @@
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <h2>Notifications</h2>
+                    <div class="header-actions">
+                        <button class="mark-all-read-btn" onclick="markAllAsRead()" title="Marquer tout comme lu">
+                            <i class="fas fa-check-double"></i>
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="notifications-container">
-                    <div class="notifications-header">
-                        <div class="notifications-title">Vos alertes</div>
-                        <button class="mark-all-read" onclick="markAllAsRead()">Tout marquer comme lu</button>
+                <div class="notifications-content">
+                    <!-- Section des notifications non lues -->
+                    <div class="notification-section" id="unread-section">
+                        <div class="section-header">
+                            <h3>
+                                <i class="fas fa-bell"></i>
+                                Nouvelles notifications
+                                <span class="unread-count" id="unread-count">0</span>
+                            </h3>
+                        </div>
+                        <div class="notifications-list" id="unread-notifications">
+                            <!-- Notifications non lues -->
+                        </div>
                     </div>
-                    
-                    <div class="notifications-list" id="notifications-list">
-                        <!-- Les notifications seront générées dynamiquement -->
+
+                    <!-- Section des notifications lues -->
+                    <div class="notification-section" id="read-section">
+                        <div class="section-header">
+                            <h3>
+                                <i class="fas fa-check-circle"></i>
+                                Notifications lues
+                            </h3>
+                        </div>
+                        <div class="notifications-list" id="read-notifications">
+                            <!-- Notifications lues -->
+                        </div>
+                    </div>
+
+                    <!-- État vide -->
+                    <div class="empty-notifications" id="empty-notifications" style="display: none;">
+                        <div class="empty-icon">
+                            <i class="fas fa-bell-slash"></i>
+                        </div>
+                        <h3>Aucune notification</h3>
+                        <p>Vous êtes à jour ! Aucune nouvelle notification pour le moment.</p>
                     </div>
                 </div>
             </div>
