@@ -498,7 +498,7 @@ function confirmVirement() {
     
     showConfirmDialog(
         'Confirmer le virement',
-        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} FCFA vers ${beneficiary.name} ?`,
+        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} F <h6>cfa</h6> vers ${beneficiary.name} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -591,7 +591,7 @@ function processTransfer() {
     
     showConfirmDialog(
         'Confirmer le transfert',
-        `Transférer ${Number(amount).toLocaleString()} FCFA vers ${name} (${phone}) via ${methodNames[selectedTransferMethod]} ?`,
+        `Transférer ${Number(amount).toLocaleString()} F <h6>cfa</h6> vers ${name} (${phone}) via ${methodNames[selectedTransferMethod]} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -670,7 +670,7 @@ const appData = {
         {
             id: 1,
             title: "Virement reçu",
-            message: "Vous avez reçu 15000,00 XAF de Jean Mvoumbi",
+            message: "Vous avez reçu 15000,00 F <h6>cfa</h6> de Jean Mvoumbi",
             date: "Il y a 2 heures",
             read: false,
             type: "transaction"
@@ -678,7 +678,7 @@ const appData = {
         {
             id: 2,
             title: "Paiement effectué",
-            message: "Paiement de 35000,00 XAF à Supermarché ABC",
+            message: "Paiement de 35000,00 F <h6>cfa</h6> à Supermarché ABC",
             date: "Il y a 5 heures",
             read: false,
             type: "transaction"
@@ -763,7 +763,7 @@ function renderNotificationItems(notifications) {
         
         if (amountMatch) {
             const amount = parseFloat(amountMatch[0].replace(',', '.'));
-            const formattedAmount = `<strong>${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} XAF</strong>`;
+            const formattedAmount = `<strong>${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} F <h6>cfa</h6></strong>`;
             formattedMessage = notification.message.replace(amountMatch[0], formattedAmount);
         }
 
@@ -892,7 +892,7 @@ function renderTransactions() {
                 <div class="transaction-date">${transaction.date}</div>
             </div>
             <div class="transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}">
-                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h5>CFA</h5>
+                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h6>cfa</h6>
             </div>
         `;
         container.appendChild(element);
@@ -1038,7 +1038,7 @@ function processTopup() {
     
     showConfirmDialog(
         'Confirmer la recharge',
-        `Voulez-vous recharger ${Number(amount).toLocaleString()} XAF via ${methodNames[selectedPaymentMethod]} ?`,
+        `Voulez-vous recharger ${Number(amount).toLocaleString()} F <h6>cfa</h6> via ${methodNames[selectedPaymentMethod]} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -1695,7 +1695,7 @@ function initializeVaultPage() {
 function updateVaultBalance() {
     const vaultTotalElement = document.getElementById('vault-total');
     if (vaultTotalElement) {
-        vaultTotalElement.innerHTML = `F <h6>cfa</h6> ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
+        vaultTotalElement.innerHTML = `F<h6>cfa</h6> ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
     }
 }
 
@@ -1717,7 +1717,7 @@ function renderVaultSavingsGoals() {
                 </div>
                 <div class="vault-goal-details">
                     <div class="vault-goal-name">${goal.name}</div>
-                    <div class="vault-goal-amount">F CFA ${goal.current.toLocaleString('fr-FR')} / F CFA ${goal.target.toLocaleString('fr-FR')}</div>
+                    <div class="vault-goal-amount">F<h6>cfa</h6> ${goal.current.toLocaleString('fr-FR')} / F<h6>cfa</h6> ${goal.target.toLocaleString('fr-FR')}</div>
                     <div class="vault-progress-bar">
                         <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
                     </div>
@@ -1760,7 +1760,7 @@ function renderVaultHistory() {
                 <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: ${iconColor};">
-                ${amountPrefix}F CFA ${transaction.amount.toLocaleString('fr-FR')}
+                ${amountPrefix}F<h6>cfa</h6> ${transaction.amount.toLocaleString('fr-FR')}
             </div>
         `;
         
@@ -2142,7 +2142,7 @@ function openBudgetCalculator() {
 }
 
 function openExchangeRates() {
-    showToast('Taux de change - USD: 656 FCFA | EUR: 724 FCFA', 'info');
+    showToast('Taux de change - USD: 656 F <h6>cfa</h6> | EUR: 724 F <h6>cfa</h6>', 'info');
     // Ici vous pourriez afficher les vrais taux
 }
 
@@ -2691,7 +2691,7 @@ function openFAQ() {
                                 <li>Vérifiez les informations</li>
                                 <li>Confirmez avec votre code PIN</li>
                             </ol>
-                            <p><strong>Limites :</strong> 500 000 F CFA par jour, 2 000 000 F CFA par mois.</p>
+                            <p><strong>Limites :</strong> 500 000 F <h6>cfa</h6> par jour, 2 000 000 F <h6>cfa</h6> par mois.</p>
                         </div>
                     </div>
 
