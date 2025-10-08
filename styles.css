@@ -192,6 +192,21 @@ body {
     -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
 }
 
+.balance-amount .currency-symbol {
+    font-size: 1em;
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.balance-amount .currency-code {
+    font-size: 0.4em;
+    opacity: 0.8;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
+    margin-right: 8px;
+    font-weight: 400;
+    text-transform: lowercase;
+}
+
 .balance-amount h6 {
     display: inline;
     font-size: 0.4em;
@@ -243,6 +258,20 @@ body {
     margin-top: 8px;
     font-size: 16px;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.detail-value .currency-symbol {
+    font-size: 1em;
+    font-weight: 700;
+    margin-right: 2px;
+}
+
+.detail-value .currency-code {
+    font-size: 0.7em;
+    opacity: 0.8;
+    margin-right: 8px;
+    font-weight: 400;
+    text-transform: lowercase;
 }
 
 .detail-value h6 {
@@ -6717,4 +6746,64 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     width: 40px;
     height: 30px;
     display: block;
+}
+
+/* Styles supplémentaires pour les formulaires de recharge */
+.topup-form .input-field input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: var(--text-light);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.topup-form .input-field input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.topup-form .input-field input::placeholder {
+    color: var(--text-muted);
+}
+
+.topup-form .input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+.topup-form .card-row {
+    display: flex;
+    gap: 10px;
+}
+
+.topup-form .input-group {
+    margin-bottom: 20px;
+}
+
+.topup-form .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.topup-form #topup-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.topup-form #phone-form, 
+.topup-form #card-form {
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease-out;
 }

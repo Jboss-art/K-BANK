@@ -18,30 +18,30 @@ function updateBalanceDisplay() {
     // Mise à jour du solde principal sur la page d'accueil
     const mainBalanceElement = document.querySelector('.balance-amount');
     if (mainBalanceElement) {
-        mainBalanceElement.innerHTML = `F <h6>cfa</h6> ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
+        mainBalanceElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des revenus mensuels
     const revenueElement = document.querySelector('.balance-detail .detail-value');
     if (revenueElement) {
-        revenueElement.innerHTML = `F <h6>cfa</h6> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
+        revenueElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des dépenses mensuelles
     const expenseElements = document.querySelectorAll('.balance-detail .detail-value');
     if (expenseElements.length > 1) {
-        expenseElements[1].innerHTML = `F <h6>cfa</h6> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
+        expenseElements[1].innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des options de compte dans le coffre-fort
     const mainAccountOption = document.querySelector('option[value="main"]');
     if (mainAccountOption) {
-        mainAccountOption.textContent = `Compte principal (F<h6>cfa</h6> ${userBalances.main.toLocaleString('fr-FR')})`;
+        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} F cfa)`;
     }
     
     const professionalAccountOption = document.querySelector('option[value="professional"]');
     if (professionalAccountOption) {
-        professionalAccountOption.textContent = `Compte professionnel (F<h6>cfa</h6> ${userBalances.professional.toLocaleString('fr-FR')})`;
+        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} F cfa)`;
     }
 }
 
@@ -363,6 +363,9 @@ function initializeSpecificPages() {
         renderVirementBeneficiaries();
         populateVirementBeneficiarySelect();
     }
+    
+    // Initialiser la page de recharge
+    initializeTopupPage();
     
     // Initialiser les écouteurs de glissement pour la page d'accueil
     initializeHomeSwipeListeners();
@@ -998,6 +1001,13 @@ function switchTab(tab) {
         populateBeneficiarySelect();
     }
 
+    // Initialiser la page de recharge
+    if (tab === 'topup') {
+        setTimeout(() => {
+            initializeTopupPage();
+        }, 100);
+    }
+
     if (tab === 'notifications') {
         setTimeout(() => {
             initializeNotifications();
@@ -1089,51 +1099,106 @@ function selectPaymentMethod(method) {
     });
     document.querySelector(`.payment-method[onclick*="${method}"]`).classList.add('selected');
     
+    // Show/hide card form based on method
+    toggleCardForm(method === 'card');
+    
     // Enable/disable topup button
     updateTopupButton();
 }
 
 function updateTopupButton() {
-    const amount = document.getElementById('topup-amount').value;
-    const phone = document.getElementById('phone-number').value;
+    const amount = document.getElementById('topup-amount')?.value || '';
     const button = document.getElementById('topup-button');
     
-    button.disabled = !selectedPaymentMethod || !amount || !phone;
+    if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('card-number')?.value || '';
+        const cardExpiry = document.getElementById('card-expiry')?.value || '';
+        const cardCvv = document.getElementById('card-cvv')?.value || '';
+        const cardName = document.getElementById('card-name')?.value || '';
+        
+        button.disabled = !selectedPaymentMethod || !amount || !cardNumber || !cardExpiry || !cardCvv || !cardName;
+    } else {
+        const phone = document.getElementById('phone-number')?.value || '';
+        button.disabled = !selectedPaymentMethod || !amount || !phone;
+    }
 }
 
 function processTopup() {
-    const amount = document.getElementById('topup-amount').value;
-    const phone = document.getElementById('phone-number').value;
+    const amount = document.getElementById('topup-amount')?.value || '';
     
-    if (!selectedPaymentMethod || !amount || !phone) {
-        showToast('Veuillez remplir tous les champs');
+    if (!selectedPaymentMethod || !amount) {
+        showToast('Veuillez remplir tous les champs requis');
         return;
     }
     
-    const methodNames = {
+    let methodNames = {
         'moov': 'Moov Money',
         'airtel': 'Airtel Money',
-        'western': 'Western Union'
+        'western': 'Western Union',
+        'card': 'Carte bancaire'
     };
+    
+    // Validation spécifique selon le mode de paiement
+    if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('card-number')?.value || '';
+        const cardExpiry = document.getElementById('card-expiry')?.value || '';
+        const cardCvv = document.getElementById('card-cvv')?.value || '';
+        const cardName = document.getElementById('card-name')?.value || '';
+        
+        if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
+            showToast('Veuillez remplir toutes les informations de la carte');
+            return;
+        }
+        
+        // Validation du numéro de carte (basique)
+        if (cardNumber.replace(/\s/g, '').length < 16) {
+            showToast('Numéro de carte invalide');
+            return;
+        }
+    } else {
+        const phone = document.getElementById('phone-number')?.value || '';
+        if (!phone) {
+            showToast('Veuillez saisir votre numéro de téléphone');
+            return;
+        }
+    }
     
     showConfirmDialog(
         'Confirmer la recharge',
-        `Voulez-vous recharger ${Number(amount).toLocaleString()} F <h6>cfa</h6> via ${methodNames[selectedPaymentMethod]} ?`,
+        `Voulez-vous recharger ${Number(amount).toLocaleString()} F CFA via ${methodNames[selectedPaymentMethod]} ?`,
         'Confirmer',
         'Annuler',
         () => {
-            showToast('Redirection vers la page de paiement...');
+            showToast('Traitement du paiement en cours...');
             // Simulate payment processing
             setTimeout(() => {
                 // Ajouter le montant au solde principal
-                if (performTransaction('credit', 'main', Number(amount))) {
+                if (performTransaction(Number(amount), 'credit', 'main')) {
                     showToast('Compte rechargé avec succès !');
-                    updateBalanceDisplay();
-                } else {
-                    showToast('Erreur lors de la recharge');
+                    
+                    // Reset form
+                    document.getElementById('topup-amount').value = '';
+                    if (selectedPaymentMethod === 'card') {
+                        document.getElementById('card-number').value = '';
+                        document.getElementById('card-expiry').value = '';
+                        document.getElementById('card-cvv').value = '';
+                        document.getElementById('card-name').value = '';
+                    } else {
+                        document.getElementById('phone-number').value = '';
+                    }
+                    selectedPaymentMethod = null;
+                    
+                    // Reset UI
+                    document.querySelectorAll('.payment-method').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    
+                    // Hide card form if it was shown
+                    toggleCardForm(false);
+                    
+                    // Return to home after 1.5 seconds
+                    setTimeout(() => switchTab('home'), 1500);
                 }
-                resetForm();
-                switchTab('home');
             }, 2000);
         }
     );
@@ -1143,19 +1208,88 @@ function resetForm() {
     document.getElementById('topup-amount').value = '';
     document.getElementById('phone-number').value = '';
     selectedPaymentMethod = null;
+    
+    // Reset UI selections
     document.querySelectorAll('.payment-method').forEach(el => {
         el.classList.remove('selected');
     });
+    
     updateTopupButton();
 }
 
-// Add event listeners for form inputs
-document.addEventListener('DOMContentLoaded', () => {
-    const inputs = ['topup-amount', 'phone-number'];
-    inputs.forEach(id => {
-        document.getElementById(id)?.addEventListener('input', updateTopupButton);
+// Fonction pour afficher/masquer le formulaire de carte
+function toggleCardForm(show) {
+    const cardForm = document.getElementById('card-form');
+    const phoneForm = document.getElementById('phone-form');
+    
+    if (cardForm && phoneForm) {
+        if (show) {
+            cardForm.style.display = 'block';
+            phoneForm.style.display = 'none';
+        } else {
+            cardForm.style.display = 'none';
+            phoneForm.style.display = 'block';
+        }
+    }
+}
+
+// Formatage du numéro de carte
+function formatCardNumber(input) {
+    let value = input.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+    let formattedValue = '';
+    
+    for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += value[i];
+    }
+    
+    input.value = formattedValue.substring(0, 19); // Max 16 digits + 3 spaces
+    updateTopupButton();
+}
+
+// Formatage de la date d'expiration
+function formatCardExpiry(input) {
+    let value = input.value.replace(/\D/g, '');
+    
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    
+    input.value = value;
+    updateTopupButton();
+}
+
+// Validation CVV
+function formatCardCvv(input) {
+    input.value = input.value.replace(/\D/g, '').substring(0, 3);
+    updateTopupButton();
+}
+
+// Fonction d'initialisation de la page de recharge
+function initializeTopupPage() {
+    // S'assurer que les formulaires sont masqués au début
+    const phoneForm = document.getElementById('phone-form');
+    const cardForm = document.getElementById('card-form');
+    
+    if (phoneForm) phoneForm.style.display = 'none';
+    if (cardForm) cardForm.style.display = 'none';
+    
+    // Réinitialiser la sélection de méthode de paiement
+    selectedPaymentMethod = null;
+    
+    // Désactiver le bouton de recharge au début
+    const topupButton = document.getElementById('topup-button');
+    if (topupButton) {
+        topupButton.disabled = true;
+    }
+    
+    // Retirer toutes les sélections
+    document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
     });
-});
+}
 
 // Functions for IBAN page
 function copyIban() {
@@ -1781,7 +1915,7 @@ function initializeVaultPage() {
 function updateVaultBalance() {
     const vaultTotalElement = document.getElementById('vault-total');
     if (vaultTotalElement) {
-        vaultTotalElement.innerHTML = `F<h6>cfa</h6> ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
+        vaultTotalElement.innerHTML = `F <h6>cfa</h6> ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
     }
 }
 
@@ -1803,7 +1937,7 @@ function renderVaultSavingsGoals() {
                 </div>
                 <div class="vault-goal-details">
                     <div class="vault-goal-name">${goal.name}</div>
-                    <div class="vault-goal-amount">F<h6>cfa</h6> ${goal.current.toLocaleString('fr-FR')} / F<h6>cfa</h6> ${goal.target.toLocaleString('fr-FR')}</div>
+                    <div class="vault-goal-amount">F <h6>cfa</h6> ${goal.current.toLocaleString('fr-FR')} / F <h6>cfa</h6> ${goal.target.toLocaleString('fr-FR')}</div>
                     <div class="vault-progress-bar">
                         <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
                     </div>
@@ -1846,7 +1980,7 @@ function renderVaultHistory() {
                 <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: ${iconColor};">
-                ${amountPrefix}F<h6>cfa</h6> ${transaction.amount.toLocaleString('fr-FR')}
+                ${amountPrefix}F <h6>cfa</h6> ${transaction.amount.toLocaleString('fr-FR')}
             </div>
         `;
         

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+gi<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -79,16 +79,16 @@
             <div class="page home-page active" id="home-page">
                 <div class="balance-card">
                     <div class="balance-title">Solde principal</div>
-                    <div class="balance-amount">F <h6>cfa</h6> 780 245,<small>00</small></div>
+                    <div class="balance-amount"><span class="currency-symbol">F</span> <span class="currency-code">cfa</span> 780 245,<small>00</small></div>
                     <div class="balance-details">
                         <div class="balance-detail">
                             <div>Revenus mensuels</div>
-                            <div class="detail-value">F <h6>cfa</h6> 245 200,<small>00</small></div>
+                            <div class="detail-value"><span class="currency-symbol">F</span> <span class="currency-code">cfa</span> 245 200,<small>00</small></div>
                         </div>
                         <div class="divider"></div>
                         <div class="balance-detail">
                             <div>Dépenses mensuelles</div>
-                            <div class="detail-value">F <h6>cfa</h6> 133 274,<small>00</small></div>
+                            <div class="detail-value"><span class="currency-symbol">F</span> <span class="currency-code">cfa</span> 133 274,<small>00</small></div>
                         </div>
                     </div>
                 </div>
@@ -501,7 +501,7 @@
                     </div>
                     
                     <div class="input-group">
-                        <label>Montant (F<h6>cfa</h6>)</label>
+                        <label>Montant (F <h6>cfa</h6>)</label>
                         <div class="input-field">
                             <input type="number" placeholder="0,00" id="virement-amount">
                         </div>
@@ -667,10 +667,69 @@ BP 20000 Libreville</div>
                         <span>Western Union</span>
                         <div class="method-info">24-48h</div>
                     </div>
+
+                    <div class="payment-method" onclick="selectPaymentMethod('card')">
+                        <div class="payment-logo">
+                            <i class="fas fa-credit-card" style="font-size: 32px; color: #3b82f6;"></i>
+                        </div>
+                        <span>Carte bancaire</span>
+                        <div class="method-info">Instantané</div>
+                    </div>
                 </div>
 
                 <div class="topup-form">
-                    <button class="primary-button" onclick="processTopup()" id="topup-button">
+                    <div class="input-group">
+                        <label>Montant à recharger</label>
+                        <div class="input-field">
+                            <input type="number" id="topup-amount" placeholder="Ex: 50000" min="1000" max="5000000" oninput="updateTopupButton()">
+                            <span class="currency">F CFA</span>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire pour téléphone (Moov/Airtel/Western Union) -->
+                    <div id="phone-form" style="display: none;">
+                        <div class="input-group">
+                            <label>Numéro de téléphone</label>
+                            <div class="input-field">
+                                <input type="tel" id="phone-number" placeholder="Ex: 07 XX XX XX XX" oninput="updateTopupButton()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire pour carte bancaire -->
+                    <div id="card-form" style="display: none;">
+                        <div class="input-group">
+                            <label>Numéro de carte</label>
+                            <div class="input-field">
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
+                                <i class="fas fa-credit-card input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="card-row">
+                            <div class="input-group" style="flex: 1;">
+                                <label>Date d'expiration</label>
+                                <div class="input-field">
+                                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" oninput="formatCardExpiry(this)">
+                                </div>
+                            </div>
+                            <div class="input-group" style="flex: 1; margin-left: 10px;">
+                                <label>CVV</label>
+                                <div class="input-field">
+                                    <input type="text" id="card-cvv" placeholder="123" maxlength="3" oninput="formatCardCvv(this)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Nom sur la carte</label>
+                            <div class="input-field">
+                                <input type="text" id="card-name" placeholder="GODWIN BATOLA" oninput="updateTopupButton()" style="text-transform: uppercase;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="primary-button" onclick="processTopup()" id="topup-button" disabled>
                         <i class="fas fa-plus-circle"></i>
                         <span>Recharger maintenant</span>
                     </button>
@@ -722,7 +781,7 @@ BP 20000 Libreville</div>
                         <label>Montant à transférer</label>
                         <div class="input-field">
                             <input type="number" id="transfer-amount" placeholder="0">
-                            <span class="currency">F<h6>cfa</h6></span>
+                            <span class="currency">F <h6>cfa</h6></span>
                         </div>
                     </div>
 
@@ -751,7 +810,7 @@ BP 20000 Libreville</div>
             <div class="page others-page" id="others-page">
                 <div class="page-header">
                     <h2>Services & Plus</h2>
-                    <div class="header-subtitle">Découvrez tous nos services</div>
+                    <div class="header-subtitle">Découvrez tous<br>nos services</div>
                 </div>
 
                 <div class="others-container">
@@ -954,7 +1013,7 @@ BP 20000 Libreville</div>
                         <i class="fas fa-key" style="margin-right: 10px;"></i>
                         Coffre-Fort Sécurisé
                     </div>
-                    <div class="balance-amount" id="vault-total">F<h6>cfa</h6> 1 250 000,<small>00</small></div>
+                    <div class="balance-amount" id="vault-total">F <h6>cfa</h6> 1 250 000,<small>00</small></div>
                     <div class="balance-details">
                         <div class="balance-detail">
                             <div>Rendement annuel</div>
@@ -963,7 +1022,7 @@ BP 20000 Libreville</div>
                         <div class="divider"></div>
                         <div class="balance-detail">
                             <div>Gains cette année</div>
-                            <div class="detail-value">F<h6>cfa</h6> 62 500,<small>00</small></div>
+                            <div class="detail-value">F <h6>cfa</h6> 62 500,<small>00</small></div>
                         </div>
                     </div>
                 </div>
@@ -1040,17 +1099,17 @@ BP 20000 Libreville</div>
                     </div>
                     
                     <div class="vault-quick-amounts">
-                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(50000)">F<h6>cfa</h6> 50 000</div>
-                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(100000)">F<h6>cfa</h6> 100 000</div>
-                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(200000)">F<h6>cfa</h6> 200 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(50000)">F <h6>cfa</h6> 50 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(100000)">F <h6>cfa</h6> 100 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickAmount(200000)">F <h6>cfa</h6> 200 000</div>
                     </div>
                     
                     <div class="vault-input-group">
                         <label>Compte source</label>
                         <div class="vault-input-field">
                             <select id="vault-deposit-source">
-                                <option value="main">Compte principal (F<h6>cfa</h6> 780 245)</option>
-                                <option value="professional">Compte professionnel (F<h6>cfa</h6> 450 800)</option>
+                                <option value="main">Compte principal (F <h6>cfa</h6> 780 245)</option>
+                                <option value="professional">Compte professionnel (F <h6>cfa</h6> 450 800)</option>
                             </select>
                         </div>
                     </div>
@@ -1092,9 +1151,9 @@ BP 20000 Libreville</div>
                     </div>
                     
                     <div class="vault-quick-amounts">
-                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(50000)">F<h6>cfa</h6> 50 000</div>
-                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(100000)">F<h6>cfa</h6> 100 000</div>
-                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(200000)">F<h6>cfa</h6> 200 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(50000)">F <h6>cfa</h6> 50 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(100000)">F <h6>cfa</h6> 100 000</div>
+                        <div class="vault-quick-amount" onclick="setVaultQuickWithdrawAmount(200000)">F <h6>cfa</h6> 200 000</div>
                     </div>
                     
                     <div class="vault-input-group">
