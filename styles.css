@@ -1992,6 +1992,10 @@ input[type="number"] {
     position: relative;
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    min-height: auto;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .iban-page .iban-card::before {
@@ -2014,13 +2018,20 @@ input[type="number"] {
     z-index: 2;
 }
 
-.iban-page .gabon-logo {
+.iban-page .kb-logo {
     width: 45px;
     height: 45px;
     border-radius: 8px;
-    object-fit: cover;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    font-family: 'Inter', sans-serif;
 }
 
 .iban-page .card-type {
@@ -2089,6 +2100,7 @@ input[type="number"] {
     align-items: center;
     padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 8px;
 }
 
 .iban-page .detail-item:last-child {
@@ -2099,11 +2111,24 @@ input[type="number"] {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
+    min-width: 80px;
+    flex-shrink: 0;
 }
 
 .iban-page .detail-value {
     font-size: 14px;
     font-weight: 600;
+    text-align: right;
+    word-wrap: break-word;
+    word-break: break-word;
+    flex: 1;
+    max-width: 65%;
+    line-height: 1.4;
+}
+
+/* Style spécial pour l'adresse avec retour à la ligne */
+.iban-page .detail-item:last-child .detail-value {
+    white-space: pre-line;
     text-align: right;
 }
 
@@ -2138,6 +2163,59 @@ input[type="number"] {
 
 .iban-page .action-button i {
     font-size: 16px;
+}
+
+/* Media queries pour la responsivité de la carte IBAN */
+@media (max-width: 480px) {
+    .iban-page .iban-container {
+        padding: 15px;
+    }
+    
+    .iban-page .iban-card {
+        padding: 20px;
+        margin: 10px 0;
+    }
+    
+    .iban-page .detail-item {
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .iban-page .detail-label {
+        min-width: auto;
+        flex-shrink: 0;
+    }
+    
+    .iban-page .detail-value {
+        text-align: right;
+        max-width: 70%;
+        font-size: 13px;
+    }
+    
+    .iban-page .iban-actions {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .iban-page .action-button {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .iban-page .iban-card {
+        padding: 15px;
+    }
+    
+    .iban-page .iban-value {
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+    
+    .iban-page .detail-value {
+        font-size: 12px;
+    }
 }
 
 .bank-info {

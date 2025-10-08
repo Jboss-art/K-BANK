@@ -2,6 +2,71 @@
 // SYSTÈME D'AUTHENTIFICATION
 // ===========================================
 
+// ===========================================
+// SYSTÈME DE GESTION DES SOLDES
+// ===========================================
+
+let userBalances = {
+    main: 780245,           // Solde principal en F CFA
+    professional: 2450800,  // Solde professionnel en F CFA
+    monthlyRevenue: 245200, // Revenus mensuels
+    monthlyExpenses: 133274 // Dépenses mensuelles
+};
+
+// Fonction pour mettre à jour l'affichage des soldes
+function updateBalanceDisplay() {
+    // Mise à jour du solde principal sur la page d'accueil
+    const mainBalanceElement = document.querySelector('.balance-amount');
+    if (mainBalanceElement) {
+        mainBalanceElement.innerHTML = `F <h6>cfa</h6> ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
+    }
+    
+    // Mise à jour des revenus mensuels
+    const revenueElement = document.querySelector('.balance-detail .detail-value');
+    if (revenueElement) {
+        revenueElement.innerHTML = `F <h6>cfa</h6> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
+    }
+    
+    // Mise à jour des dépenses mensuelles
+    const expenseElements = document.querySelectorAll('.balance-detail .detail-value');
+    if (expenseElements.length > 1) {
+        expenseElements[1].innerHTML = `F <h6>cfa</h6> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
+    }
+    
+    // Mise à jour des options de compte dans le coffre-fort
+    const mainAccountOption = document.querySelector('option[value="main"]');
+    if (mainAccountOption) {
+        mainAccountOption.textContent = `Compte principal (F<h6>cfa</h6> ${userBalances.main.toLocaleString('fr-FR')})`;
+    }
+    
+    const professionalAccountOption = document.querySelector('option[value="professional"]');
+    if (professionalAccountOption) {
+        professionalAccountOption.textContent = `Compte professionnel (F<h6>cfa</h6> ${userBalances.professional.toLocaleString('fr-FR')})`;
+    }
+}
+
+// Fonction pour effectuer une transaction (débit/crédit)
+function performTransaction(amount, type, account = 'main') {
+    const numAmount = Number(amount);
+    
+    if (type === 'debit') {
+        if (userBalances[account] >= numAmount) {
+            userBalances[account] -= numAmount;
+            updateBalanceDisplay();
+            return true;
+        } else {
+            showNotification('Solde insuffisant', 'error');
+            return false;
+        }
+    } else if (type === 'credit') {
+        userBalances[account] += numAmount;
+        updateBalanceDisplay();
+        return true;
+    }
+    
+    return false;
+}
+
 class PinAuth {
     constructor() {
         this.pin = '';
@@ -135,6 +200,7 @@ class PinAuth {
 
     initializeApp() {
         // Initialiser l'application principale après l'authentification
+        updateBalanceDisplay();
         renderTransactions();
         updateNotificationBadge();
         initializeSpecificPages();
@@ -502,8 +568,15 @@ function confirmVirement() {
         'Confirmer',
         'Annuler',
         () => {
-            // Simuler le virement
-            showNotification('Virement effectué avec succès');
+            // Déduire le montant du solde principal
+            if (performTransaction('debit', 'main', Number(amount))) {
+                showNotification('Virement effectué avec succès');
+                updateBalanceDisplay();
+            } else {
+                showNotification('Solde insuffisant pour effectuer ce virement', 'error');
+                return;
+            }
+            
             document.getElementById('virement-amount').value = '';
             document.getElementById('virement-reason').value = '';
             document.getElementById('virement-beneficiary-select').selectedIndex = 0;
@@ -595,7 +668,14 @@ function processTransfer() {
         'Confirmer',
         'Annuler',
         () => {
-            showNotification('Transfert initié avec succès');
+            // Déduire le montant du solde principal
+            if (performTransaction('debit', 'main', Number(amount))) {
+                showNotification('Transfert initié avec succès');
+                updateBalanceDisplay();
+            } else {
+                showNotification('Solde insuffisant pour effectuer ce transfert', 'error');
+                return;
+            }
             
             // Réinitialiser le formulaire
             document.getElementById('transfer-amount').value = '';
@@ -1045,7 +1125,13 @@ function processTopup() {
             showToast('Redirection vers la page de paiement...');
             // Simulate payment processing
             setTimeout(() => {
-                showToast('Compte rechargé avec succès !');
+                // Ajouter le montant au solde principal
+                if (performTransaction('credit', 'main', Number(amount))) {
+                    showToast('Compte rechargé avec succès !');
+                    updateBalanceDisplay();
+                } else {
+                    showToast('Erreur lors de la recharge');
+                }
                 resetForm();
                 switchTab('home');
             }, 2000);
@@ -1854,6 +1940,12 @@ function confirmVaultDeposit() {
         return;
     }
     
+    // Déduire du solde principal pour déposer dans le coffre-fort
+    if (!performTransaction('debit', 'main', amount)) {
+        alert('Solde insuffisant dans le compte principal');
+        return;
+    }
+    
     const newTransaction = {
         id: Date.now(),
         type: 'deposit',
@@ -1867,6 +1959,7 @@ function confirmVaultDeposit() {
     vaultBalance += amount;
     
     updateVaultBalance();
+    updateBalanceDisplay();
     renderVaultHistory();
     closeVaultDepositModal();
     
@@ -1885,6 +1978,7 @@ function confirmVaultWithdrawal() {
         return;
     }
     
+    // Retirer du coffre-fort et ajouter au solde principal
     const newTransaction = {
         id: Date.now(),
         type: 'withdrawal',
@@ -1897,7 +1991,11 @@ function confirmVaultWithdrawal() {
     vaultHistory.unshift(newTransaction);
     vaultBalance -= amount;
     
+    // Ajouter au solde principal
+    performTransaction('credit', 'main', amount);
+    
     updateVaultBalance();
+    updateBalanceDisplay();
     renderVaultHistory();
     closeVaultWithdrawModal();
     
