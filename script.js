@@ -1468,7 +1468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function temporaryBlockCard() {
     showConfirmDialog(
         'Bloquer la carte',
-        'Voulez-vous bloquer votre carte ? Celle-ci ne pourra plus être utilisée. Veuillez en commander une nouvelle.',
+        'Voulez-vous bloquer votre carte ? Celle-ci ne pourra plus être utilisée.',
         'Bloquer',
         'Annuler',
         () => {
