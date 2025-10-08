@@ -2101,10 +2101,12 @@ input[type="number"] {
     padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     gap: 8px;
+    min-height: 40px;
 }
 
 .iban-page .detail-item:last-child {
     border-bottom: none;
+    align-items: flex-start;
 }
 
 .iban-page .detail-label {
@@ -2113,6 +2115,9 @@ input[type="number"] {
     font-weight: 500;
     min-width: 80px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
 }
 
 .iban-page .detail-value {
@@ -2124,12 +2129,17 @@ input[type="number"] {
     flex: 1;
     max-width: 65%;
     line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 /* Style spécial pour l'adresse avec retour à la ligne */
 .iban-page .detail-item:last-child .detail-value {
     white-space: pre-line;
     text-align: right;
+    align-items: flex-start;
+    padding-top: 2px;
 }
 
 .iban-page .iban-actions {
