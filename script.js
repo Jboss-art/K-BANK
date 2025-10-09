@@ -204,6 +204,8 @@ class PinAuth {
         renderTransactions();
         updateNotificationBadge();
         initializeSpecificPages();
+        renderVaultCarousel(); // Initialiser le carousel du coffre-fort
+        updateVaultDisplay(); // Initialiser l'affichage du coffre-fort
         console.log('Application initialisée après authentification');
     }
 }
@@ -1017,6 +1019,14 @@ function switchTab(tab) {
     if (tab === 'iban') {
         // Initialize IBAN page if needed
         document.querySelector('.iban-page').classList.add('active');
+    }
+
+    // Initialiser la page des coffres-forts
+    if (tab === 'vaults') {
+        setTimeout(() => {
+            updateVaultDisplay();
+            renderVaultCarousel();
+        }, 100);
     }
 }
 
@@ -1866,7 +1876,7 @@ function handleHomeSwipeMouseUp() {
 // FONCTIONS DU COFFRE-FORT
 // ========================================
 
-let vaultBalance = 1250000;
+let vaultBalance = 300000;
 let vaultGoalIcon = 'plane';
 let vaultHistory = [
     {
@@ -1919,73 +1929,300 @@ function updateVaultBalance() {
     }
 }
 
-function renderVaultSavingsGoals() {
-    const container = document.getElementById('vault-savings-list');
-    if (!container) return;
+// Structure modifiée pour gérer plusieurs coffres-forts
+let vaults = [
+    {
+        id: 1,
+        name: 'Coffre-Fort Principal',
+        description: 'Mon coffre-fort principal',
+        icon: 'key',
+        balance: 300000,
+        goal: null,
+        history: [],
+        isMain: true
+    }
+]; // Liste des coffres-forts disponibles
+let currentVaultIndex = 0; // Index du coffre-fort actuel
+
+function getCurrentVault() {
+    return vaults[currentVaultIndex] || vaults[0];
+}
+
+function renderVaultCarousel() {
+    const carouselContainer = document.getElementById('vault-carousel');
+    const indicatorsContainer = document.getElementById('vault-indicators');
     
-    container.innerHTML = '';
+    if (!carouselContainer) return;
     
-    vaultSavingsGoals.forEach(goal => {
-        const progressPercent = Math.min((goal.current / goal.target) * 100, 100);
-        const goalElement = document.createElement('div');
-        goalElement.className = 'vault-savings-goal';
-        
-        goalElement.innerHTML = `
-            <div class="vault-goal-info">
-                <div class="vault-goal-icon">
-                    <i class="fas fa-${goal.icon}"></i>
+    // Générer les slides des coffres-forts
+    carouselContainer.innerHTML = '';
+    vaults.forEach((vault, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'vault-slide';
+        slide.innerHTML = `
+            <div class="vault-balance-card">
+                <div class="balance-title">
+                    <i class="fas fa-${vault.icon} vault-icon"></i>
+                    <span class="vault-name">${vault.name}</span>
                 </div>
-                <div class="vault-goal-details">
-                    <div class="vault-goal-name">${goal.name}</div>
-                    <div class="vault-goal-amount">F <h6>cfa</h6> ${goal.current.toLocaleString('fr-FR')} / F <h6>cfa</h6> ${goal.target.toLocaleString('fr-FR')}</div>
-                    <div class="vault-progress-bar">
-                        <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
-                    </div>
-                    <div class="vault-goal-date">Objectif : ${formatVaultDate(goal.date)}</div>
+                <div class="balance-amount" id="vault-total-${index}">
+                    <span class="currency-symbol">F</span> 
+                    <span class="currency-code">cfa</span> 
+                    ${vault.balance.toLocaleString('fr-FR')},<small>00</small>
                 </div>
-            </div>
-            <div class="vault-goal-actions">
-                <button onclick="contributeToGoal(${goal.id})" class="vault-contribute-btn">
-                    <i class="fas fa-plus"></i>
-                </button>
             </div>
         `;
-        
-        container.appendChild(goalElement);
+        carouselContainer.appendChild(slide);
+    });
+    
+    // Générer les indicateurs
+    if (indicatorsContainer) {
+        indicatorsContainer.innerHTML = '';
+        vaults.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.className = `vault-indicator ${index === currentVaultIndex ? 'active' : ''}`;
+            indicator.onclick = () => goToVault(index);
+            indicatorsContainer.appendChild(indicator);
+        });
+    }
+    
+    // Mettre à jour la position du carrousel
+    updateCarouselPosition();
+    
+    // Mettre à jour les boutons de navigation
+    updateNavigationButtons();
+}
+
+function updateCarouselPosition() {
+    const carouselContainer = document.getElementById('vault-carousel');
+    if (carouselContainer) {
+        const translateX = -currentVaultIndex * 100;
+        carouselContainer.style.transform = `translateX(${translateX}%)`;
+    }
+}
+
+// Fonction utilitaire pour forcer la mise à jour complète de l'affichage des coffres-forts
+function forceVaultUpdate() {
+    setTimeout(() => {
+        renderVaultCarousel();
+        renderVaultGoal();
+        renderVaultHistory();
+        updateNavigationButtons();
+        updateIndicators();
+    }, 100);
+}
+
+function updateNavigationButtons() {
+    const prevBtn = document.getElementById('vault-prev');
+    const nextBtn = document.getElementById('vault-next');
+    
+    if (prevBtn) {
+        prevBtn.classList.toggle('hidden', currentVaultIndex === 0);
+    }
+    
+    if (nextBtn) {
+        nextBtn.classList.toggle('hidden', currentVaultIndex === vaults.length - 1);
+    }
+}
+
+function updateIndicators() {
+    const indicators = document.querySelectorAll('.vault-indicator');
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentVaultIndex);
     });
 }
 
+function goToVault(index) {
+    if (index < 0 || index >= vaults.length) return;
+    
+    currentVaultIndex = index;
+    updateCarouselPosition();
+    updateIndicators();
+    updateNavigationButtons();
+    renderVaultGoal();
+    renderVaultHistory();
+}
+
+function nextVault() {
+    if (currentVaultIndex < vaults.length - 1) {
+        goToVault(currentVaultIndex + 1);
+    }
+}
+
+function previousVault() {
+    if (currentVaultIndex > 0) {
+        goToVault(currentVaultIndex - 1);
+    }
+}
+
+function switchToVault(index) {
+    goToVault(index);
+}
+
+function updateVaultDisplay() {
+    renderVaultCarousel();
+    renderVaultGoal();
+    renderVaultHistory();
+}
+
+function renderVaultGoal() {
+    const container = document.getElementById('vault-goal-container');
+    const noGoalMessage = document.getElementById('no-goal-message');
+    const addGoalLink = document.getElementById('add-goal-link');
+    
+    console.log('renderVaultGoal - Éléments trouvés:', { container, noGoalMessage, addGoalLink });
+    
+    if (!container) {
+        console.error('vault-goal-container non trouvé');
+        return;
+    }
+    
+    const currentVault = getCurrentVault();
+    console.log('renderVaultGoal - Coffre-fort actuel:', currentVault);
+    
+    if (currentVault && currentVault.goal) {
+        console.log('renderVaultGoal - Objectif trouvé:', currentVault.goal);
+        
+        if (noGoalMessage) {
+            noGoalMessage.style.display = 'none';
+        }
+        if (addGoalLink) {
+            addGoalLink.textContent = 'Modifier';
+        }
+        
+        const progressPercent = Math.min((currentVault.goal.current / currentVault.goal.target) * 100, 100);
+        
+        container.innerHTML = `
+            <div class="vault-savings-goal">
+                <div class="vault-goal-info">
+                    <div class="vault-goal-icon">
+                        <i class="fas fa-${currentVault.goal.icon}"></i>
+                    </div>
+                    <div class="vault-goal-details">
+                        <div class="vault-goal-name">${currentVault.goal.name}</div>
+                        <div class="vault-goal-amount">${currentVault.goal.current.toLocaleString('fr-FR')} F cfa / ${currentVault.goal.target.toLocaleString('fr-FR')} F cfa</div>
+                        <div class="vault-progress-bar">
+                            <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="vault-goal-date">Objectif : ${formatVaultDate(currentVault.goal.date)}</div>
+                    </div>
+                </div>
+                <div class="vault-goal-actions">
+                    <button onclick="contributeToGoal()" class="vault-contribute-btn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        console.log('renderVaultGoal - Objectif affiché avec succès');
+    } else {
+        console.log('renderVaultGoal - Aucun objectif trouvé');
+        
+        if (noGoalMessage) {
+            noGoalMessage.style.display = 'block';
+        }
+        if (addGoalLink) {
+            addGoalLink.textContent = 'Ajouter';
+        }
+        container.innerHTML = '';
+    }
+}
+
 function renderVaultHistory() {
-    const container = document.getElementById('vault-history-list');
+    renderVaultDeposits();
+    renderVaultWithdrawals();
+}
+
+function renderVaultDeposits() {
+    const container = document.getElementById('vault-deposits-list');
     if (!container) return;
     
     container.innerHTML = '';
     
-    const recentTransactions = vaultHistory.slice(0, 3);
+    const currentVault = getCurrentVault();
+    const deposits = currentVault.history.filter(t => t.type === 'deposit').slice(0, 3);
     
-    recentTransactions.forEach(transaction => {
+    if (deposits.length === 0) {
+        container.innerHTML = '<div class="no-transactions">Aucun dépôt récent</div>';
+        return;
+    }
+    
+    deposits.forEach(transaction => {
         const transactionElement = document.createElement('div');
         transactionElement.className = 'transaction-item';
         
-        const icon = transaction.type === 'deposit' ? 'plus-circle' : 'minus-circle';
-        const iconColor = transaction.type === 'deposit' ? '#4CAF50' : '#FF5722';
-        const amountPrefix = transaction.type === 'deposit' ? '+' : '-';
-        
         transactionElement.innerHTML = `
-            <div class="transaction-icon" style="background: ${iconColor}20; color: ${iconColor};">
-                <i class="fas fa-${icon}"></i>
+            <div class="transaction-icon" style="background: #22c55e20; color: #22c55e;">
+                <i class="fas fa-plus-circle"></i>
             </div>
             <div class="transaction-info">
                 <div class="transaction-title">${transaction.description}</div>
                 <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
-            <div class="transaction-amount" style="color: ${iconColor};">
-                ${amountPrefix}F <h6>cfa</h6> ${transaction.amount.toLocaleString('fr-FR')}
+            <div class="transaction-amount" style="color: #22c55e;">
+                +${transaction.amount.toLocaleString('fr-FR')} F cfa
             </div>
         `;
         
         container.appendChild(transactionElement);
     });
+}
+
+function renderVaultWithdrawals() {
+    const container = document.getElementById('vault-withdrawals-list');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    const currentVault = getCurrentVault();
+    const withdrawals = currentVault.history.filter(t => t.type === 'withdraw').slice(0, 3);
+    
+    if (withdrawals.length === 0) {
+        container.innerHTML = '<div class="no-transactions">Aucun retrait récent</div>';
+        return;
+    }
+    
+    withdrawals.forEach(transaction => {
+        const transactionElement = document.createElement('div');
+        transactionElement.className = 'transaction-item';
+        
+        transactionElement.innerHTML = `
+            <div class="transaction-icon" style="background: #ef444420; color: #ef4444;">
+                <i class="fas fa-minus-circle"></i>
+            </div>
+            <div class="transaction-info">
+                <div class="transaction-title">${transaction.description}</div>
+                <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
+            </div>
+            <div class="transaction-amount" style="color: #ef4444;">
+                -${transaction.amount.toLocaleString('fr-FR')} F cfa
+            </div>
+        `;
+        
+        container.appendChild(transactionElement);
+    });
+}
+
+// Fonctions pour afficher tous les historiques
+function showAllVaultDeposits() {
+    // Cette fonction pourrait ouvrir une modale ou naviguer vers une page dédiée
+    const currentVault = getCurrentVault();
+    const deposits = currentVault.history.filter(t => t.type === 'deposit');
+    showVaultNotification(`${deposits.length} dépôt(s) au total`, 'info');
+}
+
+function showAllVaultWithdrawals() {
+    // Cette fonction pourrait ouvrir une modale ou naviguer vers une page dédiée
+    const currentVault = getCurrentVault();
+    const withdrawals = currentVault.history.filter(t => t.type === 'withdraw');
+    showVaultNotification(`${withdrawals.length} retrait(s) au total`, 'info');
+}
+
+function showAllVaultHistory() {
+    // Fonction de compatibilité pour les anciens liens
+    const currentVault = getCurrentVault();
+    showVaultNotification(`${currentVault.history.length} transaction(s) au total`, 'info');
 }
 
 function openVaultDepositModal() {
@@ -2137,9 +2374,12 @@ function confirmVaultWithdrawal() {
 }
 
 function addVaultSavingsGoal() {
+    console.log('addVaultSavingsGoal appelée');
     const name = document.getElementById('vault-goal-name').value.trim();
     const target = parseFloat(document.getElementById('vault-goal-target').value);
     const date = document.getElementById('vault-goal-date').value;
+    
+    console.log('Valeurs récupérées:', { name, target, date });
     
     if (!name || !target || !date) {
         alert('Veuillez remplir tous les champs');
@@ -2155,32 +2395,60 @@ function addVaultSavingsGoal() {
         icon: vaultGoalIcon
     };
     
-    vaultSavingsGoals.push(newGoal);
-    renderVaultSavingsGoals();
+    console.log('Nouvel objectif créé:', newGoal);
+    
+    const currentVault = getCurrentVault();
+    console.log('Coffre-fort actuel:', currentVault);
+    
+    currentVault.goal = newGoal; // Assigner l'objectif au coffre-fort actuel
+    
+    // Fermer la modale
     closeVaultAddGoalModal();
     
+    // Forcer la mise à jour complète de l'affichage
+    forceVaultUpdate();
+    
     showVaultNotification('Objectif créé avec succès !', 'success');
+    
+    // Log pour vérifier que l'objectif a été ajouté
+    console.log('Objectif ajouté au coffre-fort:', currentVault);
 }
 
-function contributeToGoal(goalId) {
-    const goal = vaultSavingsGoals.find(g => g.id === goalId);
-    if (!goal) return;
+function contributeToGoal() {
+    const currentVault = getCurrentVault();
+    if (!currentVault.goal) return;
     
-    const amount = prompt(`Montant à contribuer pour "${goal.name}" :`);
+    const amount = prompt(`Montant à contribuer pour "${currentVault.goal.name}" :`);
     const contributionAmount = parseFloat(amount);
     
     if (!contributionAmount || contributionAmount <= 0) return;
     
-    if (contributionAmount > vaultBalance) {
-        alert('Solde insuffisant dans le coffre-fort');
+    // Vérifier que l'utilisateur a assez de fonds
+    if (userBalances.main < contributionAmount) {
+        showVaultNotification('Solde insuffisant', 'error');
         return;
     }
     
-    goal.current = Math.min(goal.current + contributionAmount, goal.target);
-    renderVaultSavingsGoals();
+    // Effectuer la transaction
+    performTransaction(contributionAmount, 'debit', 'main');
+    currentVault.goal.current += contributionAmount;
+    currentVault.balance += contributionAmount;
     
-    if (goal.current >= goal.target) {
-        showVaultNotification(`🎉 Objectif "${goal.name}" atteint !`, 'success');
+    // Ajouter à l'historique du coffre-fort
+    currentVault.history.unshift({
+        id: Date.now(),
+        type: 'deposit',
+        amount: contributionAmount,
+        description: `Contribution à ${currentVault.goal.name}`,
+        date: new Date(),
+        goal: currentVault.goal.name
+    });
+    
+    renderVaultGoal();
+    updateVaultDisplay();
+    
+    if (currentVault.goal.current >= currentVault.goal.target) {
+        showVaultNotification(`🎉 Objectif "${currentVault.goal.name}" atteint !`, 'success');
     } else {
         showVaultNotification('Contribution ajoutée avec succès !', 'success');
     }
@@ -3096,4 +3364,123 @@ function toggleModalFAQ(element) {
 function openFAQPage() {
     window.location.href = 'faq.html';
 }
+
+// =====================================
+// NOUVELLES FONCTIONS COFFRE-FORT
+// =====================================
+
+// Variables pour la gestion des coffres-forts multiples
+let selectedVaultIcon = 'vault';
+let maxVaults = 3; // Maximum 3 coffres-forts (1 principal + 2 supplémentaires)
+
+// Fonctions pour le modal de création de nouveau coffre-fort
+function openNewVaultModal() {
+    if (vaults.length >= 3) {
+        showVaultNotification('Vous avez atteint la limite de 3 coffres-forts', 'error');
+        return;
+    }
+    document.getElementById('new-vault-modal').style.display = 'flex';
+    resetVaultForm();
+}
+
+function closeNewVaultModal() {
+    document.getElementById('new-vault-modal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    // Réinitialiser le formulaire
+    resetVaultForm();
+}
+
+function selectVaultIcon(icon) {
+    // Retirer la sélection précédente
+    document.querySelectorAll('.vault-icon-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Ajouter la sélection à l'icône choisie
+    document.querySelector(`[data-icon="${icon}"]`).classList.add('selected');
+    selectedVaultIcon = icon;
+}
+
+function resetVaultForm() {
+    document.getElementById('new-vault-name').value = '';
+    document.getElementById('new-vault-description').value = '';
+    selectedVaultIcon = 'vault';
+    
+    // Remettre à zéro la sélection d'icônes
+    document.querySelectorAll('.vault-icon-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.querySelector('[data-icon="vault"]').classList.add('selected');
+}
+
+function createNewVault() {
+    console.log('createNewVault appelée');
+    const name = document.getElementById('new-vault-name').value.trim();
+    const description = document.getElementById('new-vault-description').value.trim();
+    
+    console.log('Valeurs récupérées:', { name, description });
+    
+    if (!name) {
+        alert('Veuillez entrer un nom pour le coffre-fort');
+        return;
+    }
+    
+    if (vaults.length >= 3) {
+        showVaultNotification('Limite de coffres-forts atteinte', 'error');
+        return;
+    }
+    
+    const newVault = {
+        id: Date.now(),
+        name: name,
+        description: description,
+        icon: selectedVaultIcon,
+        balance: 0,
+        goal: null,
+        history: [],
+        isMain: false
+    };
+    
+    console.log('Nouveau coffre-fort créé:', newVault);
+    console.log('Vaults avant ajout:', vaults);
+    
+    vaults.push(newVault);
+    currentVaultIndex = vaults.length - 1; // Basculer vers le nouveau coffre-fort
+    
+    console.log('Vaults après ajout:', vaults);
+    console.log('currentVaultIndex:', currentVaultIndex);
+    
+    // Fermer la modale d'abord
+    closeNewVaultModal();
+    
+    // Afficher une notification de succès
+    showVaultNotification(`Coffre-fort "${name}" créé avec succès !`, 'success');
+    
+    // Petit délai pour permettre à la notification d'apparaître, puis basculer vers le nouveau coffre
+    setTimeout(() => {
+        // Mettre à jour l'affichage et basculer vers le nouveau coffre-fort
+        forceVaultUpdate();
+        goToVault(currentVaultIndex); // Basculer explicitement vers le nouveau coffre
+        
+        // Notification supplémentaire pour indiquer qu'on est sur le nouveau coffre
+        setTimeout(() => {
+            showVaultNotification(`Vous êtes maintenant sur votre nouveau coffre-fort "${name}"`, 'info');
+        }, 1000);
+    }, 500);
+    
+    const remaining = 3 - vaults.length;
+    let message = `Coffre-fort "${name}" créé avec succès !`;
+    if (remaining > 0) {
+        message += ` (${remaining} coffre${remaining > 1 ? 's' : ''} restant${remaining > 1 ? 's' : ''})`;
+    }
+    
+    showVaultNotification(message, 'success');
+}
+
+// Initialisation lors du chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof renderVaultGoal === 'function') {
+        renderVaultGoal();
+    }
+});
 

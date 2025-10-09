@@ -4318,6 +4318,410 @@ input[type="number"] {
     box-shadow: 0 10px 30px rgba(106, 17, 203, 0.4);
 }
 
+/* Styles pour le carrousel des coffres-forts */
+.vault-carousel-container {
+    position: relative;
+    margin-bottom: 30px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.vault-carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.vault-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.vault-balance-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 20px;
+    padding: 25px;
+    color: var(--text-light);
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+}
+
+.vault-balance-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.balance-title {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.vault-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.vault-name {
+    flex: 1;
+}
+
+.balance-amount {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.balance-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.balance-detail {
+    text-align: center;
+    flex: 1;
+}
+
+.detail-value {
+    font-weight: 700;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.divider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 15px;
+}
+
+/* Boutons de navigation du carrousel */
+.vault-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.vault-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.vault-nav-prev {
+    left: 15px;
+}
+
+.vault-nav-next {
+    right: 15px;
+}
+
+.vault-nav-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Indicateurs de pagination */
+.vault-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.vault-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vault-indicator.active {
+    background: var(--accent-color);
+    transform: scale(1.2);
+}
+
+/* Sections d'historique des coffres-forts */
+.vault-history-sections {
+    margin-top: 20px;
+}
+
+.vault-history-sections .transactions-section + .transactions-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.no-transactions {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* Responsive pour les coffres-forts */
+@media (max-width: 768px) {
+    .vault-carousel-container {
+        margin: 0 -15px 20px -15px;
+        border-radius: 0;
+    }
+    
+    .vault-balance-card {
+        border-radius: 0;
+        padding: 20px;
+        margin: 0;
+        min-height: 130px;
+    }
+    
+    .balance-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .balance-amount {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+    
+    .balance-details {
+        margin-top: 15px;
+        font-size: 13px;
+    }
+    
+    .detail-value {
+        font-size: 15px;
+    }
+    
+    .vault-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .vault-nav-prev {
+        left: 10px;
+    }
+    
+    .vault-nav-next {
+        right: 10px;
+    }
+    
+    .vault-indicators {
+        margin-top: 12px;
+        gap: 6px;
+    }
+    
+    .vault-indicator {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vault-balance-card {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    .balance-title {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .balance-amount {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+    
+    .vault-nav-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .vault-nav-prev {
+        left: 5px;
+    }
+    
+    .vault-nav-next {
+        right: 5px;
+    }
+}
+
+/* Responsive pour les modales vault */
+@media (max-width: 768px) {
+    .vault-modal-content {
+        width: 95%;
+        padding: 20px;
+        max-height: 85vh;
+        border-radius: 15px;
+    }
+    
+    .vault-modal-title {
+        font-size: 18px;
+    }
+    
+    .vault-modal-close {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+    
+    .vault-input-group {
+        margin-bottom: 18px;
+    }
+    
+    .vault-input-group label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vault-modal-content {
+        width: 98%;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    
+    .vault-modal-header {
+        margin-bottom: 20px;
+    }
+    
+    .vault-modal-title {
+        font-size: 16px;
+    }
+    
+    .vault-modal-close {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .vault-input-group {
+        margin-bottom: 15px;
+    }
+}
+
+/* Styles pour la section objectif unique */
+.vault-goal-section {
+    margin: 30px 0;
+}
+
+.vault-goal-container {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.no-goal-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.no-goal-message i {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.no-goal-message p {
+    margin: 5px 0;
+}
+
+/* Styles pour le modal de création de coffre-fort */
+.vault-info-message {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.vault-info-message i {
+    color: var(--accent-color);
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.vault-info-message p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.vault-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.vault-icon-option {
+    background: var(--card-bg);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-muted);
+}
+
+.vault-icon-option:hover {
+    border-color: var(--accent-color);
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+.vault-icon-option.selected {
+    border-color: var(--accent-color);
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-color);
+}
+
+.vault-icon-option i {
+    font-size: 24px;
+    margin-bottom: 5px;
+    display: block;
+}
+
 /* Notifications du coffre-fort */
 .vault-notification {
     position: fixed;
