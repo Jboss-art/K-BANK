@@ -1078,6 +1078,428 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Styles pour la page recharge */
+        .recharge-form {
+            padding: 20px;
+        }
+
+        .operator-selection {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .operator-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid rgba(192, 192, 192, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .operator-option.selected {
+            border-color: var(--professional-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .operator-option img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .operator-option span {
+            display: block;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .amount-presets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .preset-amount {
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .preset-amount:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: var(--professional-color);
+        }
+
+        .preset-amount.selected {
+            background: var(--professional-color);
+            border-color: var(--professional-color);
+            color: white;
+        }
+
+        /* Styles pour la page factures */
+        .bills-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tab-button.active {
+            background: var(--professional-color);
+            color: white;
+        }
+
+        .tab-button i {
+            font-size: 16px;
+        }
+
+        .tab-button span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .bills-summary {
+            padding: 0 20px 20px;
+        }
+
+        .summary-card {
+            background: var(--blue-gradient);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .summary-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .summary-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .bills-list {
+            padding: 0 20px;
+        }
+
+        .bill-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .bill-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .bill-item.urgent {
+            border-color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .bill-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--professional-color);
+        }
+
+        .bill-item.urgent .bill-icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .bill-info {
+            flex: 1;
+        }
+
+        .bill-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .bill-details {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .bill-due {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .bill-amount {
+            text-align: right;
+        }
+
+        .amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .status.paid {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .status.overdue {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        /* Styles pour la page épargne */
+        .savings-overview {
+            padding: 20px;
+        }
+
+        .savings-card {
+            background: var(--blue-gradient);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+        }
+
+        .savings-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .savings-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .savings-title {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .savings-amount {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .savings-progress {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .savings-products, .current-savings {
+            padding: 0 20px 20px;
+        }
+
+        .product-card, .savings-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .product-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .product-icon, .type-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .product-info, .type-info {
+            flex: 1;
+        }
+
+        .product-title, .type-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .product-rate {
+            font-size: 14px;
+            color: var(--success-color);
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .product-description, .type-details {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .product-arrow {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .savings-balance {
+            text-align: right;
+        }
+
+        .balance-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .balance-interest {
+            font-size: 13px;
+            color: var(--success-color);
+        }
+
+        .savings-actions {
+            padding: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-button.primary {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .action-button.primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .action-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+        }
+
+        .action-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -1122,19 +1544,19 @@
                         <i class="fas fa-credit-card"></i>
                         <span>Cartes</span>
                     </div>
-                    <div class="quick-action" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="quick-action" onclick="switchTab('recharge')">
                         <i class="fas fa-mobile-alt"></i>
                         <span>Recharger</span>
                     </div>
-                    <div class="quick-action" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="quick-action" onclick="switchTab('bills')">
                         <i class="fas fa-file-invoice"></i>
                         <span>Factures</span>
                     </div>
-                    <div class="quick-action" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="quick-action" onclick="switchTab('savings')">
                         <i class="fas fa-chart-line"></i>
                         <span>Épargne</span>
                     </div>
-                    <div class="quick-action" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="quick-action" onclick="switchTab('loans')">
                         <i class="fas fa-hand-holding-usd"></i>
                         <span>Prêts</span>
                     </div>
@@ -1194,6 +1616,488 @@
                 </div>
             </div>
 
+            <!-- Page Recharge -->
+            <div class="page recharge-page" id="recharge-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Recharge Mobile</h2>
+                </div>
+
+                <div class="content">
+                    <div class="recharge-form">
+                        <div class="input-group">
+                            <label>Numéro de téléphone</label>
+                            <div class="input-field">
+                                <input type="tel" placeholder="06 XX XX XX XX" id="recharge-phone" maxlength="10">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Opérateur</label>
+                            <div class="operator-selection">
+                                <div class="operator-option" onclick="selectOperator('moov')">
+                                    <img src="assets/logos/moov.png" alt="Moov">
+                                    <span>Moov</span>
+                                </div>
+                                <div class="operator-option" onclick="selectOperator('airtel')">
+                                    <img src="assets/logos/airtel-money.png" alt="Airtel">
+                                    <span>Airtel</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Montant (Fcfa)</label>
+                            <div class="amount-presets">
+                                <div class="preset-amount" onclick="setRechargeAmount(500)">500</div>
+                                <div class="preset-amount" onclick="setRechargeAmount(1000)">1000</div>
+                                <div class="preset-amount" onclick="setRechargeAmount(2000)">2000</div>
+                                <div class="preset-amount" onclick="setRechargeAmount(5000)">5000</div>
+                            </div>
+                            <div class="input-field">
+                                <input type="number" placeholder="Montant personnalisé" id="recharge-amount">
+                            </div>
+                        </div>
+
+                        <button class="submit-button" onclick="confirmRecharge()">
+                            <i class="fas fa-mobile-alt"></i>
+                            Recharger
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Factures -->
+            <div class="page bills-page" id="bills-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Gestion des Factures</h2>
+                </div>
+
+                <div class="content">
+                    <div class="bills-tabs">
+                        <div class="tab-button active" onclick="switchBillsTab('pending')">
+                            <i class="fas fa-clock"></i>
+                            <span>En attente</span>
+                        </div>
+                        <div class="tab-button" onclick="switchBillsTab('paid')">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Payées</span>
+                        </div>
+                        <div class="tab-button" onclick="switchBillsTab('overdue')">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>En retard</span>
+                        </div>
+                    </div>
+
+                    <div class="bills-content" id="bills-pending">
+                        <div class="bills-summary">
+                            <div class="summary-card">
+                                <div class="summary-icon">
+                                    <i class="fas fa-file-invoice"></i>
+                                </div>
+                                <div class="summary-info">
+                                    <div class="summary-amount">350,000 Fcfa</div>
+                                    <div class="summary-label">Total à payer</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bills-list">
+                            <div class="bill-item" onclick="viewBillDetails(1)">
+                                <div class="bill-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="bill-info">
+                                    <div class="bill-title">SEEG - Électricité</div>
+                                    <div class="bill-details">Facture #ELE-2024-001</div>
+                                    <div class="bill-due">Échéance: 15/02/2024</div>
+                                </div>
+                                <div class="bill-amount">
+                                    <div class="amount">85,000 Fcfa</div>
+                                    <div class="status pending">En attente</div>
+                                </div>
+                            </div>
+
+                            <div class="bill-item" onclick="viewBillDetails(2)">
+                                <div class="bill-icon">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                                <div class="bill-info">
+                                    <div class="bill-title">SEEG - Eau</div>
+                                    <div class="bill-details">Facture #EAU-2024-001</div>
+                                    <div class="bill-due">Échéance: 20/02/2024</div>
+                                </div>
+                                <div class="bill-amount">
+                                    <div class="amount">45,000 Fcfa</div>
+                                    <div class="status pending">En attente</div>
+                                </div>
+                            </div>
+
+                            <div class="bill-item" onclick="viewBillDetails(3)">
+                                <div class="bill-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="bill-info">
+                                    <div class="bill-title">Gabon Telecom - Internet</div>
+                                    <div class="bill-details">Facture #INT-2024-001</div>
+                                    <div class="bill-due">Échéance: 25/02/2024</div>
+                                </div>
+                                <div class="bill-amount">
+                                    <div class="amount">220,000 Fcfa</div>
+                                    <div class="status pending">En attente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bills-content" id="bills-paid" style="display: none;">
+                        <div class="bills-list">
+                            <div class="bill-item">
+                                <div class="bill-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="bill-info">
+                                    <div class="bill-title">Airtel - Téléphone</div>
+                                    <div class="bill-details">Facture #TEL-2024-001</div>
+                                    <div class="bill-due">Payée le: 10/01/2024</div>
+                                </div>
+                                <div class="bill-amount">
+                                    <div class="amount">25,000 Fcfa</div>
+                                    <div class="status paid">Payée</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bills-content" id="bills-overdue" style="display: none;">
+                        <div class="bills-list">
+                            <div class="bill-item urgent">
+                                <div class="bill-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="bill-info">
+                                    <div class="bill-title">Assurance Véhicule</div>
+                                    <div class="bill-details">Police #ASS-2024-001</div>
+                                    <div class="bill-due">En retard depuis: 5 jours</div>
+                                </div>
+                                <div class="bill-amount">
+                                    <div class="amount">120,000 Fcfa</div>
+                                    <div class="status overdue">En retard</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Épargne -->
+            <div class="page savings-page" id="savings-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Épargne Professionnelle</h2>
+                </div>
+
+                <div class="content">
+                    <div class="savings-overview">
+                        <div class="savings-card">
+                            <div class="savings-header">
+                                <div class="savings-icon">
+                                    <i class="fas fa-piggy-bank"></i>
+                                </div>
+                                <div class="savings-info">
+                                    <div class="savings-title">Épargne Totale</div>
+                                    <div class="savings-amount">1,250,000 Fcfa</div>
+                                </div>
+                            </div>
+                            <div class="savings-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 62.5%"></div>
+                                </div>
+                                <div class="progress-text">Objectif: 2,000,000 Fcfa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="savings-products">
+                        <div class="section-title">Produits d'épargne</div>
+                        
+                        <div class="product-card" onclick="openSavingsDetails('depot-terme')">
+                            <div class="product-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Dépôt à Terme</div>
+                                <div class="product-rate">Taux: 6.5% / an</div>
+                                <div class="product-description">Durée minimale: 6 mois</div>
+                            </div>
+                            <div class="product-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="product-card" onclick="openSavingsDetails('plan-epargne')">
+                            <div class="product-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Plan Épargne Entreprise</div>
+                                <div class="product-rate">Taux: 5.8% / an</div>
+                                <div class="product-description">Versements mensuels</div>
+                            </div>
+                            <div class="product-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="product-card" onclick="openSavingsDetails('livret-pro')">
+                            <div class="product-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Livret Professionnel</div>
+                                <div class="product-rate">Taux: 4.2% / an</div>
+                                <div class="product-description">Disponible à tout moment</div>
+                            </div>
+                            <div class="product-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-savings">
+                        <div class="section-title">Mes épargnes actuelles</div>
+                        
+                        <div class="savings-item">
+                            <div class="savings-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="type-info">
+                                    <div class="type-name">Dépôt à Terme #001</div>
+                                    <div class="type-details">Échéance: 15/08/2024</div>
+                                </div>
+                            </div>
+                            <div class="savings-balance">
+                                <div class="balance-amount">850,000 Fcfa</div>
+                                <div class="balance-interest">+32,500 Fcfa d'intérêts</div>
+                            </div>
+                        </div>
+
+                        <div class="savings-item">
+                            <div class="savings-type">
+                                <div class="type-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="type-info">
+                                    <div class="type-name">Livret Professionnel</div>
+                                    <div class="type-details">Ouvert le: 12/01/2024</div>
+                                </div>
+                            </div>
+                            <div class="savings-balance">
+                                <div class="balance-amount">400,000 Fcfa</div>
+                                <div class="balance-interest">+8,400 Fcfa d'intérêts</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="savings-actions">
+                        <button class="action-button primary" onclick="openNewSavingsModal()">
+                            <i class="fas fa-plus"></i>
+                            Nouvelle épargne
+                        </button>
+                        <button class="action-button secondary" onclick="viewSavingsHistory()">
+                            <i class="fas fa-history"></i>
+                            Historique
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Prêts -->
+            <div class="page loans-page" id="loans-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('home')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Prêts Professionnels</h2>
+                </div>
+
+                <div class="content">
+                    <div class="loan-eligibility">
+                        <div class="eligibility-card">
+                            <div class="eligibility-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="eligibility-info">
+                                <div class="eligibility-title">Éligible aux prêts</div>
+                                <div class="eligibility-amount">Jusqu'à 5,000,000 Fcfa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="loan-products">
+                        <div class="section-title">Types de prêts disponibles</div>
+                        
+                        <div class="loan-card" onclick="applyForLoan('equipement')">
+                            <div class="loan-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="loan-info">
+                                <div class="loan-title">Prêt Équipement</div>
+                                <div class="loan-rate">Taux: 8.5% / an</div>
+                                <div class="loan-duration">Durée: 12 à 60 mois</div>
+                            </div>
+                            <div class="loan-amount">
+                                <div class="max-amount">Max: 3M Fcfa</div>
+                            </div>
+                        </div>
+
+                        <div class="loan-card" onclick="applyForLoan('tresorerie')">
+                            <div class="loan-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="loan-info">
+                                <div class="loan-title">Crédit de Trésorerie</div>
+                                <div class="loan-rate">Taux: 7.8% / an</div>
+                                <div class="loan-duration">Durée: 6 à 24 mois</div>
+                            </div>
+                            <div class="loan-amount">
+                                <div class="max-amount">Max: 2M Fcfa</div>
+                            </div>
+                        </div>
+
+                        <div class="loan-card" onclick="applyForLoan('immobilier')">
+                            <div class="loan-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="loan-info">
+                                <div class="loan-title">Prêt Immobilier Pro</div>
+                                <div class="loan-rate">Taux: 9.2% / an</div>
+                                <div class="loan-duration">Durée: 60 à 240 mois</div>
+                            </div>
+                            <div class="loan-amount">
+                                <div class="max-amount">Max: 50M Fcfa</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-loans">
+                        <div class="section-title">Mes prêts en cours</div>
+                        
+                        <div class="loan-status-card">
+                            <div class="loan-status-header">
+                                <div class="status-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="status-info">
+                                    <div class="status-title">Prêt Équipement #2024-001</div>
+                                    <div class="status-details">Demande en cours d'étude</div>
+                                </div>
+                            </div>
+                            <div class="loan-progress">
+                                <div class="progress-steps">
+                                    <div class="step completed">Demande</div>
+                                    <div class="step active">Étude</div>
+                                    <div class="step">Validation</div>
+                                    <div class="step">Déblocage</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="loan-simulator">
+                        <div class="section-title">Simulateur de prêt</div>
+                        <div class="simulator-card">
+                            <div class="simulator-form">
+                                <div class="input-row">
+                                    <label>Montant souhaité</label>
+                                    <input type="number" placeholder="1,000,000" id="loan-amount" oninput="calculateLoan()">
+                                </div>
+                                <div class="input-row">
+                                    <label>Durée (mois)</label>
+                                    <input type="number" placeholder="36" id="loan-duration" oninput="calculateLoan()">
+                                </div>
+                                <div class="result-row">
+                                    <div class="result-label">Mensualité estimée:</div>
+                                    <div class="result-value" id="monthly-payment">-- Fcfa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Rapports -->
+            <div class="page reports-page" id="reports-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('professional')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Rapports & Analytics</h2>
+                </div>
+
+                <div class="content">
+                    <div class="reports-summary">
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div class="summary-icon success">
+                                    <i class="fas fa-arrow-up"></i>
+                                </div>
+                                <div class="summary-data">
+                                    <div class="summary-value">+15.2%</div>
+                                    <div class="summary-label">Revenus ce mois</div>
+                                </div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-icon danger">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="summary-data">
+                                    <div class="summary-value">-8.5%</div>
+                                    <div class="summary-label">Dépenses ce mois</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Évolution mensuelle</h3>
+                            <div class="chart-legend">
+                                <span class="legend-item income">Revenus</span>
+                                <span class="legend-item expense">Dépenses</span>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Graphique interactif disponible prochainement</p>
+                        </div>
+                    </div>
+
+                    <div class="reports-actions">
+                        <button class="report-btn" onclick="generateReport('monthly')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Rapport mensuel
+                        </button>
+                        <button class="report-btn" onclick="generateReport('yearly')">
+                            <i class="fas fa-calendar"></i>
+                            Rapport annuel
+                        </button>
+                        <button class="report-btn" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            Exporter données
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Page Compte Professionnel -->
             <div class="page professional-page" id="professional-page">
                 <div class="page-header">
@@ -1242,14 +2146,14 @@
                         <div class="action-title">Gérer partenaires</div>
                         <div class="action-description">Ajouter/modifier</div>
                     </div>
-                    <div class="action-card" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="action-card" onclick="switchTab('reports')">
                         <div class="action-icon">
                             <i class="fas fa-chart-bar"></i>
                         </div>
                         <div class="action-title">Rapports</div>
                         <div class="action-description">Analytiques détaillés</div>
                     </div>
-                    <div class="action-card" onclick="showToast('Fonctionnalité à venir')">
+                    <div class="action-card" onclick="switchTab('bills')">
                         <div class="action-icon">
                             <i class="fas fa-file-invoice"></i>
                         </div>
@@ -2239,6 +3143,183 @@
         }
 
         // Initialiser les écouteurs de glissement au chargement de la page
+
+        // Variables pour la recharge
+        let selectedOperator = null;
+        let selectedAmount = null;
+
+        // Sélectionner un opérateur
+        function selectOperator(operator) {
+            selectedOperator = operator;
+            
+            // Retirer la sélection des autres opérateurs
+            document.querySelectorAll('.operator-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Ajouter la sélection à l'opérateur choisi
+            event.target.closest('.operator-option').classList.add('selected');
+        }
+
+        // Définir un montant prédéfini
+        function setRechargeAmount(amount) {
+            selectedAmount = amount;
+            document.getElementById('recharge-amount').value = amount;
+            
+            // Mettre à jour la sélection visuelle
+            document.querySelectorAll('.preset-amount').forEach(preset => {
+                preset.classList.remove('selected');
+            });
+            
+            event.target.classList.add('selected');
+        }
+
+        // Confirmer la recharge
+        function confirmRecharge() {
+            const phone = document.getElementById('recharge-phone').value;
+            const amount = document.getElementById('recharge-amount').value || selectedAmount;
+            
+            if (!phone) {
+                showToast('Veuillez saisir un numéro de téléphone', 'error');
+                return;
+            }
+            
+            if (!selectedOperator) {
+                showToast('Veuillez sélectionner un opérateur', 'error');
+                return;
+            }
+            
+            if (!amount || amount <= 0) {
+                showToast('Veuillez saisir un montant valide', 'error');
+                return;
+            }
+            
+            const operatorNames = {
+                'moov': 'Moov',
+                'airtel': 'Airtel'
+            };
+            
+            showConfirmDialog(
+                'Confirmer la recharge',
+                `Recharger ${Number(amount).toLocaleString()} Fcfa sur le ${phone} (${operatorNames[selectedOperator]}) ?`,
+                'Confirmer',
+                'Annuler',
+                () => {
+                    // Simuler le traitement
+                    showToast('Recharge en cours...', 'info');
+                    
+                    setTimeout(() => {
+                        // Déduire du solde professionnel
+                        if (appData.user.professionalBalance >= amount) {
+                            appData.user.professionalBalance -= Number(amount);
+                            updateBalanceDisplay();
+                            showToast(`Recharge de ${Number(amount).toLocaleString()} Fcfa effectuée avec succès !`, 'success');
+                            
+                            // Réinitialiser le formulaire
+                            document.getElementById('recharge-phone').value = '';
+                            document.getElementById('recharge-amount').value = '';
+                            selectedOperator = null;
+                            selectedAmount = null;
+                            
+                            document.querySelectorAll('.operator-option').forEach(option => {
+                                option.classList.remove('selected');
+                            });
+                            
+                            document.querySelectorAll('.preset-amount').forEach(preset => {
+                                preset.classList.remove('selected');
+                            });
+                        } else {
+                            showToast('Solde insuffisant dans le compte professionnel', 'error');
+                        }
+                    }, 2000);
+                }
+            );
+        }
+
+        // Gestion des onglets de factures
+        function switchBillsTab(tab) {
+            // Masquer tous les contenus
+            document.querySelectorAll('.bills-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Retirer la classe active de tous les boutons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Afficher le contenu sélectionné
+            document.getElementById(`bills-${tab}`).style.display = 'block';
+            
+            // Ajouter la classe active au bouton cliqué
+            event.target.closest('.tab-button').classList.add('active');
+        }
+
+        // Voir les détails d'une facture
+        function viewBillDetails(billId) {
+            showToast(`Détails de la facture #${billId} - Fonctionnalité à développer`, 'info');
+        }
+
+        // Fonctions pour l'épargne
+        function openSavingsDetails(productType) {
+            const productNames = {
+                'depot-terme': 'Dépôt à Terme',
+                'plan-epargne': 'Plan Épargne Entreprise',
+                'livret-pro': 'Livret Professionnel'
+            };
+            
+            showToast(`Ouverture de ${productNames[productType]} - Fonctionnalité à développer`, 'info');
+        }
+
+        function openNewSavingsModal() {
+            showToast('Nouvelle épargne - Fonctionnalité à développer', 'info');
+        }
+
+        function viewSavingsHistory() {
+            showToast('Historique des épargnes - Fonctionnalité à développer', 'info');
+        }
+
+        // Fonctions pour les prêts
+        function applyForLoan(type) {
+            const loanTypes = {
+                'equipement': 'Prêt Équipement',
+                'tresorerie': 'Crédit de Trésorerie',
+                'immobilier': 'Prêt Immobilier Pro'
+            };
+            
+            showToast(`Demande de ${loanTypes[type]} - Fonctionnalité à développer`, 'info');
+        }
+
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('loan-amount').value) || 0;
+            const duration = parseFloat(document.getElementById('loan-duration').value) || 0;
+            const rate = 0.085; // 8.5% par an
+            
+            if (amount > 0 && duration > 0) {
+                const monthlyRate = rate / 12;
+                const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, duration)) / 
+                                    (Math.pow(1 + monthlyRate, duration) - 1);
+                
+                document.getElementById('monthly-payment').textContent = 
+                    monthlyPayment.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' Fcfa';
+            } else {
+                document.getElementById('monthly-payment').textContent = '-- Fcfa';
+            }
+        }
+
+        // Fonctions pour les rapports
+        function generateReport(type) {
+            const reportTypes = {
+                'monthly': 'Rapport mensuel',
+                'yearly': 'Rapport annuel'
+            };
+            
+            showToast(`Génération du ${reportTypes[type]} - Fonctionnalité à développer`, 'info');
+        }
+
+        function exportData() {
+            showToast('Export des données - Fonctionnalité à développer', 'info');
+        }
     </script>
 </body>
 </html>
