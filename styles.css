@@ -195,7 +195,7 @@ body {
 .balance-amount .currency-symbol {
     font-size: 1em;
     font-weight: 600;
-    margin-right: 2px;
+    margin-right: 0px;
 }
 
 .balance-amount .currency-code {
@@ -263,7 +263,7 @@ body {
 .detail-value .currency-symbol {
     font-size: 1em;
     font-weight: 700;
-    margin-right: 2px;
+    margin-right: 0px;
 }
 
 .detail-value .currency-code {
@@ -4480,6 +4480,14 @@ input[type="number"] {
 .vault-history-sections .transactions-section + .transactions-section {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 20px;
+}
+
+.vault-quick-amount .currency-symbol {
+    margin-right: 0px;
+}
+
+.vault-quick-amount .currency-code {
+    margin-right: 5px;
 }
 
 .no-transactions {

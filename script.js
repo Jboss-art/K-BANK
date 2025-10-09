@@ -36,12 +36,12 @@ function updateBalanceDisplay() {
     // Mise à jour des options de compte dans le coffre-fort
     const mainAccountOption = document.querySelector('option[value="main"]');
     if (mainAccountOption) {
-        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} F cfa)`;
+        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} Fcfa)`;
     }
     
     const professionalAccountOption = document.querySelector('option[value="professional"]');
     if (professionalAccountOption) {
-        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} F cfa)`;
+        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} Fcfa)`;
     }
 }
 
@@ -755,7 +755,7 @@ const appData = {
         {
             id: 1,
             title: "Virement reçu",
-            message: "Vous avez reçu 15000,00 F <h6>cfa</h6> de Jean Mvoumbi",
+            message: "Vous avez reçu 15000,00 de Jean Mvoumbi",
             date: "Il y a 2 heures",
             read: false,
             type: "transaction"
@@ -763,7 +763,7 @@ const appData = {
         {
             id: 2,
             title: "Paiement effectué",
-            message: "Paiement de 35000,00 F <h6>cfa</h6> à Supermarché ABC",
+            message: "Paiement de 35000,00 à Supermarché ABC",
             date: "Il y a 5 heures",
             read: false,
             type: "transaction"
@@ -848,7 +848,7 @@ function renderNotificationItems(notifications) {
         
         if (amountMatch) {
             const amount = parseFloat(amountMatch[0].replace(',', '.'));
-            const formattedAmount = `<strong>${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} F <h6>cfa</h6></strong>`;
+            const formattedAmount = `<strong>${amount < 0 ? '-' : ''}${Math.abs(amount).toLocaleString()} Fcfa</strong>`;
             formattedMessage = notification.message.replace(amountMatch[0], formattedAmount);
         }
 
@@ -1938,7 +1938,88 @@ let vaults = [
         icon: 'key',
         balance: 300000,
         goal: null,
-        history: [],
+        history: [
+            {
+                id: 1,
+                type: 'deposit',
+                amount: 120000,
+                description: 'Dépôt initial',
+                date: new Date(2024, 8, 15), // 15 septembre 2024
+                goal: null
+            },
+            {
+                id: 2,
+                type: 'deposit',
+                amount: 60000,
+                description: 'Épargne mensuelle',
+                date: new Date(2024, 9, 1), // 1 octobre 2024
+                goal: null
+            },
+            {
+                id: 3,
+                type: 'deposit',
+                amount: 70000,
+                description: 'Prime de fin d\'année',
+                date: new Date(2024, 11, 20), // 20 décembre 2024
+                goal: null
+            },
+            {
+                id: 4,
+                type: 'withdraw',
+                amount: 25000,
+                description: 'Frais médicaux',
+                date: new Date(2025, 1, 10), // 10 février 2025
+                goal: null
+            },
+            {
+                id: 5,
+                type: 'deposit',
+                amount: 35000,
+                description: 'Économies février',
+                date: new Date(2025, 1, 28), // 28 février 2025
+                goal: null
+            },
+            {
+                id: 6,
+                type: 'deposit',
+                amount: 40000,
+                description: 'Épargne mars',
+                date: new Date(2025, 2, 15), // 15 mars 2025
+                goal: null
+            },
+            {
+                id: 7,
+                type: 'withdraw',
+                amount: 20000,
+                description: 'Achat équipement',
+                date: new Date(2025, 3, 5), // 5 avril 2025
+                goal: null
+            },
+            {
+                id: 8,
+                type: 'deposit',
+                amount: 25000,
+                description: 'Épargne avril',
+                date: new Date(2025, 3, 30), // 30 avril 2025
+                goal: null
+            },
+            {
+                id: 9,
+                type: 'deposit',
+                amount: 20000,
+                description: 'Bonus travail',
+                date: new Date(2025, 7, 10), // 10 août 2025
+                goal: null
+            },
+            {
+                id: 10,
+                type: 'withdraw',
+                amount: 25000,
+                description: 'Frais divers',
+                date: new Date(2025, 8, 20), // 20 septembre 2025
+                goal: null
+            }
+        ],
         isMain: true
     }
 ]; // Liste des coffres-forts disponibles
@@ -2100,7 +2181,7 @@ function renderVaultGoal() {
                     </div>
                     <div class="vault-goal-details">
                         <div class="vault-goal-name">${currentVault.goal.name}</div>
-                        <div class="vault-goal-amount">${currentVault.goal.current.toLocaleString('fr-FR')} F cfa / ${currentVault.goal.target.toLocaleString('fr-FR')} F cfa</div>
+                        <div class="vault-goal-amount">${currentVault.goal.current.toLocaleString('fr-FR')} Fcfa / ${currentVault.goal.target.toLocaleString('fr-FR')} Fcfa</div>
                         <div class="vault-progress-bar">
                             <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
                         </div>
@@ -2141,7 +2222,10 @@ function renderVaultDeposits() {
     container.innerHTML = '';
     
     const currentVault = getCurrentVault();
-    const deposits = currentVault.history.filter(t => t.type === 'deposit').slice(0, 3);
+    const deposits = currentVault.history
+        .filter(t => t.type === 'deposit')
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3);
     
     if (deposits.length === 0) {
         container.innerHTML = '<div class="no-transactions">Aucun dépôt récent</div>';
@@ -2161,7 +2245,7 @@ function renderVaultDeposits() {
                 <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: #22c55e;">
-                +${transaction.amount.toLocaleString('fr-FR')} F cfa
+                +${transaction.amount.toLocaleString('fr-FR')} Fcfa
             </div>
         `;
         
@@ -2176,7 +2260,10 @@ function renderVaultWithdrawals() {
     container.innerHTML = '';
     
     const currentVault = getCurrentVault();
-    const withdrawals = currentVault.history.filter(t => t.type === 'withdraw').slice(0, 3);
+    const withdrawals = currentVault.history
+        .filter(t => t.type === 'withdraw')
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3);
     
     if (withdrawals.length === 0) {
         container.innerHTML = '<div class="no-transactions">Aucun retrait récent</div>';
@@ -2196,7 +2283,7 @@ function renderVaultWithdrawals() {
                 <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: #ef4444;">
-                -${transaction.amount.toLocaleString('fr-FR')} F cfa
+                -${transaction.amount.toLocaleString('fr-FR')} Fcfa
             </div>
         `;
         
@@ -3263,7 +3350,6 @@ function openFAQ() {
                                 <li><strong>Visualisation :</strong> Suivez vos progrès en temps réel</li>
                                 <li><strong>Sécurité :</strong> Fonds bloqués jusqu'à l'objectif atteint</li>
                             </ul>
-                            <p><strong>Taux d'intérêt :</strong> 3% annuel sur les épargnes bloquées.</p>
                         </div>
                     </div>
 
@@ -3283,7 +3369,7 @@ function openFAQ() {
                                 <li><strong>Signalez la transaction</strong> dans votre historique</li>
                                 <li><strong>Conservez les preuves</strong> (captures d'écran, SMS, etc.)</li>
                             </ol>
-                            <p><strong>Notre engagement :</strong> Enquête sous 24h, remboursement sous 48h si fraude confirmée.</p>
+                            <p><strong>Notre engagement :</strong> Enquête sous 24h.</p>
                             <p><strong>Numéro d'urgence :</strong> +241 01 23 45 67 (24h/24, 7j/7)</p>
                         </div>
                     </div>
