@@ -1028,6 +1028,20 @@ function switchTab(tab) {
             renderVaultCarousel();
         }, 100);
     }
+
+    // Gérer l'affichage du bouton flottant K-Shop
+    const kshopFloat = document.querySelector('.kshop-float');
+    if (kshopFloat) {
+        if (tab === 'kshop') {
+            kshopFloat.style.display = 'none'; // Cacher le bouton sur la page K-Shop
+            console.log('Bouton K-Shop caché - page kshop active');
+        } else {
+            kshopFloat.style.display = 'block'; // Afficher le bouton sur les autres pages
+            console.log('Bouton K-Shop affiché - page:', tab);
+        }
+    } else {
+        console.log('Bouton K-Shop non trouvé dans le DOM');
+    }
 }
 
 // Modal de confirmation
@@ -1686,21 +1700,16 @@ function updateKShopBadge(count) {
 }
 
 function openKShop() {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
+    switchTab('kshop');
     
-    const kshopPage = document.querySelector('.kshop-page');
-    if (kshopPage) {
-        kshopPage.classList.add('active');
-        
-        // Reset navigation active state
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-        });
-    } else {
-        showToast('Page K-Shop en construction');
-    }
+    // Double vérification pour s'assurer que le bouton est caché
+    setTimeout(() => {
+        const kshopFloat = document.querySelector('.kshop-float');
+        if (kshopFloat) {
+            kshopFloat.style.display = 'none';
+            console.log('Bouton K-Shop forcé à se cacher via openKShop()');
+        }
+    }, 100);
 }
 
 // Variables pour le glissement vers compte-pro
@@ -3562,6 +3571,43 @@ function createNewVault() {
     
     showVaultNotification(message, 'success');
 }
+
+// Fonction pour surveiller les changements de page et gérer le bouton K-Shop
+function manageKShopFloat() {
+    const kshopFloat = document.querySelector('.kshop-float');
+    const kshopPage = document.querySelector('.kshop-page');
+    
+    if (kshopFloat && kshopPage) {
+        if (kshopPage.classList.contains('active')) {
+            kshopFloat.style.display = 'none';
+            console.log('Bouton K-Shop caché - surveillance active');
+        } else {
+            kshopFloat.style.display = 'block';
+            console.log('Bouton K-Shop affiché - surveillance active');
+        }
+    }
+}
+
+// Observer pour surveiller les changements de classe sur les pages
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            manageKShopFloat();
+        }
+    });
+});
+
+// Démarrer l'observation quand le DOM est prêt
+document.addEventListener('DOMContentLoaded', function() {
+    // Observer tous les éléments avec la classe 'page'
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
+        observer.observe(page, { attributes: true, attributeFilter: ['class'] });
+    });
+    
+    // Vérification initiale
+    setTimeout(manageKShopFloat, 500);
+});
 
 // Initialisation lors du chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
