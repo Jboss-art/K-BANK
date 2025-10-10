@@ -940,24 +940,131 @@ BP 20000 Libreville</div>
                 </div>
 
                 <div class="kshop-container">
-                    <!-- Partenaires vedettes -->
+                    <!-- Partenaires vedettes avec carrousel -->
                     <div class="featured-partners">
-                        <h3>Partenaires vedettes</h3>
-                        <div class="partners-carousel">
-                            <div class="partner-card featured">
-                                <div class="partner-banner">
-                                    <img src="assets/logos/ckdo-banner.png" alt="CKDO">
-                                    <div class="partner-discount">-15%</div>
+                        <h3>🌟 Partenaires vedettes</h3>
+                        <div class="carousel-container">
+                            <div class="partners-carousel" id="partners-carousel">
+                                <!-- CKDO Gabon -->
+                                <div class="partner-card featured active" data-partner="ckdo">
+                                    <div class="partner-banner">
+                                        <img src="assets/logos/shopping.png" alt="CKDO Gabon" class="banner-image">
+                                        <div class="partner-overlay">
+                                            <div class="partner-logo-text">CKDO</div>
+                                        </div>
+                                        <div class="partner-discount">-15%</div>
+                                        <div class="partner-badge">POPULAIRE</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>CKDO Gabon</h4>
+                                            <p>Supermarché & Shopping</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★★</span>
+                                                <span class="rating-text">4.8/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Réduction permanente</span>
+                                                <span class="benefit">Cashback 2%</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="partner-info">
-                                    <img src="assets/logos/ckdo-logo.png" alt="CKDO" class="partner-logo">
-                                    <div class="partner-details">
-                                        <h4>CKDO Gabon</h4>
-                                        <p>Supermarché & Shopping</p>
+
+                                <!-- Mbolo -->
+                                <div class="partner-card featured" data-partner="mbolo">
+                                    <div class="partner-banner">
+                                        <img src="assets/restauration.jpg" alt="Mbolo Restaurant" class="banner-image">
+                                        <div class="partner-overlay">
+                                            <div class="partner-logo-text">MBOLO</div>
+                                        </div>
+                                        <div class="partner-discount">-20%</div>
+                                        <div class="partner-badge">NOUVEAU</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>Mbolo</h4>
+                                            <p>Restaurant Africain</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★☆</span>
+                                                <span class="rating-text">4.6/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Plats traditionnels</span>
+                                                <span class="benefit">Livraison gratuite</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- KFC Gabon -->
+                                <div class="partner-card featured" data-partner="kfc">
+                                    <div class="partner-banner">
+                                        <img src="assets/mont_blanc.jpg" alt="KFC Gabon" class="banner-image">
+                                        <div class="partner-overlay kfc-overlay">
+                                            <div class="partner-logo-text">KFC</div>
+                                        </div>
+                                        <div class="partner-discount">-10%</div>
+                                        <div class="partner-badge">HOT</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>KFC Gabon</h4>
+                                            <p>Fast Food International</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★☆</span>
+                                                <span class="rating-text">4.4/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Menu famillial</span>
+                                                <span class="benefit">Drive disponible</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Paul Gabon -->
+                                <div class="partner-card featured" data-partner="paul">
+                                    <div class="partner-banner">
+                                        <img src="assets/mont_blanSc.jpg" alt="Paul Gabon" class="banner-image">
+                                        <div class="partner-overlay paul-overlay">
+                                            <div class="partner-logo-text">PAUL</div>
+                                        </div>
+                                        <div class="partner-discount">-12%</div>
+                                        <div class="partner-badge">PREMIUM</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>Paul Gabon</h4>
+                                            <p>Boulangerie & Pâtisserie</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★★</span>
+                                                <span class="rating-text">4.9/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Produits frais</span>
+                                                <span class="benefit">Café premium</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Autres partenaires vedettes... -->
+
+                            <!-- Contrôles du carrousel -->
+                            <div class="carousel-controls">
+                                <button class="carousel-btn prev" onclick="previousPartner()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="carousel-indicators" id="carousel-indicators">
+                                    <span class="indicator active" data-slide="0"></span>
+                                    <span class="indicator" data-slide="1"></span>
+                                    <span class="indicator" data-slide="2"></span>
+                                    <span class="indicator" data-slide="3"></span>
+                                </div>
+                                <button class="carousel-btn next" onclick="nextPartner()">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 

@@ -2273,16 +2273,75 @@ input[type="number"] {
 }
 
 .partner-card {
-    min-width: 280px;
+    min-width: 240px;
+    max-width: 240px;
     background: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .partner-banner {
-    height: 140px;
+    height: 110px;
     position: relative;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+}
+
+.partner-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.partner-card:hover .partner-banner img {
+    transform: scale(1.05);
+}
+
+.partner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.partner-logo-text {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.kfc-overlay {
+    background: rgba(255, 0, 0, 0.7);
+}
+
+.paul-overlay {
+    background: rgba(243, 156, 18, 0.7);
+}
+
+.partner-logo-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .partner-banner img {
@@ -2291,39 +2350,209 @@ input[type="number"] {
     object-fit: cover;
 }
 
+/* Images placeholder pour les nouveaux partenaires */
+.partner-banner img[src*="ckdo-logo.png"] {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+}
+
+.partner-banner img[src*="mbolo-logo.png"] {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+.partner-banner img[src*="kfc-logo.png"] {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+}
+
+.partner-banner img[src*="paul-logo.png"] {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+/* Style par défaut si l'image ne charge pas */
+.partner-banner img {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .partner-discount {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     background: #ff3b30;
     color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 4px 8px;
+    border-radius: 16px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
+}
+
+.partner-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
 }
 
 .partner-info {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.partner-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
+    padding: 12px;
 }
 
 .partner-details h4 {
-    font-size: 16px;
-    margin-bottom: 4px;
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: white;
 }
 
 .partner-details p {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.partner-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.partner-rating .stars {
+    color: #ffd700;
+    font-size: 12px;
+}
+
+.partner-rating .rating-text {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.partner-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.benefit {
+    background: rgba(106, 17, 203, 0.2);
+    color: #a78bfa;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+/* Carrousel des partenaires */
+.carousel-container {
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.partners-carousel {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 8px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.partners-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.partner-card.featured {
+    min-width: 240px;
+    max-width: 240px;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.carousel-btn {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+}
+
+.carousel-btn:hover {
+    background: rgba(106, 17, 203, 0.3);
+    border-color: #6a11cb;
+    transform: scale(1.1);
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: 6px;
+}
+
+.indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #6a11cb;
+    transform: scale(1.2);
+}
+
+.featured-partners h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: white;
+}
+
+/* Responsive pour le carrousel */
+@media (max-width: 380px) {
+    .partner-card.featured {
+        min-width: 200px;
+        max-width: 200px;
+    }
+    
+    .partner-banner {
+        height: 90px;
+    }
+    
+    .partner-logo-text {
+        font-size: 16px;
+    }
+    
+    .partners-carousel {
+        gap: 10px;
+    }
 }
 
 /* Grille des catégories */

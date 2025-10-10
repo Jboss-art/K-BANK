@@ -372,6 +372,10 @@ function initializeSpecificPages() {
     // Initialiser les écouteurs de glissement pour la page d'accueil
     initializeHomeSwipeListeners();
     
+    // Initialiser le carrousel des partenaires K-Shop
+    initCarouselIndicators();
+    startCarouselAutoScroll();
+    
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -1710,6 +1714,65 @@ function openKShop() {
             console.log('Bouton K-Shop forcé à se cacher via openKShop()');
         }
     }, 100);
+}
+
+// Carrousel des partenaires
+let currentPartnerIndex = 0;
+const partnersData = ['ckdo', 'mbolo', 'kfc', 'paul'];
+
+function nextPartner() {
+    currentPartnerIndex = (currentPartnerIndex + 1) % partnersData.length;
+    updateCarousel();
+}
+
+function previousPartner() {
+    currentPartnerIndex = (currentPartnerIndex - 1 + partnersData.length) % partnersData.length;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const carousel = document.getElementById('partners-carousel');
+    const indicators = document.querySelectorAll('.indicator');
+    const cards = document.querySelectorAll('.partner-card.featured');
+    
+    if (carousel && cards.length > 0) {
+        // Déplacer le carrousel avec la nouvelle largeur
+        const cardWidth = 252; // 240px + 12px gap
+        carousel.scrollTo({
+            left: currentPartnerIndex * cardWidth,
+            behavior: 'smooth'
+        });
+        
+        // Mettre à jour les indicateurs
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentPartnerIndex);
+        });
+        
+        // Mettre à jour les cartes actives
+        cards.forEach((card, index) => {
+            card.classList.toggle('active', index === currentPartnerIndex);
+        });
+    }
+}
+
+// Gestion des clics sur les indicateurs
+function initCarouselIndicators() {
+    const indicators = document.querySelectorAll('.indicator');
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentPartnerIndex = index;
+            updateCarousel();
+        });
+    });
+}
+
+// Auto-scroll du carrousel
+function startCarouselAutoScroll() {
+    setInterval(() => {
+        if (document.querySelector('.kshop-page.active')) {
+            nextPartner();
+        }
+    }, 4000); // Change toutes les 4 secondes
 }
 
 // Variables pour le glissement vers compte-pro
