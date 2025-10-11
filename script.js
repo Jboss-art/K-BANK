@@ -376,6 +376,9 @@ function initializeSpecificPages() {
     initCarouselIndicators();
     startCarouselAutoScroll();
     
+    // Initialiser le thème
+    initializeTheme();
+    
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -1773,6 +1776,44 @@ function startCarouselAutoScroll() {
             nextPartner();
         }
     }, 4000); // Change toutes les 4 secondes
+}
+
+// Gestion du thème
+function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    body.setAttribute('data-theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Animation du toggle
+    const sliders = document.querySelectorAll('.theme-toggle-slider');
+    sliders.forEach(slider => {
+        if (slider) {
+            slider.style.transform = newTheme === 'light' ? 'translateX(24px)' : 'translateX(0)';
+        }
+    });
+    
+    console.log(`Thème basculé vers: ${newTheme}`);
+}
+
+// Initialiser le thème au chargement
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const body = document.body;
+    
+    body.setAttribute('data-theme', savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    // Mettre à jour le slider
+    const slider = document.querySelector('.theme-toggle-slider');
+    if (slider) {
+        slider.style.transform = savedTheme === 'light' ? 'translateX(24px)' : 'translateX(0)';
+    }
+    
+    console.log(`Thème initialisé: ${savedTheme}`);
 }
 
 // Variables pour le glissement vers compte-pro

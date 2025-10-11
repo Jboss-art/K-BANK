@@ -6,13 +6,26 @@
     <title>K-Bank - Finance Moderne</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Initialiser le thème avant le rendu
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
-<body>
+<body data-theme="dark">
     <!-- Page d'authentification -->
     <div class="auth-overlay" id="auth-overlay">
         <div class="auth-container">
             <div class="auth-card">
-                <div class="auth-logo">K-BANK</div>
+                <div class="auth-header-section">
+                    <div class="auth-logo">K-BANK</div>
+                    <div class="theme-toggle auth-theme-toggle" onclick="toggleTheme()" title="Basculer le thème">
+                        <div class="theme-toggle-slider">
+                            <i class="fas fa-sun theme-icon light"></i>
+                            <i class="fas fa-moon theme-icon dark"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="auth-subtitle">Banque digitale sécurisée</div>
                 
                 <h2 class="auth-title">Entrez votre code PIN</h2>
@@ -63,6 +76,12 @@
         <div class="header">
             <div class="header-title">KB</div>
             <div class="header-actions">
+                <div class="theme-toggle" onclick="toggleTheme()" title="Basculer le thème">
+                    <div class="theme-toggle-slider">
+                        <i class="fas fa-sun theme-icon light"></i>
+                        <i class="fas fa-moon theme-icon dark"></i>
+                    </div>
+                </div>
                 <div class="header-icon" onclick="switchTab('profile')">
                     <i class="fas fa-user"></i>
                 </div>
