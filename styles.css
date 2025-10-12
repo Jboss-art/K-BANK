@@ -9,6 +9,7 @@
     --danger-color: #ff3b30;
     --warning-color: #ff9500;
     --info-color: #007aff;
+    --accent-color: #6a11cb;       /* Couleur d'accent par défaut */
     --header-bg: rgba(26, 26, 46, 0.95);
     --nav-bg: rgba(26, 26, 46, 0.95);
     --page-bg: linear-gradient(135deg, var(--dark-bg), #0f0c29);
@@ -21,16 +22,17 @@
 
 /* Mode clair - Palette argentée élégante et professionnelle */
 [data-theme="light"] {
-    --primary-color: #64748b;      /* Argenté olive principal - slate-500 */
-    --secondary-color: #1e293b;    /* Bleu marine foncé - slate-800 */
+    --primary-color: #334155;      /* Bleu marine slate-700 */
+    --secondary-color: #0f172a;    /* Bleu marine très foncé slate-900 */
     --dark-bg: #f8fafc;
     --card-bg: #ffffff;
-    --text-light: #1e293b;         /* Bleu marine pour bon contraste */
-    --text-muted: #64748b;         /* Argenté olive pour texte secondaire */
+    --text-light: #0f172a;         /* Bleu marine foncé pour contraste */
+    --text-muted: #475569;         /* Bleu-gris pour texte secondaire */
     --success-color: #10b981;
     --danger-color: #ef4444;
     --warning-color: #f59e0b;
-    --info-color: #64748b;         /* Argenté olive pour info */
+    --info-color: #334155;         /* Bleu marine pour info */
+    --accent-color: #334155;       /* Bleu marine pour accent */
     --header-bg: rgba(255, 255, 255, 0.95);
     --nav-bg: rgba(255, 255, 255, 0.95);
     --page-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
@@ -43,15 +45,15 @@
 
 /* Améliorations spécifiques au mode clair - REFONTE COMPLÈTE */
 
-/* Balance Card en mode clair - Dégradé argenté olive et bleu marine */
+/* Balance Card en mode clair - Dégradé bleu marine harmonieux */
 [data-theme="light"] .balance-card {
     background: linear-gradient(135deg, 
-        #64748b 0%, 
-        #475569 50%,
-        #1e293b 100%);
-    border: 1px solid rgba(100, 116, 139, 0.2);
+        #334155 0%, 
+        #1e293b 50%,
+        #0f172a 100%);
+    border: 1px solid rgba(51, 65, 85, 0.2);
     box-shadow: 
-        0 10px 40px rgba(100, 116, 139, 0.15),
+        0 10px 40px rgba(51, 65, 85, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     color: #ffffff;
@@ -111,7 +113,7 @@
     background: var(--hover-bg);
     border-color: var(--primary-color);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(107, 114, 128, 0.12);
+    box-shadow: 0 8px 20px rgba(51, 65, 85, 0.12);
 }
 
 [data-theme="light"] .quick-action i {
@@ -134,7 +136,7 @@
 [data-theme="light"] .transaction-item:hover {
     background: var(--hover-bg);
     border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.08);
+    box-shadow: 0 4px 12px rgba(51, 65, 85, 0.08);
 }
 
 [data-theme="light"] .transaction-icon {
@@ -180,11 +182,11 @@
 
 /* Navigation en mode clair */
 [data-theme="light"] .nav-item {
-    color: rgba(44, 62, 80, 0.7); /* Plus sombre et visible */
+    color: var(--text-muted); /* Utilise la nouvelle couleur bleu-gris */
 }
 
 [data-theme="light"] .nav-item.active {
-    color: var(--primary-color) !important; /* Couleur active adaptée */
+    color: var(--primary-color) !important; /* Bleu marine pour l'élément actif */
     font-weight: 600;
 }
 
@@ -195,6 +197,34 @@
 [data-theme="light"] .nav-item span {
     color: inherit;
     font-weight: inherit;
+}
+
+/* Bottom Navigation en mode clair - Éléments blancs pour meilleure harmonisation */
+[data-theme="light"] .bottom-nav {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="light"] .bottom-nav .nav-item {
+    color: rgba(255, 255, 255, 0.8) !important; /* Éléments en blanc transparent */
+}
+
+[data-theme="light"] .bottom-nav .nav-item.active {
+    color: white !important; /* Élément actif en blanc pur */
+    font-weight: 600;
+}
+
+[data-theme="light"] .bottom-nav .nav-item:hover {
+    color: white !important; /* Hover en blanc pur */
+    /* Suppression du mouvement translateY pour mode clair */
+}
+
+[data-theme="light"] .bottom-nav .nav-item i {
+    color: inherit !important;
+}
+
+[data-theme="light"] .bottom-nav .nav-item span {
+    color: inherit !important;
 }
 
 /* Headers en mode clair */
@@ -218,6 +248,21 @@
     color: var(--text-light) !important;
 }
 
+/* Action Icons - uniformisation en mode clair */
+[data-theme="light"] .action-icon {
+    color: var(--primary-color) !important; /* Couleur uniforme pour toutes les icônes */
+    font-size: 20px !important; /* Taille uniforme */
+}
+
+[data-theme="light"] .action-icon i {
+    color: inherit !important; /* Les icônes héritent de la couleur du parent */
+}
+
+[data-theme="light"] .action-icon .fa-university {
+    color: inherit !important; /* L'icône IBAN hérite aussi de la couleur */
+    font-size: inherit !important; /* L'icône IBAN hérite de la taille */
+}
+
 [data-theme="light"] p {
     color: var(--text-muted) !important;
 }
@@ -234,7 +279,7 @@
 
 [data-theme="light"] .partner-card:hover {
     border-color: var(--primary-color);
-    box-shadow: 0 8px 24px rgba(107, 114, 128, 0.12);
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.12);
     transform: translateY(-4px);
 }
 
@@ -248,29 +293,9 @@
 }
 
 [data-theme="light"] .benefit {
-    background: rgba(107, 114, 128, 0.08);
+    background: rgba(51, 65, 85, 0.08);
     color: var(--primary-color);
-    border: 1px solid rgba(107, 114, 128, 0.15);
-}
-
-/* Navigation améliorée en mode clair */
-[data-theme="light"] .nav-item {
-    color: var(--text-muted);
-    transition: all 0.3s ease;
-}
-
-[data-theme="light"] .nav-item:hover {
-    color: var(--primary-color);
-    transform: translateY(-2px);
-}
-
-[data-theme="light"] .nav-item.active {
-    color: var(--primary-color) !important;
-    font-weight: 600;
-}
-
-[data-theme="light"] .nav-item.active i {
-    color: var(--primary-color) !important;
+    border: 1px solid rgba(51, 65, 85, 0.15);
 }
 
 /* Headers et notifications améliorés */
@@ -300,21 +325,21 @@
 [data-theme="light"] select:focus,
 [data-theme="light"] textarea:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.08);
+    box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.08);
 }
 
 [data-theme="light"] button {
     background: var(--button-bg);
     color: white;
     border: none;
-    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.25);
+    box-shadow: 0 4px 12px rgba(51, 65, 85, 0.25);
     transition: all 0.3s ease;
 }
 
 [data-theme="light"] button:hover {
     background: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(107, 114, 128, 0.3);
+    box-shadow: 0 6px 16px rgba(51, 65, 85, 0.3);
 }
 
 [data-theme="light"] .btn-secondary {
@@ -440,7 +465,7 @@
 [data-theme="light"] .profile-card:hover,
 [data-theme="light"] .settings-item:hover {
     border-color: var(--primary-color);
-    box-shadow: 0 6px 16px rgba(107, 114, 128, 0.08);
+    box-shadow: 0 6px 16px rgba(51, 65, 85, 0.08);
 }
 
 body {
@@ -2382,8 +2407,8 @@ input[type="number"] {
 }
 
 .action-icon .fa-university {
-    font-size: 20px;
-    color: var(--text-light);
+    font-size: inherit; /* Utilise la taille héritée de .action-icon */
+    color: inherit; /* Utilise la couleur héritée de .action-icon */
 }
 
 .action-card:active .action-icon .fa-university {
@@ -6217,6 +6242,65 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     }
 }
 
+/* ===== PAGE AUTRES - STYLES MODE CLAIR ===== */
+[data-theme="light"] .others-page {
+    background: var(--page-bg);
+}
+
+[data-theme="light"] .others-page .page-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white !important; /* Police blanche pour meilleure harmonisation */
+}
+
+[data-theme="light"] .others-page .page-header h2 {
+    color: white !important; /* Police blanche pour le titre */
+}
+
+[data-theme="light"] .others-page .header-subtitle {
+    color: rgba(255, 255, 255, 0.9) !important; /* Police blanche légèrement transparente */
+}
+
+[data-theme="light"] .others-page .section-header h3 {
+    color: white !important; /* Police blanche pour les titres de section */
+}
+
+/* Support Cards - celles qui existent vraiment dans le HTML */
+[data-theme="light"] .support-card {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important; /* Police blanche pour le contenu des cartes */
+}
+
+[data-theme="light"] .support-content h4 {
+    color: white !important; /* Police blanche pour les titres */
+}
+
+[data-theme="light"] .support-content p {
+    color: rgba(255, 255, 255, 0.8) !important; /* Police blanche transparente pour descriptions */
+}
+
+/* Setting Items - ceux qui existent dans le HTML */
+[data-theme="light"] .setting-item {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="light"] .setting-content h4 {
+    color: white !important; /* Police blanche pour les titres des paramètres */
+}
+
+[data-theme="light"] .setting-content p {
+    color: rgba(255, 255, 255, 0.8) !important; /* Police blanche pour descriptions */
+}
+
+[data-theme="light"] .setting-arrow {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+[data-theme="light"] .setting-item:hover .setting-arrow {
+    color: white !important;
+}
+
 /* FAQ Styles */
 .faq-container {
     display: flex;
@@ -7495,7 +7579,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 }
 
 [data-theme="light"] .pin-input.filled {
-    background: rgba(107, 114, 128, 0.08);
+    background: rgba(51, 65, 85, 0.08);
     border-color: var(--primary-color);
 }
 
@@ -7511,7 +7595,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     color: white;
     border-color: var(--primary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(107, 114, 128, 0.25);
+    box-shadow: 0 6px 12px rgba(51, 65, 85, 0.25);
 }
 
 [data-theme="light"] .key-button.delete {
