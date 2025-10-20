@@ -353,6 +353,44 @@
     border-color: var(--primary-color);
 }
 
+/* Icônes dans les boutons - Mode clair */
+[data-theme="light"] button i {
+    color: white !important; /* Toutes les icônes dans les boutons sont blanches */
+}
+
+[data-theme="light"] .btn-primary i,
+[data-theme="light"] .primary-button i,
+[data-theme="light"] .action-button i {
+    color: white !important; /* Icônes blanches dans les boutons principaux */
+}
+
+[data-theme="light"] .btn-secondary i {
+    color: var(--text-light) !important; /* Icônes foncées dans les boutons secondaires */
+}
+
+[data-theme="light"] .modal-button.primary i {
+    color: white !important; /* Icônes blanches dans les boutons modaux principaux */
+}
+
+[data-theme="light"] .modal-button.secondary i {
+    color: var(--text-light) !important; /* Icônes foncées dans les boutons modaux secondaires */
+}
+
+[data-theme="light"] .key-button i {
+    color: white !important; /* Icônes blanches dans les boutons du clavier numérique */
+}
+
+[data-theme="light"] .copy-button i,
+[data-theme="light"] .back-button i,
+[data-theme="light"] .logout-button i {
+    color: white !important; /* Icônes blanches dans les boutons utilitaires */
+}
+
+[data-theme="light"] .quick-action i,
+[data-theme="light"] .transaction-icon i {
+    color: white !important; /* Icônes blanches dans les actions rapides */
+}
+
 /* Modales et overlays en mode clair */
 [data-theme="light"] .modal,
 [data-theme="light"] .overlay {
