@@ -386,9 +386,18 @@
     color: white !important; /* Icônes blanches dans les boutons utilitaires */
 }
 
-[data-theme="light"] .quick-action i,
-[data-theme="light"] .transaction-icon i {
+[data-theme="light"] .quick-action i {
     color: white !important; /* Icônes blanches dans les actions rapides */
+}
+
+/* Icônes blanches pour les transactions générales, mais pas dans vault-page */
+[data-theme="light"] .transaction-icon i {
+    color: white !important;
+}
+
+/* Override pour les icônes du vault-page - préservation des couleurs sémantiques */
+[data-theme="light"] .vault-page .transaction-icon i {
+    color: inherit !important; /* Hérite de la couleur du parent définie par JavaScript */
 }
 
 /* Modales et overlays en mode clair */
@@ -6280,6 +6289,104 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     }
 }
 
+/* ===== PAGE COFFRE-FORT - STYLES MODE CLAIR ===== */
+[data-theme="light"] .vault-page {
+    background: var(--page-bg);
+}
+
+[data-theme="light"] .vault-page .page-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white !important;
+}
+
+[data-theme="light"] .vault-page .page-header h2 {
+    color: white !important;
+}
+
+/* Amélioration des icônes de l'historique du coffre-fort - Préservation des couleurs sémantiques */
+[data-theme="light"] .vault-page .transaction-icon {
+    /* Pas de couleur forcée - permet aux styles inline JavaScript de prendre le dessus */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(51, 65, 85, 0.15);
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: none !important; /* Éliminer tout floutage */
+    opacity: 1 !important; /* Assurer la pleine opacité */
+    backdrop-filter: none !important; /* Pas de backdrop filter */
+}
+
+/* Couleurs sémantiques par défaut si pas de style inline (fallback) */
+[data-theme="light"] .vault-page .transaction-icon:not([style*="background"]) {
+    background: var(--primary-color);
+    color: white;
+}
+
+[data-theme="light"] .vault-page .transaction-icon i {
+    font-size: 16px;
+    /* Couleur héritée du parent pour respecter les couleurs sémantiques */
+    filter: none !important; /* Éliminer tout floutage possible */
+    opacity: 1 !important; /* Assurer la pleine opacité */
+    transform: none !important; /* Éliminer les transformations */
+}
+
+[data-theme="light"] .vault-history-sections .transaction-item {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .vault-history-sections .transaction-title {
+    color: var(--text-light) !important;
+    font-weight: 600;
+}
+
+[data-theme="light"] .vault-history-sections .transaction-subtitle {
+    color: var(--text-muted) !important;
+}
+
+/* Préservation des couleurs sémantiques pour les montants */
+[data-theme="light"] .vault-history-sections .transaction-amount {
+    /* Les styles inline JavaScript prennent le dessus pour les couleurs sémantiques */
+    font-weight: 600;
+    filter: none !important; /* Éliminer tout floutage possible */
+    opacity: 1 !important; /* Assurer la pleine opacité */
+}
+
+/* Assurer la netteté de tous les éléments de transaction du vault */
+[data-theme="light"] .vault-page .transaction-item,
+[data-theme="light"] .vault-page .transaction-item * {
+    filter: none !important; /* Éliminer tout floutage */
+    opacity: 1 !important; /* Assurer la pleine opacité */
+    backdrop-filter: none !important; /* Pas de backdrop filter */
+}
+
+/* Couleur par défaut pour les montants sans style inline (fallback) */
+[data-theme="light"] .vault-history-sections .transaction-amount:not([style*="color"]) {
+    color: var(--text-light) !important;
+}
+
+/* Préservation des couleurs sémantiques pour les icônes des sections d'en-tête */
+[data-theme="light"] .vault-history-sections .section-header h3 i[style*="#22c55e"] {
+    color: #22c55e !important; /* Vert pour les dépôts */
+}
+
+[data-theme="light"] .vault-history-sections .section-header h3 i[style*="#ef4444"] {
+    color: #ef4444 !important; /* Rouge pour les retraits */
+}
+
+/* Protection spécifique pour les icônes flèches dépôts/retraits */
+[data-theme="light"] .vault-history-sections .section-header h3 .fa-arrow-down {
+    color: #22c55e !important; /* Flèche vers le bas = dépôt (vert) */
+}
+
+[data-theme="light"] .vault-history-sections .section-header h3 .fa-arrow-up {
+    color: #ef4444 !important; /* Flèche vers le haut = retrait (rouge) */
+}
+
 /* ===== PAGE AUTRES - STYLES MODE CLAIR ===== */
 [data-theme="light"] .others-page {
     background: var(--page-bg);
@@ -6299,7 +6406,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 }
 
 [data-theme="light"] .others-page .section-header h3 {
-    color: white !important; /* Police blanche pour les titres de section */
+    color: var(--text-light) !important; /* Police noire pour les titres de section (Assistance, Paramètres) */
 }
 
 /* Support Cards - celles qui existent vraiment dans le HTML */
