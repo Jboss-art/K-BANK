@@ -35,12 +35,12 @@
     --accent-color: #334155;       /* Bleu marine pour accent */
     --header-bg: rgba(255, 255, 255, 0.95);
     --nav-bg: rgba(255, 255, 255, 0.95);
-    --page-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    --shadow: rgba(0, 0, 0, 0.08);
-    --border-color: #e5e7eb;
+    --page-bg: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --border-color: #d1d5db;
     --input-bg: #f9fafb;
     --button-bg: var(--primary-color);
-    --hover-bg: #f1f5f9;
+    --hover-bg: #e2e8f0;
 }
 
 /* Améliorations spécifiques au mode clair - REFONTE COMPLÈTE */
@@ -6334,9 +6334,9 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 }
 
 [data-theme="light"] .vault-history-sections .transaction-item {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="light"] .vault-history-sections .transaction-title {
@@ -6385,6 +6385,491 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 
 [data-theme="light"] .vault-history-sections .section-header h3 .fa-arrow-up {
     color: #ef4444 !important; /* Flèche vers le haut = retrait (rouge) */
+}
+
+/* ===== OBJECTIFS D'ÉPARGNE - VARIATIONS DE COULEURS MODE CLAIR ===== */
+[data-theme="light"] .vault-quick-amount {
+    background: rgba(51, 65, 85, 0.05);
+    border: 1px solid rgba(51, 65, 85, 0.15);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+/* Variations de couleurs pour les icônes d'objectifs */
+[data-theme="light"] .vault-quick-amount:nth-child(1) {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+}
+
+[data-theme="light"] .vault-quick-amount:nth-child(1):hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+[data-theme="light"] .vault-quick-amount:nth-child(2) {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+[data-theme="light"] .vault-quick-amount:nth-child(2):hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+    border-color: #22c55e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+[data-theme="light"] .vault-quick-amount:nth-child(3) {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #a855f7;
+}
+
+[data-theme="light"] .vault-quick-amount:nth-child(3):hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.1));
+    border-color: #a855f7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+/* État sélectionné pour les objectifs */
+[data-theme="light"] .vault-quick-amount.selected {
+    background: linear-gradient(135deg, var(--primary-color), #1e293b);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(51, 65, 85, 0.3);
+}
+
+/* Icônes dans les objectifs */
+[data-theme="light"] .vault-quick-amount i {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* ===== STYLES OBJECTIFS D'ÉPARGNE MODE CLAIR ===== */
+[data-theme="light"] .vault-goal-section {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .vault-goal-section h3 {
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+[data-theme="light"] .vault-goal-icon {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="light"] .vault-goal-name {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+[data-theme="light"] .vault-goal-amount {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+[data-theme="light"] .vault-goal-date {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .vault-progress-bar {
+    background: rgba(51, 65, 85, 0.1);
+    border: 1px solid rgba(51, 65, 85, 0.1);
+}
+
+[data-theme="light"] .vault-progress-fill {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+[data-theme="light"] .vault-contribute-btn {
+    background: linear-gradient(135deg, var(--primary-color), #1e293b);
+    box-shadow: 0 4px 12px rgba(51, 65, 85, 0.2);
+}
+
+[data-theme="light"] .vault-contribute-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(51, 65, 85, 0.3);
+}
+
+[data-theme="light"] .no-goal-message {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 40px 20px;
+}
+
+[data-theme="light"] .no-goal-message i {
+    color: rgba(51, 65, 85, 0.3) !important;
+}
+
+/* ===== STYLES INPUTS ET PLACEHOLDERS MODE CLAIR ===== */
+[data-theme="light"] .vault-input-field input,
+[data-theme="light"] .vault-input-field select {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(51, 65, 85, 0.15);
+    color: var(--text-light);
+}
+
+[data-theme="light"] .vault-input-field input:focus,
+[data-theme="light"] .vault-input-field select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.1);
+    background: white;
+}
+
+/* Placeholders visibles en mode clair */
+[data-theme="light"] .vault-input-field input::placeholder {
+    color: rgba(51, 65, 85, 0.9) !important;
+    font-weight: 600;
+    opacity: 1;
+}
+
+[data-theme="light"] .vault-amount-input input::placeholder {
+    color: rgba(51, 65, 85, 0.9) !important;
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* Fond bleu marine pour inputs vault avec placeholders */
+[data-theme="light"] .vault-input-field input:placeholder-shown {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.1), rgba(30, 41, 59, 0.15)) !important;
+    border-color: rgba(51, 65, 85, 0.3) !important;
+}
+
+[data-theme="light"] .vault-amount-input:has(input:placeholder-shown) {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.1), rgba(30, 41, 59, 0.15)) !important;
+    border-color: rgba(51, 65, 85, 0.3) !important;
+}
+
+/* Labels plus visibles */
+[data-theme="light"] .vault-input-group label {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Styles pour les montants avec symbole F */
+[data-theme="light"] .vault-amount-input {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(51, 65, 85, 0.15);
+    border-radius: 12px;
+}
+
+[data-theme="light"] .vault-amount-input:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.1);
+    background: white;
+}
+
+[data-theme="light"] .vault-currency-symbol {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ===== PLACEHOLDERS GÉNÉRAUX MODE CLAIR ===== */
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+    color: rgba(51, 65, 85, 0.9) !important;
+    opacity: 1 !important;
+    font-weight: 500;
+}
+
+/* Fond bleu marine subtil pour inputs avec placeholders */
+[data-theme="light"] input:placeholder-shown,
+[data-theme="light"] textarea:placeholder-shown {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.08), rgba(30, 41, 59, 0.12)) !important;
+    border-color: rgba(51, 65, 85, 0.25) !important;
+}
+
+/* Placeholders spécifiques pour différents contextes */
+[data-theme="light"] .search-input-container input::placeholder {
+    color: rgba(51, 65, 85, 0.9) !important;
+    font-weight: 500;
+}
+
+[data-theme="light"] .topup-form .input-field input::placeholder {
+    color: rgba(51, 65, 85, 0.9) !important;
+    font-weight: 500;
+}
+
+/* Fonds bleu marine pour contextes spécifiques */
+[data-theme="light"] .search-input-container input:placeholder-shown {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.08), rgba(30, 41, 59, 0.12)) !important;
+    border-color: rgba(51, 65, 85, 0.25) !important;
+}
+
+[data-theme="light"] .topup-form .input-field input:placeholder-shown {
+    background: linear-gradient(135deg, rgba(51, 65, 85, 0.08), rgba(30, 41, 59, 0.12)) !important;
+    border-color: rgba(51, 65, 85, 0.25) !important;
+}
+
+/* Amélioration des inputs généraux en mode clair */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(51, 65, 85, 0.15);
+    color: var(--text-light);
+}
+
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.1);
+}
+
+/* ===== PAGE VIREMENT MODERNE - MODE CLAIR ===== */
+[data-theme="light"] .virement-page {
+    background: var(--page-bg);
+    padding: 20px;
+}
+
+/* En-tête de page modernisée */
+[data-theme="light"] .virement-page .page-header {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 32px rgba(51, 65, 85, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .virement-page .page-header h2 {
+    color: var(--primary-color);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
+[data-theme="light"] .virement-page .back-button {
+    background: linear-gradient(135deg, var(--primary-color), #1e293b);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    font-size: 18px;
+    box-shadow: 0 4px 16px rgba(51, 65, 85, 0.2);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .virement-page .back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(51, 65, 85, 0.3);
+}
+
+/* Conteneur de formulaire modernisé */
+[data-theme="light"] .virement-page .form-container {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 32px rgba(51, 65, 85, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+/* Groupes d'input modernisés */
+[data-theme="light"] .virement-page .input-group {
+    margin-bottom: 25px;
+}
+
+[data-theme="light"] .virement-page .input-group label {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+[data-theme="light"] .virement-page .input-field {
+    position: relative;
+}
+
+[data-theme="light"] .virement-page .input-field input,
+[data-theme="light"] .virement-page .input-field select {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid rgba(51, 65, 85, 0.15);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: 500;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .virement-page .input-field input:focus,
+[data-theme="light"] .virement-page .input-field select:focus {
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(51, 65, 85, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Bouton principal modernisé */
+[data-theme="light"] .virement-page .primary-button {
+    background: linear-gradient(135deg, var(--primary-color), #1e293b);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+[data-theme="light"] .virement-page .primary-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(51, 65, 85, 0.3);
+}
+
+[data-theme="light"] .virement-page .primary-button i {
+    font-size: 18px;
+}
+
+/* Section bénéficiaires modernisée */
+[data-theme="light"] .virement-page .beneficiaries-section {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 32px rgba(51, 65, 85, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .virement-page .section-header h3 {
+    color: var(--primary-color);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+}
+
+/* Liste des bénéficiaires */
+[data-theme="light"] .virement-page .beneficiaries-list {
+    margin-bottom: 20px;
+}
+
+/* Bouton secondaire modernisé */
+[data-theme="light"] .virement-page .secondary-button {
+    background: rgba(51, 65, 85, 0.1);
+    color: var(--primary-color);
+    border: 2px solid rgba(51, 65, 85, 0.2);
+    padding: 15px 25px;
+    border-radius: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+[data-theme="light"] .virement-page .secondary-button:hover {
+    background: rgba(51, 65, 85, 0.15);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(51, 65, 85, 0.15);
+}
+
+/* Éléments bénéficiaires modernisés */
+[data-theme="light"] .virement-page .beneficiary-item {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(51, 65, 85, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+[data-theme="light"] .virement-page .beneficiary-item:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.15);
+}
+
+[data-theme="light"] .virement-page .beneficiary-name {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+[data-theme="light"] .virement-page .beneficiary-account {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+[data-theme="light"] .virement-page .beneficiary-bank {
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* États vides modernisés */
+[data-theme="light"] .virement-page .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .virement-page .empty-state i {
+    font-size: 48px;
+    color: rgba(51, 65, 85, 0.3);
+    margin-bottom: 15px;
+}
+
+[data-theme="light"] .virement-page .empty-state p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Animations et effets */
+[data-theme="light"] .virement-page .form-container,
+[data-theme="light"] .virement-page .beneficiaries-section,
+[data-theme="light"] .virement-page .page-header {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== PAGE AUTRES - STYLES MODE CLAIR ===== */
