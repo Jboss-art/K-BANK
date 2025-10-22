@@ -100,6 +100,31 @@
     background: rgba(255, 255, 255, 0.3) !important;
 }
 
+/* Carte principale en mode clair */
+[data-theme="light"] .main-balance-card {
+    background: linear-gradient(135deg, 
+        rgba(106, 17, 203, 0.95) 0%, 
+        rgba(37, 117, 252, 0.95) 50%,
+        rgba(106, 17, 203, 0.90) 100%) !important;
+    box-shadow: 
+        0 8px 24px rgba(106, 17, 203, 0.4),
+        0 4px 12px rgba(37, 117, 252, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme="light"] .main-balance-card .clouds-background {
+    opacity: 0.8;
+}
+
+[data-theme="light"] .main-balance-card .balance-title,
+[data-theme="light"] .main-balance-card .balance-amount,
+[data-theme="light"] .main-balance-card .balance-detail,
+[data-theme="light"] .main-balance-card .detail-value {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
 /* Actions rapides en mode clair */
 [data-theme="light"] .quick-action {
     background: var(--card-bg);
@@ -695,6 +720,226 @@ body {
     justify-content: center;
     font-size: 10px;
     font-weight: bold;
+}
+
+/* ===============================================
+   CARTE DE SOLDE PRINCIPALE - COLLÉE AU HEADER
+   =============================================== */
+
+.main-balance-card {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, 
+        rgba(106, 17, 203, 0.98) 0%, 
+        rgba(37, 117, 252, 0.98) 50%,
+        rgba(106, 17, 203, 0.95) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 
+        0 8px 32px rgba(106, 17, 203, 0.6),
+        0 4px 16px rgba(37, 117, 252, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border-radius: 0 0 25px 25px;
+    overflow: hidden;
+    animation: slideDownBalance 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 10;
+}
+
+/* Arrière-plan de nuages dynamiques */
+.clouds-background {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(ellipse 300px 120px at 20% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 250px 100px at 70% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 200px 80px at 50% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 150px at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    animation: cloudFloat 20s infinite linear;
+    z-index: 1;
+}
+
+.clouds-background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(ellipse 180px 70px at 30% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 320px 110px at 90% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    animation: cloudFloat 25s infinite linear reverse;
+}
+
+.clouds-background::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.02) 50%, transparent 60%),
+        linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.03) 50%, transparent 70%);
+    animation: shimmer 8s infinite ease-in-out;
+}
+
+/* Contenu de la carte */
+.main-balance-card .balance-content {
+    position: relative;
+    z-index: 2;
+    padding: 25px 20px 30px 20px;
+}
+
+.main-balance-card .balance-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.main-balance-card .balance-amount {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.main-balance-card .balance-amount .currency-symbol,
+.main-balance-card .balance-amount .currency-code {
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.main-balance-card .balance-amount small {
+    font-size: 20px;
+    opacity: 0.8;
+}
+
+.main-balance-card .balance-details {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.main-balance-card .balance-detail {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+}
+
+.main-balance-card .balance-detail .detail-value {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.main-balance-card .balance-detail .detail-value .currency-symbol,
+.main-balance-card .balance-detail .detail-value .currency-code {
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+.main-balance-card .balance-detail .detail-value small {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.main-balance-card .divider {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* Animations */
+@keyframes slideDownBalance {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes cloudFloat {
+    0% { transform: translateX(-10%) scale(1); }
+    50% { transform: translateX(10%) scale(1.05); }
+    100% { transform: translateX(-10%) scale(1); }
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* Ajustement du contenu principal */
+.content {
+    padding-top: 0; /* Retour au flux normal */
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .main-balance-card {
+        border-radius: 0 0 20px 20px;
+    }
+    
+    .main-balance-card .balance-content {
+        padding: 20px 15px 25px 15px;
+    }
+    
+    .main-balance-card .balance-amount {
+        font-size: 30px;
+        margin-bottom: 18px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-balance-card {
+        border-radius: 0 0 15px 15px;
+    }
+    
+    .main-balance-card .balance-content {
+        padding: 18px 12px 22px 12px;
+    }
+    
+    .main-balance-card .balance-amount {
+        font-size: 26px;
+        margin-bottom: 16px;
+    }
+    
+    .main-balance-card .balance-details {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .main-balance-card .divider {
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+        align-self: center;
+    }
+    
+    .main-balance-card .balance-detail .detail-value {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .main-balance-card .balance-content {
+        padding: 15px 10px 20px 10px;
+    }
+    
+    .main-balance-card .balance-amount {
+        font-size: 24px;
+    }
+    
+    .main-balance-card .balance-detail .detail-value {
+        font-size: 14px;
+    }
 }
 
 /* Carte de solde */
