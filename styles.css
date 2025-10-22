@@ -522,11 +522,27 @@ body {
     color: var(--text-light);
     min-height: 100vh;
     transition: all 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Règles globales pour éviter les débordements */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.page, .container, .content,
+.modal-content, .card, 
+.transaction-item, .action-card,
+.notification-item, .beneficiary-item {
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* Structure principale */
 .app-container {
     max-width: 420px;
+    width: 100%;
     margin: 0 auto;
     height: 100vh;
     position: relative;
@@ -536,12 +552,13 @@ body {
     background: var(--shadow);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 /* Header fixe */
 .header {
     height: 60px;
-    padding: 0 20px; /* Augmenté pour plus d'espace */
+    padding: 0 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -556,6 +573,7 @@ body {
     z-index: 100;
     border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .header-title {
@@ -685,10 +703,10 @@ body {
         rgba(106, 17, 203, 0.95) 0%, 
         rgba(37, 117, 252, 0.95) 50%,
         rgba(106, 17, 203, 0.85) 100%);
-    border-radius: 0;
-    padding: 30px 25px;
-    margin: 0 -15px 15px -15px;
-    width: calc(100% + 30px);
+    border-radius: 15px;
+    padding: 25px 20px;
+    margin: 15px 15px 20px 15px;
+    width: calc(100% - 30px);
     position: relative;
     overflow: hidden;
     box-shadow: 
@@ -992,6 +1010,10 @@ body {
     margin-bottom: 45px; /* Ajusté à la nouvelle hauteur de la navbar */
     height: calc(100vh - 105px); /* 60px header + 45px navbar */
     overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
 }
 
 /* Ajustements responsive pour le contenu */
@@ -8937,4 +8959,118 @@ input[type="checkbox"]:checked + .toggle-slider::before {
 .topup-form #card-form {
     margin-top: 20px;
     animation: fadeIn 0.3s ease-out;
+}
+
+/* ========================================
+   AMÉLIORATION RESPONSIVE GLOBALE
+   ======================================== */
+
+/* Prevent horizontal overflow on all screens */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Ensure all text containers don't overflow */
+.transaction-title, .notification-title,
+.beneficiary-name, .action-title, 
+.metric-label, .flux-label {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Responsive improvements for very small screens */
+@media screen and (max-width: 280px) {
+    .app-container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .header {
+        padding: 0 8px;
+        font-size: 14px;
+    }
+    
+    .balance-card {
+        margin: 8px;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    
+    .balance-amount {
+        font-size: 20px;
+    }
+    
+    .nav-item {
+        font-size: 9px;
+        padding: 4px 0;
+    }
+    
+    .nav-item i {
+        font-size: 14px;
+        margin-bottom: 1px;
+    }
+    
+    .page {
+        padding: 8px;
+    }
+}
+
+/* Ensure grids don't overflow */
+@media screen and (max-width: 380px) {
+    .action-grid, .quick-actions,
+    .stats-grid, .services-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .transaction-item, .notification-item {
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .action-card {
+        padding: 12px;
+        min-height: auto;
+    }
+}
+
+/* Tablet improvements */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .app-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .balance-card {
+        margin: 15px 20px 20px 20px;
+        padding: 30px 25px;
+        border-radius: 15px;
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+/* Desktop improvements */
+@media screen and (min-width: 769px) {
+    .app-container {
+        max-width: 450px;
+        margin: 0 auto;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .balance-card {
+        margin: 20px 25px 25px 25px;
+        padding: 35px 30px;
+        border-radius: 20px;
+    }
+    
+    .action-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }

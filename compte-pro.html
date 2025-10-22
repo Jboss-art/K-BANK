@@ -1749,6 +1749,1666 @@
             }
         }
 
+        /* Styles pour l'en-tête de section amélioré */
+        .section-header-enhanced {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 15px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        .section-icon.simulator {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .section-info {
+            flex: 1;
+        }
+
+        .section-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .section-info p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+
+        .loans-count, .simulator-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .count-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .count-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .simulator-status {
+            flex-direction: row;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .simulator-status i {
+            color: #10b981;
+            margin-right: 6px;
+            font-size: 12px;
+        }
+
+        .simulator-status span {
+            font-size: 11px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        /* Styles pour la carte de prêt modernisée */
+        .loan-status-card-modern {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 0 15px 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loan-status-card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+        }
+
+        .loan-status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .loan-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .loan-reference {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-family: 'Courier New', monospace;
+        }
+
+        .loan-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-item .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-item .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .loan-progress-modern {
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .step.completed .step-icon {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .step.active .step-icon {
+            background: var(--secondary-color);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .step.pending .step-icon {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        .step span {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .step.pending span {
+            color: var(--text-muted);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .loan-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-btn.primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Styles pour le simulateur modernisé */
+        .loan-simulator-modern {
+            padding: 0 15px;
+            margin-bottom: 30px;
+        }
+
+        .simulator-card-modern {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simulator-card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .simulator-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Styles pour la disposition inline du simulateur */
+        .simulator-inputs-inline {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-group-inline {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Styles pour la disposition empilée du simulateur */
+        .simulator-inputs-stacked {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .labels-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .label-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Styles pour la disposition compacte du simulateur */
+        .simulator-inputs-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .labels-row-compact {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .label-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-range-inline {
+            font-size: 10px;
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .inputs-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .inputs-row .input-wrapper {
+            flex: 1;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .input-label i {
+            color: #10b981;
+        }
+
+        .input-label .fa-calendar-alt {
+            position: relative;
+            top: -4px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 15px 60px 15px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #10b981;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Supprimer les flèches des inputs de type number */
+        .input-wrapper input[type="number"]::-webkit-outer-spin-button,
+        .input-wrapper input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-wrapper input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .input-range {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .calculation-result {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .result-header i {
+            color: #10b981;
+        }
+
+        .result-header span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .result-amount {
+            font-size: 36px;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        .result-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-details .detail {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .result-details .detail span:first-child {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .result-details .detail span:last-child {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .simulate-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .simulate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Responsive pour les nouvelles sections */
+        @media (max-width: 768px) {
+            .section-header-enhanced {
+                padding: 15px;
+            }
+            
+            .section-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .loan-details {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .progress-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .step-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .simulator-inputs {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .simulator-inputs-inline {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .input-group-inline {
+                width: 100%;
+            }
+            
+            .simulator-inputs-stacked {
+                gap: 20px;
+            }
+            
+            .labels-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .inputs-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .simulator-inputs-compact {
+                gap: 15px;
+            }
+            
+            .labels-row-compact {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .label-item {
+                gap: 3px;
+            }
+            
+            .result-amount {
+                font-size: 28px;
+            }
+            
+            .action-btn {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header-enhanced {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .loan-status-card-modern,
+            .simulator-card-modern {
+                margin: 0 10px 20px;
+                padding: 20px;
+            }
+            
+            .simulator-inputs-inline {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .input-group-inline {
+                width: 100%;
+            }
+            
+            .simulator-inputs-stacked {
+                gap: 15px;
+            }
+            
+            .labels-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .inputs-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .simulator-inputs-compact {
+                gap: 12px;
+            }
+            
+            .labels-row-compact {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 12px;
+            }
+            
+            .label-item {
+                gap: 2px;
+            }
+            
+            .input-range-inline {
+                font-size: 9px;
+            }
+            
+            .input-label {
+                font-size: 13px;
+            }
+            
+            .input-wrapper input {
+                padding: 12px 50px 12px 12px;
+                font-size: 14px;
+            }
+            
+            .loan-actions {
+                flex-direction: column;
+            }
+            
+            .result-details {
+                flex-direction: column;
+                gap: 10px;
+                text-align: left;
+            }
+            
+            .result-amount {
+                font-size: 24px;
+            }
+        }
+
+        /* Styles pour la page rapport modernisée */
+        .analytics-dashboard {
+            padding: 0 15px;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .period-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .period-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .period-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .refresh-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .refresh-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        /* Métriques grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .metric-card.revenue::before {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .metric-card.expenses::before {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .metric-card.profit::before {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .metric-card.growth::before {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .metric-change.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .metric-sublabel {
+            font-size: 11px;
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-weight: 600;
+        }
+
+        /* Graphique moderne */
+        .chart-container-modern {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .chart-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-light);
+            flex-shrink: 0;
+        }
+
+        .chart-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .chart-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-color.revenue {
+            background: #10b981;
+        }
+
+        .legend-color.expenses {
+            background: #ef4444;
+        }
+
+        .legend-color.profit {
+            background: #8b5cf6;
+        }
+
+        .chart-options {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .chart-type-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-type-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            padding: 20px 15px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .placeholder-content {
+            max-width: 400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .placeholder-icon {
+            font-size: 48px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .chart-placeholder h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .chart-placeholder p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .placeholder-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            align-items: center;
+            justify-items: start;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .feature-item i {
+            color: var(--accent-color);
+            font-size: 9px;
+            flex-shrink: 0;
+        }
+
+        .clickable-feature {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+        }
+
+        .clickable-feature:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .clickable-feature:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Styles pour le graphique dynamique natif */
+        #dynamic-chart-container {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .native-chart-header {
+            position: relative;
+        }
+
+        .chart-back-btn {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: var(--accent-color);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-back-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateX(-3px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .chart-back-btn i {
+            font-size: 14px;
+        }
+
+        .chart-legend-native {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .legend-item-native {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .chart-area-native {
+            display: flex;
+            align-items: flex-end;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 300px;
+            position: relative;
+        }
+
+        .chart-y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 260px;
+            margin-right: 15px;
+            padding-top: 10px;
+        }
+
+        .y-label {
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            text-align: right;
+            min-width: 35px;
+        }
+
+        .chart-bars-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            flex: 1;
+            height: 260px;
+            position: relative;
+        }
+
+        .month-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bars-set {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 240px;
+        }
+
+        .bar {
+            width: 12px;
+            min-height: 2px;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            animation: growBar 1.2s ease-out;
+        }
+
+        @keyframes growBar {
+            from {
+                height: 0;
+                opacity: 0.5;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .revenue-bar {
+            background: linear-gradient(180deg, #10b981, #059669);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .expense-bar {
+            background: linear-gradient(180deg, #ef4444, #dc2626);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .profit-bar {
+            background: linear-gradient(180deg, #3b82f6, #2563eb);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .bar:hover {
+            transform: scaleY(1.05);
+            filter: brightness(1.2);
+        }
+
+        .month-label {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .chart-summary-native {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-label {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .summary-values {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .revenue-sum {
+            color: #10b981;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .expense-sum {
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .profit-sum {
+            color: #3b82f6;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        /* Tooltip pour les barres */
+        .bar-tooltip {
+            position: absolute;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Responsive pour le graphique */
+        @media (max-width: 768px) {
+            .chart-legend-native {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .legend-item-native {
+                font-size: 11px;
+            }
+            
+            .bar {
+                width: 8px;
+            }
+            
+            .summary-values {
+                gap: 10px;
+            }
+        }
+
+        /* Transactions récentes */
+        .recent-transactions {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .recent-transactions .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recent-transactions h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .view-all-btn {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .transactions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(3px);
+        }
+
+        .transaction-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .transaction-icon.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .transaction-icon.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 2px;
+        }
+
+        .transaction-date {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .transaction-amount {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .transaction-amount.positive {
+            color: #10b981;
+        }
+
+        .transaction-amount.negative {
+            color: #ef4444;
+        }
+
+        /* Actions modernes */
+        .reports-actions-modern {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 3px;
+        }
+
+        .action-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive pour la page rapport */
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .chart-controls {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .chart-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .chart-legend {
+                gap: 10px;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .chart-legend .legend-item {
+                font-size: 11px;
+            }
+            
+            .chart-options {
+                align-self: center;
+            }
+            
+            .reports-actions-modern {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .action-card {
+                padding: 15px;
+            }
+            
+            .action-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .analytics-dashboard {
+                padding: 0 10px;
+            }
+            
+            .metric-card {
+                padding: 15px;
+            }
+            
+            .metric-value {
+                font-size: 20px;
+            }
+            
+            .chart-container-modern {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .chart-canvas {
+                height: 160px;
+            }
+            
+            .chart-placeholder {
+                padding: 15px 10px;
+            }
+            
+            .placeholder-icon {
+                font-size: 32px;
+            }
+            
+            .chart-placeholder h4 {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            
+            .chart-placeholder p {
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+            
+            .placeholder-features {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                max-width: 200px;
+            }
+            
+            .feature-item {
+                font-size: 10px;
+                gap: 5px;
+                justify-self: center;
+            }
+            
+            /* Responsive pour modales flux et prévisions */
+            .modal-content-flux, .modal-content-budget {
+                width: 95%;
+                margin: 2vh auto;
+                max-height: 95vh;
+            }
+            
+            .flux-dashboard, .budget-dashboard {
+                padding: 20px 15px;
+            }
+            
+            .flux-filters, .forecast-controls {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .filter-group, .control-group {
+                justify-content: space-between;
+            }
+            
+            .flux-summary, .forecast-summary {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .flux-card, .forecast-card {
+                padding: 15px;
+            }
+            
+            .flux-chart-area, .forecast-chart-area {
+                height: 250px;
+            }
+            
+            .flux-transaction-item {
+                padding: 12px;
+                gap: 10px;
+            }
+            
+            .recommendation-item {
+                padding: 15px;
+                gap: 12px;
+            }
+            
+            .recent-transactions {
+                padding: 15px;
+            }
+            
+            .transaction-item {
+                padding: 10px;
+            }
+        }
+
         /* Modale de demande de prêt */
         .loan-application-modal {
             position: fixed;
@@ -4074,45 +5734,150 @@
                     </div>
 
                     <div class="current-loans">
-                        <div class="section-title">Mes prêts en cours</div>
+                        <div class="section-header-enhanced">
+                            <div class="section-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="section-info">
+                                <h3 class="section-title">Mes Prêts en Cours</h3>
+                                <p class="section-subtitle">Suivi de vos demandes de financement</p>
+                            </div>
+                            <div class="loans-count">
+                                <span class="count-number">1</span>
+                                <span class="count-label">Actif</span>
+                            </div>
+                        </div>
                         
-                        <div class="loan-status-card">
+                        <div class="loan-status-card-modern">
                             <div class="loan-status-header">
-                                <div class="status-icon">
-                                    <i class="fas fa-clock"></i>
+                                <div class="loan-badge">
+                                    <i class="fas fa-tools"></i>
+                                    <span>ÉQUIPEMENT</span>
                                 </div>
-                                <div class="status-info">
-                                    <div class="status-title">Prêt Équipement #2024-001</div>
-                                    <div class="status-details">Demande en cours d'étude</div>
+                                <div class="loan-reference">#PRO-2024-001</div>
+                            </div>
+                            
+                            <div class="loan-details">
+                                <div class="detail-item">
+                                    <span class="label">Montant demandé</span>
+                                    <span class="value">2,500,000 FCFA</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Durée</span>
+                                    <span class="value">48 mois</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Taux</span>
+                                    <span class="value">9.2% / an</span>
                                 </div>
                             </div>
-                            <div class="loan-progress">
-                                <div class="progress-steps">
-                                    <div class="step completed">Demande</div>
-                                    <div class="step active">Étude</div>
-                                    <div class="step">Validation</div>
-                                    <div class="step">Déblocage</div>
+                            
+                            <div class="loan-progress-modern">
+                                <div class="progress-header">
+                                    <span class="progress-title">Statut de la demande</span>
+                                    <span class="progress-percentage">50%</span>
                                 </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 50%"></div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step completed">
+                                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                                        <span>Demande</span>
+                                    </div>
+                                    <div class="step active">
+                                        <div class="step-icon"><i class="fas fa-search"></i></div>
+                                        <span>Étude</span>
+                                    </div>
+                                    <div class="step pending">
+                                        <div class="step-icon"><i class="fas fa-thumbs-up"></i></div>
+                                        <span>Validation</span>
+                                    </div>
+                                    <div class="step pending">
+                                        <div class="step-icon"><i class="fas fa-money-bill-wave"></i></div>
+                                        <span>Déblocage</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="loan-actions">
+                                <button class="action-btn primary">
+                                    <i class="fas fa-eye"></i>
+                                    Suivre le dossier
+                                </button>
+                                <button class="action-btn secondary">
+                                    <i class="fas fa-phone"></i>
+                                    Contacter
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="loan-simulator">
-                        <div class="section-title">Simulateur de prêt</div>
-                        <div class="simulator-card">
-                            <div class="simulator-form">
-                                <div class="input-row">
-                                    <label>Montant souhaité</label>
-                                    <input type="number" placeholder="1,000,000" id="loan-amount" oninput="calculateLoan()">
+                    <div class="loan-simulator-modern">
+                        <div class="section-header-enhanced">
+                            <div class="section-icon simulator">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="section-info">
+                                <h3 class="section-title">Simulateur de Prêt</h3>
+                                <p class="section-subtitle">Estimez votre capacité de financement</p>
+                            </div>
+                            <div class="simulator-status">
+                                <i class="fas fa-bolt"></i>
+                                <span>Temps réel</span>
+                            </div>
+                        </div>
+                        
+                        <div class="simulator-card-modern">
+                            <div class="simulator-inputs-compact">
+                                <div class="labels-row-compact">
+                                    <div class="label-item">
+                                        <label class="input-label">
+                                            <i class="fas fa-coins"></i>
+                                            Montant souhaité
+                                        </label>
+                                        <span class="input-range-inline">Min: 100K - Max: 10M</span>
+                                    </div>
+                                    <div class="label-item">
+                                        <label class="input-label">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            Durée de remboursement
+                                        </label>
+                                        <span class="input-range-inline">Min: 12 - Max: 240 mois</span>
+                                    </div>
                                 </div>
-                                <div class="input-row">
-                                    <label>Durée (mois)</label>
-                                    <input type="number" placeholder="36" id="loan-duration" oninput="calculateLoan()">
+                                <div class="inputs-row">
+                                    <div class="input-wrapper">
+                                        <input type="number" placeholder="1,000,000" id="loan-amount" oninput="calculateLoan()">
+                                        <span class="input-suffix">FCFA</span>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="number" placeholder="36" id="loan-duration" oninput="calculateLoan()">
+                                        <span class="input-suffix">Mois</span>
+                                    </div>
                                 </div>
-                                <div class="result-row">
-                                    <div class="result-label">Mensualité estimée:</div>
-                                    <div class="result-value" id="monthly-payment">-- Fcfa</div>
+                            </div>
+                            
+                            <div class="calculation-result">
+                                <div class="result-header">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Estimation mensuelle</span>
                                 </div>
+                                <div class="result-amount" id="monthly-payment">-- FCFA</div>
+                                <div class="result-details">
+                                    <div class="detail">
+                                        <span>Taux appliqué</span>
+                                        <span>9.2% / an</span>
+                                    </div>
+                                    <div class="detail">
+                                        <span>Coût total</span>
+                                        <span id="total-cost">-- FCFA</span>
+                                    </div>
+                                </div>
+                                <button class="simulate-btn" onclick="openLoanApplication('simulation')">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Faire une demande
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -4125,60 +5890,315 @@
                     <button class="back-button" onclick="switchTab('professional')">
                         <i class="fas fa-arrow-left"></i>
                     </button>
-                    <h2>Rapports & Analytics</h2>
+                    <h2>Analytics & Rapports</h2>
                 </div>
 
                 <div class="content">
-                    <div class="reports-summary">
-                        <div class="summary-grid">
-                            <div class="summary-item">
-                                <div class="summary-icon success">
-                                    <i class="fas fa-arrow-up"></i>
-                                </div>
-                                <div class="summary-data">
-                                    <div class="summary-value">+15.2%</div>
-                                    <div class="summary-label">Revenus ce mois</div>
-                                </div>
+                    <!-- Dashboard moderne -->
+                    <div class="analytics-dashboard">
+                        <div class="dashboard-header">
+                            <div class="period-selector">
+                                <button class="period-btn active" data-period="7d">7J</button>
+                                <button class="period-btn" data-period="30d">30J</button>
+                                <button class="period-btn" data-period="90d">3M</button>
+                                <button class="period-btn" data-period="1y">1A</button>
                             </div>
-                            <div class="summary-item">
-                                <div class="summary-icon danger">
-                                    <i class="fas fa-arrow-down"></i>
-                                </div>
-                                <div class="summary-data">
-                                    <div class="summary-value">-8.5%</div>
-                                    <div class="summary-label">Dépenses ce mois</div>
-                                </div>
+                            <div class="refresh-btn" onclick="refreshChart()">
+                                <i class="fas fa-sync-alt"></i>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3>Évolution mensuelle</h3>
-                            <div class="chart-legend">
-                                <span class="legend-item income">Revenus</span>
-                                <span class="legend-item expense">Dépenses</span>
+                        <!-- Métriques principales -->
+                        <div class="metrics-grid">
+                            <div class="metric-card revenue">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-arrow-trend-up"></i>
+                                    </div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+15.2%</span>
+                                    </div>
+                                </div>
+                                <div class="metric-value">2,847,500</div>
+                                <div class="metric-label">Revenus ce mois</div>
+                                <div class="metric-sublabel">FCFA</div>
+                            </div>
+
+                            <div class="metric-card expenses">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-arrow-trend-down"></i>
+                                    </div>
+                                    <div class="metric-change negative">
+                                        <i class="fas fa-arrow-down"></i>
+                                        <span>-8.5%</span>
+                                    </div>
+                                </div>
+                                <div class="metric-value">1,652,300</div>
+                                <div class="metric-label">Dépenses ce mois</div>
+                                <div class="metric-sublabel">FCFA</div>
+                            </div>
+
+                            <div class="metric-card profit">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+28.7%</span>
+                                    </div>
+                                </div>
+                                <div class="metric-value">1,195,200</div>
+                                <div class="metric-label">Bénéfices nets</div>
+                                <div class="metric-sublabel">FCFA</div>
+                            </div>
+
+                            <div class="metric-card growth">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+12.3%</span>
+                                    </div>
+                                </div>
+                                <div class="metric-value">42.1</div>
+                                <div class="metric-label">Marge bénéficiaire</div>
+                                <div class="metric-sublabel">%</div>
                             </div>
                         </div>
-                        <div class="chart-placeholder">
-                            <i class="fas fa-chart-line"></i>
-                            <p>Graphique interactif disponible prochainement</p>
-                        </div>
-                    </div>
 
-                    <div class="reports-actions">
-                        <button class="report-btn" onclick="generateReport('monthly')">
-                            <i class="fas fa-calendar-alt"></i>
-                            Rapport mensuel
-                        </button>
-                        <button class="report-btn" onclick="generateReport('yearly')">
-                            <i class="fas fa-calendar"></i>
-                            Rapport annuel
-                        </button>
-                        <button class="report-btn" onclick="exportData()">
-                            <i class="fas fa-download"></i>
-                            Exporter données
-                        </button>
+                        <!-- Graphique principal -->
+                        <div class="chart-container-modern">
+                            <div class="chart-header">
+                                <h3>Évolution financière</h3>
+                                <div class="chart-controls">
+                                    <div class="chart-legend">
+                                        <div class="legend-item">
+                                            <div class="legend-color revenue"></div>
+                                            <span>Revenus</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color expenses"></div>
+                                            <span>Dépenses</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color profit"></div>
+                                            <span>Bénéfices</span>
+                                        </div>
+                                    </div>
+                                    <div class="chart-options">
+                                        <button class="chart-type-btn active" data-type="line">
+                                            <i class="fas fa-chart-line"></i>
+                                        </button>
+                                        <button class="chart-type-btn" data-type="bar">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas">
+                                <canvas id="financialChart" width="400" height="200" style="display: none;"></canvas>
+                                <!-- Conteneur pour le graphique dynamique natif -->
+                                <div id="dynamic-chart-container" style="display: none; padding: 25px; background: var(--card-bg); border-radius: 15px; margin: 20px 0; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div class="native-chart-header">
+                                        <button class="chart-back-btn" onclick="toggleChart()" title="Masquer le graphique">
+                                            <i class="fas fa-arrow-left"></i>
+                                        </button>
+                                        <h4 style="color: var(--text-light); margin: 0 0 20px 0; text-align: center; font-size: 18px;">
+                                            📊 Évolution Financière - Analyse Dynamique
+                                        </h4>
+                                    </div>
+                                    <div class="native-chart-content">
+                                        <!-- Légende -->
+                                        <div class="chart-legend-native">
+                                            <div class="legend-item-native">
+                                                <div class="legend-dot" style="background: #10b981;"></div>
+                                                <span>Revenus</span>
+                                            </div>
+                                            <div class="legend-item-native">
+                                                <div class="legend-dot" style="background: #ef4444;"></div>
+                                                <span>Dépenses</span>
+                                            </div>
+                                            <div class="legend-item-native">
+                                                <div class="legend-dot" style="background: #3b82f6;"></div>
+                                                <span>Bénéfices</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Graphique à barres -->
+                                        <div class="chart-area-native">
+                                            <div class="chart-y-axis">
+                                                <div class="y-label">12M FCFA</div>
+                                                <div class="y-label">9M FCFA</div>
+                                                <div class="y-label">6M FCFA</div>
+                                                <div class="y-label">3M FCFA</div>
+                                                <div class="y-label">0 FCFA</div>
+                                            </div>
+                                            <div class="chart-bars-container">
+                                                <div class="month-group" data-month="Jan">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="7200000"></div>
+                                                        <div class="bar expense-bar" data-value="4800000"></div>
+                                                        <div class="bar profit-bar" data-value="2400000"></div>
+                                                    </div>
+                                                    <div class="month-label">Jan</div>
+                                                </div>
+                                                <div class="month-group" data-month="Fév">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="9000000"></div>
+                                                        <div class="bar expense-bar" data-value="5700000"></div>
+                                                        <div class="bar profit-bar" data-value="3300000"></div>
+                                                    </div>
+                                                    <div class="month-label">Fév</div>
+                                                </div>
+                                                <div class="month-group" data-month="Mar">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="7800000"></div>
+                                                        <div class="bar expense-bar" data-value="5400000"></div>
+                                                        <div class="bar profit-bar" data-value="2400000"></div>
+                                                    </div>
+                                                    <div class="month-label">Mar</div>
+                                                </div>
+                                                <div class="month-group" data-month="Avr">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="10200000"></div>
+                                                        <div class="bar expense-bar" data-value="6600000"></div>
+                                                        <div class="bar profit-bar" data-value="3600000"></div>
+                                                    </div>
+                                                    <div class="month-label">Avr</div>
+                                                </div>
+                                                <div class="month-group" data-month="Mai">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="8400000"></div>
+                                                        <div class="bar expense-bar" data-value="6000000"></div>
+                                                        <div class="bar profit-bar" data-value="2400000"></div>
+                                                    </div>
+                                                    <div class="month-label">Mai</div>
+                                                </div>
+                                                <div class="month-group" data-month="Jun">
+                                                    <div class="bars-set">
+                                                        <div class="bar revenue-bar" data-value="10800000"></div>
+                                                        <div class="bar expense-bar" data-value="7200000"></div>
+                                                        <div class="bar profit-bar" data-value="3600000"></div>
+                                                    </div>
+                                                    <div class="month-label">Jun</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Résumé des données -->
+                                        <div class="chart-summary-native">
+                                            <div class="summary-item">
+                                                <div class="summary-label">Moyenne mensuelle</div>
+                                                <div class="summary-values">
+                                                    <span class="revenue-sum">8,9M FCFA revenus</span>
+                                                    <span class="expense-sum">5,95M FCFA dépenses</span>
+                                                    <span class="profit-sum">2,95M FCFA bénéfices</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-placeholder">
+                                    <div class="placeholder-content">
+                                        <i class="fas fa-chart-line placeholder-icon"></i>
+                                        <h4>Tableau de bord avancé en développement</h4>
+                                        <p>Analyse complète de votre activité financière professionnelle</p>
+                                        <div class="placeholder-features">
+                                            <div class="feature-item clickable-feature" onclick="toggleChart()">
+                                                <i class="fas fa-chart-line"></i>
+                                                <span>Graphique dynamique</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-file-export"></i>
+                                                <span>Rapports personnalisables</span>
+                                            </div>
+                                            <div class="feature-item">
+                                                <i class="fas fa-bell"></i>
+                                                <span>Alertes de seuils</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aperçu des transactions récentes -->
+                        <div class="recent-transactions">
+                            <div class="section-header">
+                                <h4>Transactions récentes</h4>
+                                <button class="view-all-btn">Voir tout</button>
+                            </div>
+                            <div class="transactions-list">
+                                <div class="transaction-item">
+                                    <div class="transaction-icon positive">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <div class="transaction-title">Paiement client - ABC Corp</div>
+                                        <div class="transaction-date">Aujourd'hui, 14:30</div>
+                                    </div>
+                                    <div class="transaction-amount positive">+850,000 FCFA</div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="transaction-icon negative">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <div class="transaction-title">Salaires équipe</div>
+                                        <div class="transaction-date">Hier, 09:15</div>
+                                    </div>
+                                    <div class="transaction-amount negative">-320,000 FCFA</div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="transaction-icon positive">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <div class="transaction-title">Vente produits - Commande #1247</div>
+                                        <div class="transaction-date">Hier, 16:45</div>
+                                    </div>
+                                    <div class="transaction-amount positive">+425,500 FCFA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions rapides -->
+                        <div class="reports-actions-modern">
+                            <button class="action-card" onclick="generateDetailedReport('monthly')">
+                                <div class="action-icon">
+                                    <i class="fas fa-file-chart-line"></i>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Rapport détaillé</div>
+                                    <div class="action-subtitle">Mensuel complet</div>
+                                </div>
+                            </button>
+                            
+                            <button class="action-card" onclick="exportAdvancedData()">
+                                <div class="action-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Exporter données</div>
+                                    <div class="action-subtitle">PDF / Excel</div>
+                                </div>
+                            </button>
+                            
+                            <button class="action-card" onclick="scheduleReport()">
+                                <div class="action-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Programmer</div>
+                                    <div class="action-subtitle">Envoi automatique</div>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -5843,17 +7863,30 @@ Vous recevrez une réponse sous 48-72h ouvrables.`;
         function calculateLoan() {
             const amount = parseFloat(document.getElementById('loan-amount').value) || 0;
             const duration = parseFloat(document.getElementById('loan-duration').value) || 0;
-            const rate = 0.085; // 8.5% par an
+            const rate = 0.092; // 9.2% par an
             
             if (amount > 0 && duration > 0) {
                 const monthlyRate = rate / 12;
                 const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, duration)) / 
                                     (Math.pow(1 + monthlyRate, duration) - 1);
                 
+                const totalCost = monthlyPayment * duration;
+                
                 document.getElementById('monthly-payment').textContent = 
-                    monthlyPayment.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' Fcfa';
+                    monthlyPayment.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' FCFA';
+                
+                // Mettre à jour le coût total si l'élément existe
+                const totalCostElement = document.getElementById('total-cost');
+                if (totalCostElement) {
+                    totalCostElement.textContent = 
+                        totalCost.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' FCFA';
+                }
             } else {
-                document.getElementById('monthly-payment').textContent = '-- Fcfa';
+                document.getElementById('monthly-payment').textContent = '-- FCFA';
+                const totalCostElement = document.getElementById('total-cost');
+                if (totalCostElement) {
+                    totalCostElement.textContent = '-- FCFA';
+                }
             }
         }
 
@@ -5974,12 +8007,224 @@ Vous recevrez une réponse sous 48-72h ouvrables.`;
             freezeButton.textContent = cardStatus === 'frozen' ? 'Dégeler' : 'Geler';
         }
 
-        // Fermer les modales en cliquant en dehors
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('confirmation-modal')) {
-                e.target.classList.remove('show');
+        // Fonction pour afficher/masquer le graphique dynamique natif
+        function toggleChart() {
+            const chartContainer = document.getElementById('dynamic-chart-container');
+            const placeholderContainer = document.querySelector('.chart-placeholder');
+            const isVisible = chartContainer.style.display !== 'none';
+            
+            if (isVisible) {
+                chartContainer.style.display = 'none';
+                placeholderContainer.style.display = 'block';
+            } else {
+                chartContainer.style.display = 'block';
+                placeholderContainer.style.display = 'none';
+                
+                // Initialiser le graphique natif
+                setTimeout(() => {
+                    initializeNativeChart();
+                }, 100);
             }
-        });
+        }
+
+        // Fonction pour initialiser le graphique natif
+        function initializeNativeChart() {
+            console.log('Initialisation du graphique natif...');
+            
+            // Données des barres en FCFA
+            const data = [
+                { revenue: 7200000, expense: 4800000, profit: 2400000 },
+                { revenue: 9000000, expense: 5700000, profit: 3300000 },
+                { revenue: 7800000, expense: 5400000, profit: 2400000 },
+                { revenue: 10200000, expense: 6600000, profit: 3600000 },
+                { revenue: 8400000, expense: 6000000, profit: 2400000 },
+                { revenue: 10800000, expense: 7200000, profit: 3600000 }
+            ];
+            
+            // Calculer les hauteurs des barres (max 12M FCFA = 100% de hauteur)
+            const maxValue = 12000000;
+            const bars = document.querySelectorAll('.bar');
+            
+            bars.forEach((bar, index) => {
+                const monthIndex = Math.floor(index / 3);
+                const barType = index % 3;
+                
+                let value, height;
+                
+                switch(barType) {
+                    case 0: // revenue
+                        value = data[monthIndex].revenue;
+                        break;
+                    case 1: // expense  
+                        value = data[monthIndex].expense;
+                        break;
+                    case 2: // profit
+                        value = data[monthIndex].profit;
+                        break;
+                }
+                
+                height = (value / maxValue) * 240; // 240px est la hauteur max
+                
+                // Animation progressive avec délai
+                setTimeout(() => {
+                    bar.style.height = height + 'px';
+                    bar.setAttribute('data-value', value);
+                }, index * 100);
+            });
+            
+            // Ajouter les tooltips interactifs
+            addBarTooltips();
+            
+            console.log('Graphique natif créé avec succès !');
+        }
+
+        // Fonction pour ajouter les tooltips sur les barres
+        function addBarTooltips() {
+            const bars = document.querySelectorAll('.bar');
+            let tooltip = null;
+            
+            bars.forEach((bar, index) => {
+                bar.addEventListener('mouseenter', (e) => {
+                    const value = parseInt(bar.getAttribute('data-value'));
+                    const monthIndex = Math.floor(index / 3);
+                    const barType = index % 3;
+                    const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'];
+                    const types = ['Revenus', 'Dépenses', 'Bénéfices'];
+                    
+                    // Créer le tooltip
+                    tooltip = document.createElement('div');
+                    tooltip.className = 'bar-tooltip';
+                    
+                    // Formater en FCFA avec millions
+                    const formattedValue = (value / 1000000).toFixed(1) + 'M';
+                    
+                    tooltip.innerHTML = `
+                        <strong>${months[monthIndex]}</strong><br>
+                        ${types[barType]}: ${formattedValue} FCFA
+                    `;
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    // Positionner le tooltip
+                    const rect = bar.getBoundingClientRect();
+                    tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
+                    tooltip.style.top = (rect.top - tooltip.offsetHeight - 10) + 'px';
+                    tooltip.style.opacity = '1';
+                });
+                
+                bar.addEventListener('mouseleave', () => {
+                    if (tooltip) {
+                        tooltip.remove();
+                        tooltip = null;
+                    }
+                });
+            });
+        }
+
+        // Fonction pour animer les barres de façon aléatoire (simulation de données live)
+        function animateChartData() {
+            const bars = document.querySelectorAll('.bar');
+            const maxValue = 12000000; // 12M FCFA
+            
+            bars.forEach((bar, index) => {
+                const currentValue = parseInt(bar.getAttribute('data-value'));
+                const variation = (Math.random() - 0.5) * 1200000; // Variation de ±600k FCFA
+                const newValue = Math.max(600000, Math.min(maxValue, currentValue + variation));
+                const newHeight = (newValue / maxValue) * 240;
+                
+                bar.style.height = newHeight + 'px';
+                bar.setAttribute('data-value', Math.round(newValue));
+            });
+            
+            console.log('Données du graphique mises à jour');
+        }
+
+        // Auto-update des données toutes les 10 secondes (optionnel)
+        let chartUpdateInterval = null;
+        
+        function startChartAutoUpdate() {
+            if (!chartUpdateInterval) {
+                chartUpdateInterval = setInterval(animateChartData, 10000);
+                console.log('Auto-update du graphique activé');
+            }
+        }
+        
+        function stopChartAutoUpdate() {
+            if (chartUpdateInterval) {
+                clearInterval(chartUpdateInterval);
+                chartUpdateInterval = null;
+                console.log('Auto-update du graphique désactivé');
+            }
+        }
     </script>
+    
+    <!-- Styles d'amélioration responsive globale -->
+    <style>
+        /* Prevent horizontal overflow globally */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        /* Ensure all containers respect width limits */
+        .main-container, .professional-container, 
+        .page, .content, .modal-content {
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Text overflow prevention */
+        .transaction-title, .metric-label, .forecast-title,
+        .recommendation-title, .action-title, .flux-label {
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            hyphens: auto !important;
+        }
+        
+        /* Ultra small screens (< 280px) */
+        @media screen and (max-width: 280px) {
+            .modal-content-flux, .modal-content-budget {
+                width: 98% !important;
+                margin: 1vh auto !important;
+                padding: 0 !important;
+            }
+            
+            .flux-dashboard, .budget-dashboard {
+                padding: 10px 8px !important;
+            }
+            
+            .flux-card, .forecast-card {
+                padding: 10px !important;
+                margin-bottom: 8px !important;
+            }
+            
+            .metrics-grid, .flux-summary, .forecast-summary {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+        }
+        
+        /* Small screens improvements */
+        @media screen and (max-width: 360px) {
+            .analytics-dashboard {
+                padding: 0 8px !important;
+            }
+            
+            .chart-container-modern,
+            .flux-chart-container,
+            .forecast-chart-container {
+                margin-left: -8px !important;
+                margin-right: -8px !important;
+                border-radius: 10px !important;
+            }
+            
+            .placeholder-features {
+                max-width: 240px !important;
+                gap: 6px !important;
+            }
+        }
+    </style>
 </body>
 </html>
