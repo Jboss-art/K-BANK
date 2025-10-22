@@ -3834,3 +3834,256 @@ function formatCurrency(amount) {
     return amount.toLocaleString('fr-FR') + ' FCFA';
 }
 
+// ===========================================
+// GESTION DES PLAFONDS DE CARTE
+// ===========================================
+
+// Variables de plafonds
+let cardLimits = {
+    payment: 500000,    // Plafond de paiement en FCFA
+    withdrawal: 200000  // Plafond de retrait en FCFA
+};
+
+// Usage actuel (simulé)
+let currentUsage = {
+    payment: 175000,    // Montant utilisé aujourd'hui pour les paiements
+    withdrawal: 120000  // Montant retiré aujourd'hui
+};
+
+// Fonction pour ouvrir la page de gestion du plafond de paiement
+function adjustPaymentLimit() {
+    switchToPage('payment-limit-page');
+    updatePaymentLimitDisplay();
+}
+
+// Fonction pour ouvrir la page de gestion du plafond de retrait
+function adjustWithdrawalLimit() {
+    switchToPage('withdrawal-limit-page');
+    updateWithdrawalLimitDisplay();
+}
+
+// Fonction pour changer de page
+function switchToPage(pageId) {
+    // Cacher toutes les pages
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('active'));
+    
+    // Afficher la page demandée
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
+}
+
+// Fonction pour mettre à jour l'affichage du plafond de paiement
+function updatePaymentLimitDisplay() {
+    const currentLimitElement = document.querySelector('#payment-limit-page .current-limit');
+    const usageProgressElement = document.querySelector('#payment-limit-page .usage-progress');
+    const usageTextElement = document.querySelector('#payment-limit-page .usage-text');
+    const inputElement = document.getElementById('new-payment-limit');
+    
+    if (currentLimitElement) {
+        currentLimitElement.innerHTML = `${cardLimits.payment.toLocaleString('fr-FR')} <span>FCFA / jour</span>`;
+    }
+    
+    if (usageProgressElement && usageTextElement) {
+        const usagePercentage = (currentUsage.payment / cardLimits.payment) * 100;
+        usageProgressElement.style.width = `${usagePercentage}%`;
+        usageTextElement.textContent = `${currentUsage.payment.toLocaleString('fr-FR')} FCFA utilisés sur ${cardLimits.payment.toLocaleString('fr-FR')} FCFA`;
+    }
+    
+    if (inputElement) {
+        inputElement.value = cardLimits.payment;
+    }
+    
+    // Mettre à jour les boutons preset
+    updatePaymentPresetButtons();
+}
+
+// Fonction pour mettre à jour l'affichage du plafond de retrait
+function updateWithdrawalLimitDisplay() {
+    const currentLimitElement = document.querySelector('#withdrawal-limit-page .current-limit');
+    const usageProgressElement = document.querySelector('#withdrawal-limit-page .usage-progress');
+    const usageTextElement = document.querySelector('#withdrawal-limit-page .usage-text');
+    const inputElement = document.getElementById('new-withdrawal-limit');
+    
+    if (currentLimitElement) {
+        currentLimitElement.innerHTML = `${cardLimits.withdrawal.toLocaleString('fr-FR')} <span>FCFA / jour</span>`;
+    }
+    
+    if (usageProgressElement && usageTextElement) {
+        const usagePercentage = (currentUsage.withdrawal / cardLimits.withdrawal) * 100;
+        usageProgressElement.style.width = `${usagePercentage}%`;
+        usageTextElement.textContent = `${currentUsage.withdrawal.toLocaleString('fr-FR')} FCFA retirés sur ${cardLimits.withdrawal.toLocaleString('fr-FR')} FCFA`;
+    }
+    
+    if (inputElement) {
+        inputElement.value = cardLimits.withdrawal;
+    }
+    
+    // Mettre à jour les boutons preset
+    updateWithdrawalPresetButtons();
+}
+
+// Fonction pour définir un plafond de paiement prédéfini
+function setPaymentLimit(amount) {
+    const inputElement = document.getElementById('new-payment-limit');
+    if (inputElement) {
+        inputElement.value = amount;
+    }
+    updatePaymentPresetButtons(amount);
+}
+
+// Fonction pour définir un plafond de retrait prédéfini
+function setWithdrawalLimit(amount) {
+    const inputElement = document.getElementById('new-withdrawal-limit');
+    if (inputElement) {
+        inputElement.value = amount;
+    }
+    updateWithdrawalPresetButtons(amount);
+}
+
+// Fonction pour mettre à jour les boutons preset de paiement
+function updatePaymentPresetButtons(selectedAmount = null) {
+    const buttons = document.querySelectorAll('#payment-limit-page .preset-btn');
+    const currentAmount = selectedAmount || cardLimits.payment;
+    
+    buttons.forEach(button => {
+        button.classList.remove('active');
+        const buttonAmount = parseInt(button.textContent.replace(/[^\d]/g, ''));
+        if (buttonAmount === currentAmount) {
+            button.classList.add('active');
+        }
+    });
+}
+
+// Fonction pour mettre à jour les boutons preset de retrait
+function updateWithdrawalPresetButtons(selectedAmount = null) {
+    const buttons = document.querySelectorAll('#withdrawal-limit-page .preset-btn');
+    const currentAmount = selectedAmount || cardLimits.withdrawal;
+    
+    buttons.forEach(button => {
+        button.classList.remove('active');
+        const buttonAmount = parseInt(button.textContent.replace(/[^\d]/g, ''));
+        if (buttonAmount === currentAmount) {
+            button.classList.add('active');
+        }
+    });
+}
+
+// Fonction pour mettre à jour le plafond de paiement
+function updatePaymentLimit() {
+    const inputElement = document.getElementById('new-payment-limit');
+    const newLimit = parseInt(inputElement.value);
+    
+    if (!newLimit || newLimit < 50000 || newLimit > 1000000) {
+        showNotification('Veuillez entrer un montant valide entre 50 000 et 1 000 000 FCFA', 'error');
+        return;
+    }
+    
+    // Mettre à jour le plafond
+    cardLimits.payment = newLimit;
+    
+    // Mettre à jour l'affichage de la page carte
+    updateCardLimitsDisplay();
+    
+    // Afficher notification de succès
+    showNotification(`Demande de modification du plafond de paiement soumise : ${newLimit.toLocaleString('fr-FR')} FCFA/jour. Votre demande sera étudiée par nos équipes.`, 'success');
+    
+    // Retourner à la page cartes
+    setTimeout(() => {
+        switchTab('cards');
+    }, 1500);
+}
+
+// Fonction pour mettre à jour le plafond de retrait
+function updateWithdrawalLimit() {
+    const inputElement = document.getElementById('new-withdrawal-limit');
+    const newLimit = parseInt(inputElement.value);
+    
+    if (!newLimit || newLimit < 25000 || newLimit > 500000) {
+        showNotification('Veuillez entrer un montant valide entre 25 000 et 500 000 FCFA', 'error');
+        return;
+    }
+    
+    // Mettre à jour le plafond
+    cardLimits.withdrawal = newLimit;
+    
+    // Mettre à jour l'affichage de la page carte
+    updateCardLimitsDisplay();
+    
+    // Afficher notification de succès
+    showNotification(`Demande de modification du plafond de retrait soumise : ${newLimit.toLocaleString('fr-FR')} FCFA/jour. Votre demande sera étudiée par nos équipes.`, 'success');
+    
+    // Retourner à la page cartes
+    setTimeout(() => {
+        switchTab('cards');
+    }, 1500);
+}
+
+// Fonction pour mettre à jour l'affichage des plafonds sur la page carte principale
+function updateCardLimitsDisplay() {
+    // Mettre à jour le plafond de paiement
+    const paymentLimitElement = document.querySelector('[onclick="adjustPaymentLimit()"] .card-meta');
+    if (paymentLimitElement) {
+        paymentLimitElement.innerHTML = `F <h6>cfa</h6> ${cardLimits.payment.toLocaleString('fr-FR')} / jour`;
+    }
+    
+    // Mettre à jour le plafond de retrait
+    const withdrawalLimitElement = document.querySelector('[onclick="adjustWithdrawalLimit()"] .card-meta');
+    if (withdrawalLimitElement) {
+        withdrawalLimitElement.innerHTML = `F <h6>cfa</h6> ${cardLimits.withdrawal.toLocaleString('fr-FR')} / jour`;
+    }
+}
+
+// Fonction pour afficher des notifications
+function showNotification(message, type = 'info') {
+    // Créer l'élément de notification s'il n'existe pas
+    let notification = document.getElementById('notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'notification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        document.body.appendChild(notification);
+    }
+    
+    // Définir la couleur selon le type
+    const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        warning: '#f59e0b',
+        info: '#3b82f6'
+    };
+    
+    notification.style.backgroundColor = colors[type] || colors.info;
+    notification.textContent = message;
+    
+    // Afficher la notification
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Masquer la notification après 3 secondes
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+    }, 3000);
+}
+
+// Initialiser les plafonds au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    updateCardLimitsDisplay();
+});
+

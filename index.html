@@ -290,6 +290,161 @@
                 </div>
             </div>
 
+            <!-- Page Plafond de Paiement -->
+            <div class="page payment-limit-page" id="payment-limit-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('cards')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Plafond de paiement</h2>
+                </div>
+                
+                <div class="form-container">
+                    <div class="limit-info-card">
+                        <div class="limit-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="limit-details">
+                            <h3>Plafond actuel</h3>
+                            <div class="current-limit">500 000 <span>FCFA / jour</span></div>
+                            <div class="limit-status">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Limite active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="limit-usage">
+                        <h4>Utilisation aujourd'hui</h4>
+                        <div class="usage-bar">
+                            <div class="usage-progress" style="width: 35%"></div>
+                        </div>
+                        <div class="usage-text">175 000 FCFA utilisés sur 500 000 FCFA</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nouveau plafond (FCFA)</label>
+                        <div class="input-field">
+                            <input type="number" placeholder="Entrez le nouveau montant" id="new-payment-limit" min="50000" max="1000000" step="25000">
+                        </div>
+                        <div class="input-hint">Minimum: 50 000 FCFA - Maximum: 1 000 000 FCFA</div>
+                    </div>
+
+                    <div class="preset-limits">
+                        <h4>Plafonds suggérés</h4>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" onclick="setPaymentLimit(250000)">250 000 FCFA</button>
+                            <button class="preset-btn active" onclick="setPaymentLimit(500000)">500 000 FCFA</button>
+                            <button class="preset-btn" onclick="setPaymentLimit(750000)">750 000 FCFA</button>
+                            <button class="preset-btn" onclick="setPaymentLimit(1000000)">1 000 000 FCFA</button>
+                        </div>
+                    </div>
+
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="notice-text">
+                            <strong>Information importante</strong>
+                            <p>Votre demande sera étudiée par nos équipes. La modification de votre plafond prendra effet uniquement si elle est acceptée. Vous recevrez une notification de confirmation du traitement de votre demande.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button" onclick="updatePaymentLimit()">
+                        <i class="fas fa-paper-plane"></i> Faire la demande
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Plafond de Retrait -->
+            <div class="page withdrawal-limit-page" id="withdrawal-limit-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('cards')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Plafond de retrait</h2>
+                </div>
+                
+                <div class="form-container">
+                    <div class="limit-info-card">
+                        <div class="limit-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="limit-details">
+                            <h3>Plafond actuel</h3>
+                            <div class="current-limit">200 000 <span>FCFA / jour</span></div>
+                            <div class="limit-status">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Limite active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="limit-usage">
+                        <h4>Retraits aujourd'hui</h4>
+                        <div class="usage-bar">
+                            <div class="usage-progress withdrawal-progress" style="width: 60%"></div>
+                        </div>
+                        <div class="usage-text">120 000 FCFA retirés sur 200 000 FCFA</div>
+                    </div>
+
+                    <div class="atm-locations">
+                        <h4>Distributeurs disponibles</h4>
+                        <div class="atm-list">
+                            <div class="atm-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="atm-info">
+                                    <span class="atm-name">Centre-ville Libreville</span>
+                                    <span class="atm-status available">Disponible 24h/24</span>
+                                </div>
+                            </div>
+                            <div class="atm-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="atm-info">
+                                    <span class="atm-name">Marché Mont-Bouet</span>
+                                    <span class="atm-status available">Disponible 24h/24</span>
+                                </div>
+                            </div>
+                            <div class="atm-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="atm-info">
+                                    <span class="atm-name">Bord de mer</span>
+                                    <span class="atm-status maintenance">Maintenance (16h-18h)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nouveau plafond (FCFA)</label>
+                        <div class="input-field">
+                            <input type="number" placeholder="Entrez le nouveau montant" id="new-withdrawal-limit" min="25000" max="500000" step="25000">
+                        </div>
+                        <div class="input-hint">Minimum: 25 000 FCFA - Maximum: 500 000 FCFA</div>
+                    </div>
+
+                    <div class="preset-limits">
+                        <h4>Plafonds suggérés</h4>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" onclick="setWithdrawalLimit(100000)">100 000 FCFA</button>
+                            <button class="preset-btn active" onclick="setWithdrawalLimit(200000)">200 000 FCFA</button>
+                            <button class="preset-btn" onclick="setWithdrawalLimit(300000)">300 000 FCFA</button>
+                            <button class="preset-btn" onclick="setWithdrawalLimit(500000)">500 000 FCFA</button>
+                        </div>
+                    </div>
+
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="notice-text">
+                            <strong>Information importante</strong>
+                            <p>Votre demande sera étudiée par nos équipes. La modification de votre plafond prendra effet uniquement si elle est acceptée. Vous recevrez une notification de confirmation du traitement de votre demande.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="primary-button" onclick="updateWithdrawalLimit()">
+                        <i class="fas fa-paper-plane"></i> Faire la demande
+                    </button>
+                </div>
+            </div>
+
             <!-- Page Informations Personnelles -->
             <div class="page personal-info-page" id="personal-info-page">
                 <div class="page-header">

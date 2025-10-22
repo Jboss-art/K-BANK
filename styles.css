@@ -9363,3 +9363,291 @@ html, body {
         top: -15px;
     }
 }
+
+/* ===========================================
+   PAGES DE GESTION DES PLAFONDS
+   =========================================== */
+
+/* Pages de plafonds */
+.payment-limit-page,
+.withdrawal-limit-page {
+    display: none;
+}
+
+.payment-limit-page.active,
+.withdrawal-limit-page.active {
+    display: block;
+}
+
+/* Carte d'informations des plafonds */
+.limit-info-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.limit-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.limit-details h3 {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+}
+
+.current-limit {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.current-limit span {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.limit-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--success-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.limit-status i {
+    font-size: 16px;
+}
+
+/* Barre d'utilisation */
+.limit-usage {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.limit-usage h4 {
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+}
+
+.usage-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.usage-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), #22c55e);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.withdrawal-progress {
+    background: linear-gradient(90deg, var(--warning-color), #fbbf24);
+}
+
+.usage-text {
+    color: var(--text-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Boutons de plafonds prédéfinis */
+.preset-limits {
+    margin-bottom: 24px;
+}
+
+.preset-limits h4 {
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.preset-btn {
+    padding: 14px 16px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.preset-btn:hover {
+    background: var(--hover-bg);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.preset-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
+}
+
+/* Notice de sécurité */
+.security-notice {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.security-notice i {
+    color: var(--success-color);
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.notice-text strong {
+    color: var(--text-light);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.notice-text p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Liste des distributeurs */
+.atm-locations {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.atm-locations h4 {
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+}
+
+.atm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.atm-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.atm-item i {
+    color: var(--primary-color);
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.atm-info {
+    flex: 1;
+}
+
+.atm-name {
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.atm-status {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.atm-status.available {
+    color: var(--success-color);
+}
+
+.atm-status.maintenance {
+    color: var(--warning-color);
+}
+
+/* Responsive pour les pages de plafonds */
+@media screen and (max-width: 480px) {
+    .limit-info-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .limit-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .current-limit {
+        font-size: 24px;
+    }
+    
+    .preset-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .atm-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .security-notice {
+        flex-direction: column;
+        text-align: center;
+    }
+}
