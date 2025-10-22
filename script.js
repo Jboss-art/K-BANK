@@ -3718,5 +3718,119 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof renderVaultGoal === 'function') {
         renderVaultGoal();
     }
+    
+    // Initialiser le graphique dynamique
+    initializeDynamicChart();
 });
+
+// ===========================================
+// GRAPHIQUE DYNAMIQUE AVEC ANIMATION CONTINUE
+// ===========================================
+
+function initializeDynamicChart() {
+    console.log('🚀 Démarrage du graphique dynamique...');
+    
+    const chartContainer = document.getElementById('dynamicChart');
+    if (!chartContainer) {
+        console.error('❌ Graphique non trouvé!');
+        return;
+    }
+    
+    console.log('✅ Graphique trouvé:', chartContainer);
+    
+    // Forcer l'affichage immédiat
+    chartContainer.style.display = 'block';
+    chartContainer.style.visibility = 'visible';
+    chartContainer.style.opacity = '1';
+    
+    // Trouver toutes les barres
+    const bars = chartContainer.querySelectorAll('.bar-fill');
+    console.log(`📊 ${bars.length} barres trouvées`);
+    
+    // Forcer l'affichage de chaque barre
+    bars.forEach((bar, index) => {
+        console.log(`🔧 Configuration barre ${index + 1}`);
+        
+        // Styles forcés
+        bar.style.display = 'block';
+        bar.style.visibility = 'visible';
+        bar.style.opacity = '1';
+        bar.style.position = 'relative';
+        bar.style.width = '100%';
+        bar.style.minHeight = '30px';
+        
+        // Vérifier que la hauteur est définie
+        const height = bar.style.height;
+        console.log(`📏 Barre ${index + 1} hauteur: ${height}`);
+        
+        if (!height) {
+            const chartBar = bar.closest('.chart-bar');
+            const value = chartBar.getAttribute('data-value');
+            bar.style.height = value + '%';
+            console.log(`🔧 Hauteur forcée: ${value}%`);
+        }
+    });
+    
+    // Vérifier les labels
+    const labels = chartContainer.querySelectorAll('.bar-label');
+    console.log(`🏷️ ${labels.length} étiquettes trouvées`);
+    
+    labels.forEach((label, index) => {
+        console.log(`🏷️ Label ${index + 1}: ${label.textContent}`);
+    });
+    
+    console.log('✅ Graphique initialisé avec succès!');
+    
+    // Click handler simple
+    chartContainer.addEventListener('click', function() {
+        console.log('🖱️ Graphique cliqué!');
+        const bars = this.querySelectorAll('.bar-fill');
+        bars.forEach(bar => {
+            if (bar.style.animationPlayState === 'paused') {
+                bar.style.animationPlayState = 'running';
+                console.log('▶️ Animation reprise');
+            } else {
+                bar.style.animationPlayState = 'paused';
+                console.log('⏸️ Animation pausée');
+            }
+        });
+    });
+}
+
+function updateChartValues() {
+    const chartContainer = document.getElementById('dynamicChart');
+    if (!chartContainer || !chartContainer.classList.contains('animating')) return;
+    
+    const bars = chartContainer.querySelectorAll('.chart-bar');
+    
+    bars.forEach((bar, index) => {
+        const barFill = bar.querySelector('.bar-fill');
+        const barValue = bar.querySelector('.bar-value');
+        
+        // Générer une variation aléatoire de ±10%
+        const baseValue = parseInt(bar.getAttribute('data-value'));
+        const variation = (Math.random() - 0.5) * 20; // -10% à +10%
+        const newValue = Math.max(20, Math.min(100, baseValue + variation));
+        
+        // Calculer la nouvelle valeur financière
+        const baseFinancialValue = parseFloat(barValue.textContent.replace('M', ''));
+        const newFinancialValue = (baseFinancialValue * (newValue / baseValue)).toFixed(1);
+        
+        // Appliquer les nouvelles valeurs avec animation fluide
+        barFill.style.transition = 'height 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        barFill.style.height = newValue + '%';
+        barValue.textContent = newFinancialValue + 'M';
+        
+        // Effet de pulsation sur la couleur
+        const hue = 240 + (newValue - 50) * 2; // Bleu à violet selon la valeur
+        barFill.style.background = `linear-gradient(180deg, 
+            hsl(${hue}, 70%, 60%), 
+            hsl(${hue + 20}, 70%, 50%))`;
+    });
+}
+
+// Fonction utilitaire pour formater les devises
+function formatCurrency(amount) {
+    return amount.toLocaleString('fr-FR') + ' FCFA';
+}
 

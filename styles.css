@@ -9074,3 +9074,292 @@ html, body {
         gap: 20px;
     }
 }
+
+/* Graphique dynamique avec animation continue - FORCER L'AFFICHAGE */
+#dynamicChart,
+.dynamic-chart-container {
+    background: var(--card-bg) !important;
+    border-radius: 12px !important;
+    padding: 15px 10px !important;
+    margin: 15px 0 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #6a11cb !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 180px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999 !important;
+}
+
+#dynamicChart:hover,
+.dynamic-chart-container:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+#dynamicChart .animated-chart,
+.animated-chart {
+    position: relative !important;
+    height: 120px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    padding: 10px 5px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.chart-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.grid-line {
+    height: 1px;
+    background: var(--border-color);
+    opacity: 0.3;
+}
+
+.chart-bars {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    width: 100% !important;
+    height: 100% !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.chart-bar {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    position: relative !important;
+    height: 100% !important;
+    min-width: 35px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.bar-fill {
+    width: 100% !important;
+    background-color: #6a11cb !important; /* Couleur de base au cas où les styles inline ne marchent pas */
+    border-radius: 4px 4px 0 0 !important;
+    transition: all 0.5s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 20px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Bordure pour voir les barres même si la couleur ne marche pas */
+}
+
+.bar-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.6), 
+        transparent);
+    animation: shimmer 1s linear infinite;
+}
+
+.bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 70%);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.bar-label {
+    color: var(--text-muted) !important;
+    font-size: 11px !important;
+    margin-top: 6px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.bar-value {
+    color: white !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    position: absolute !important;
+    top: -18px !important;
+    background: linear-gradient(45deg, #6a11cb, #2575fc) !important;
+    padding: 2px 5px !important;
+    border-radius: 8px !important;
+    opacity: 0 !important;
+    transform: translateY(5px) !important;
+    animation: valueFloat 1.5s ease-in-out infinite !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    white-space: nowrap !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Animation simple et visible */
+@keyframes simpleBarPulse {
+    0%, 100% {
+        transform: scaleY(1) scaleX(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scaleY(1.1) scaleX(1.02);
+        filter: brightness(1.3);
+    }
+}
+
+@keyframes colorChange {
+    0% { filter: hue-rotate(0deg); }
+    25% { filter: hue-rotate(90deg); }
+    50% { filter: hue-rotate(180deg); }
+    75% { filter: hue-rotate(270deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* Appliquer l'animation simple */
+.bar-fill {
+    animation: simpleBarPulse 2s ease-in-out infinite, colorChange 4s linear infinite !important;
+}
+
+@keyframes valueFloat {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(5px) scale(0.8) rotate(-2deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.1) rotate(2deg);
+    }
+}
+
+@keyframes chartGlow {
+    0%, 100% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border-color: var(--border-color);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(106, 17, 203, 0.4), 
+                    0 0 30px rgba(37, 117, 252, 0.3);
+        border-color: rgba(106, 17, 203, 0.5);
+    }
+}
+
+/* État animé par défaut */
+.dynamic-chart-container {
+    animation: chartGlow 2s ease-in-out infinite;
+}
+
+.dynamic-chart-container .bar-fill {
+    animation: barPulse 1.5s ease-in-out infinite, colorShift 3s ease-in-out infinite;
+}
+
+.dynamic-chart-container .bar-fill::before {
+    animation: shimmer 1s linear infinite;
+}
+
+.dynamic-chart-container .bar-fill::after {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.dynamic-chart-container .bar-value {
+    animation: valueFloat 1.5s ease-in-out infinite;
+}
+
+/* État arrêté */
+.dynamic-chart-container.stopped .bar-fill,
+.dynamic-chart-container.stopped .bar-fill::before,
+.dynamic-chart-container.stopped .bar-fill::after,
+.dynamic-chart-container.stopped .bar-value,
+.dynamic-chart-container.stopped {
+    animation: none !important;
+}
+
+.dynamic-chart-container.stopped .chart-subtitle::after {
+    content: " - Animation arrêtée";
+    color: var(--success-color);
+}
+
+/* Valeurs des barres */
+.chart-bar:nth-child(1) { --bar-height: 85%; }
+.chart-bar:nth-child(2) { --bar-height: 92%; }
+.chart-bar:nth-child(3) { --bar-height: 78%; }
+.chart-bar:nth-child(4) { --bar-height: 95%; }
+.chart-bar:nth-child(5) { --bar-height: 88%; }
+.chart-bar:nth-child(6) { --bar-height: 100%; }
+
+/* S'assurer que les conteneurs parents donnent assez d'espace */
+.chart-canvas,
+.financial-overview .overview-content,
+.evolution-section {
+    overflow: visible !important;
+    min-height: auto !important;
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .dynamic-chart-container {
+        padding: 10px 8px;
+        margin: 10px 0;
+        min-height: 150px;
+    }
+    
+    .animated-chart {
+        height: 100px;
+        padding: 8px 3px;
+    }
+    
+    .chart-bars {
+        gap: 6px;
+        padding: 0;
+    }
+    
+    .chart-bar {
+        min-width: 30px;
+    }
+    
+    .bar-label {
+        font-size: 10px;
+        margin-top: 5px;
+    }
+    
+    .bar-value {
+        font-size: 8px;
+        padding: 2px 4px;
+        top: -15px;
+    }
+}
