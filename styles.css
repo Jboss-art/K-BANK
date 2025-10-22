@@ -103,14 +103,15 @@
 /* Carte principale en mode clair */
 [data-theme="light"] .main-balance-card {
     background: linear-gradient(135deg, 
-        rgba(106, 17, 203, 0.95) 0%, 
-        rgba(37, 117, 252, 0.95) 50%,
-        rgba(106, 17, 203, 0.90) 100%) !important;
+        rgba(106, 17, 203, 0.90) 0%, 
+        rgba(37, 117, 252, 0.97) 50%,
+        rgba(106, 17, 203, 0.87) 100%) !important;
     box-shadow: 
-        0 8px 24px rgba(106, 17, 203, 0.4),
-        0 4px 12px rgba(37, 117, 252, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        0 12px 36px rgba(106, 17, 203, 0.25),
+        0 6px 18px rgba(37, 117, 252, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 [data-theme="light"] .main-balance-card .clouds-background {
@@ -731,16 +732,17 @@ body {
     width: 100%;
     margin: 0;
     background: linear-gradient(135deg, 
-        rgba(106, 17, 203, 0.98) 0%, 
-        rgba(37, 117, 252, 0.98) 50%,
-        rgba(106, 17, 203, 0.95) 100%);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+        rgba(106, 17, 203, 0.88) 0%, 
+        rgba(37, 117, 252, 0.95) 50%,
+        rgba(106, 17, 203, 0.85) 100%);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     box-shadow: 
-        0 8px 32px rgba(106, 17, 203, 0.6),
-        0 4px 16px rgba(37, 117, 252, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        0 12px 48px rgba(106, 17, 203, 0.3),
+        0 6px 24px rgba(37, 117, 252, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     border-radius: 0 0 25px 25px;
     overflow: hidden;
     animation: slideDownBalance 1s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -752,10 +754,10 @@ body {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: 
-        radial-gradient(ellipse 300px 120px at 20% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 250px 100px at 70% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 200px 80px at 50% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 70%),
-        radial-gradient(ellipse 400px 150px at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+        radial-gradient(ellipse 300px 120px at 20% 40%, rgba(255, 255, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 250px 100px at 70% 60%, rgba(255, 255, 255, 0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 200px 80px at 50% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 150px at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
     animation: cloudFloat 20s infinite linear;
     z-index: 1;
 }
@@ -765,8 +767,8 @@ body {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: 
-        radial-gradient(ellipse 180px 70px at 30% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 70%),
-        radial-gradient(ellipse 320px 110px at 90% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+        radial-gradient(ellipse 180px 70px at 30% 70%, rgba(255, 255, 255, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 320px 110px at 90% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
     animation: cloudFloat 25s infinite linear reverse;
 }
 
@@ -788,32 +790,35 @@ body {
 }
 
 .main-balance-card .balance-title {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .main-balance-card .balance-amount {
     color: #ffffff;
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 20px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .main-balance-card .balance-amount .currency-symbol,
 .main-balance-card .balance-amount .currency-code {
     font-size: 18px;
-    font-weight: 500;
-    opacity: 0.9;
+    font-weight: 600;
+    opacity: 0.95;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .main-balance-card .balance-amount small {
     font-size: 20px;
-    opacity: 0.8;
+    opacity: 0.9;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .main-balance-card .balance-details {
@@ -824,26 +829,30 @@ body {
 
 .main-balance-card .balance-detail {
     flex: 1;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.92);
     font-size: 13px;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .main-balance-card .balance-detail .detail-value {
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     margin-top: 4px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .main-balance-card .balance-detail .detail-value .currency-symbol,
 .main-balance-card .balance-detail .detail-value .currency-code {
     font-size: 11px;
-    opacity: 0.9;
+    opacity: 0.95;
+    font-weight: 600;
 }
 
 .main-balance-card .balance-detail .detail-value small {
     font-size: 12px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .main-balance-card .divider {
