@@ -10333,3 +10333,41 @@ html {
         --mobile-border-radius: 14px;
     }
 }
+
+/* ==== CORRECTION POUR LES OPTIONS DE SELECT ==== */
+/* Force les options des listes déroulantes à être visibles */
+select option, 
+.input-field select option,
+.form-group select option {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 8px 12px;
+    border: none;
+}
+
+/* Mode sombre */
+[data-theme="dark"] select option,
+[data-theme="dark"] .input-field select option,
+[data-theme="dark"] .form-group select option {
+    background: #2a2a3e !important;
+    color: #ffffff !important;
+}
+
+/* Mode clair */
+[data-theme="light"] select option,
+[data-theme="light"] .input-field select option,
+[data-theme="light"] .form-group select option {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+/* Styles pour les selects eux-mêmes */
+select,
+.input-field select,
+.form-group select {
+    background: var(--input-bg) !important;
+    color: var(--text-light) !important;
+    border: 2px solid var(--border-color);
+    border-radius: var(--mobile-border-radius);
+    padding: 12px var(--mobile-padding);
+}
