@@ -10371,3 +10371,76 @@ select,
     border-radius: var(--mobile-border-radius);
     padding: 12px var(--mobile-padding);
 }
+
+/* ==== STYLES POUR LE THEME TOGGLE DANS LES PARAMÈTRES ==== */
+.theme-toggle-setting {
+    width: 50px;
+    height: 26px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-setting:hover {
+    background: rgba(106, 17, 203, 0.2);
+    border-color: var(--primary-color);
+}
+
+.theme-toggle-setting .theme-toggle-slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-setting .theme-icon {
+    position: absolute;
+    font-size: 10px;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.theme-toggle-setting .theme-icon.light {
+    opacity: 1;
+}
+
+.theme-toggle-setting .theme-icon.dark {
+    opacity: 0;
+}
+
+/* Mode sombre actif */
+[data-theme="dark"] .theme-toggle-setting .theme-toggle-slider {
+    transform: translateX(22px);
+}
+
+[data-theme="dark"] .theme-toggle-setting .theme-icon.light {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle-setting .theme-icon.dark {
+    opacity: 1;
+}
+
+/* Mode clair */
+[data-theme="light"] .theme-toggle-setting .theme-toggle-slider {
+    transform: translateX(0px);
+}
+
+[data-theme="light"] .theme-toggle-setting .theme-icon.light {
+    opacity: 1;
+}
+
+[data-theme="light"] .theme-toggle-setting .theme-icon.dark {
+    opacity: 0;
+}

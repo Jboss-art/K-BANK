@@ -1358,13 +1358,168 @@ function downloadIban() {
         'Télécharger',
         'Annuler',
         () => {
-            showToast('Téléchargement du RIB en cours...');
-            // Simulate download
-            setTimeout(() => {
-                showToast('RIB téléchargé avec succès');
-            }, 1500);
+            generateIbanPDF();
         }
     );
+}
+
+function generateIbanPDF() {
+    try {
+        showToast('Génération du RIB en cours...');
+        
+        // Vérifier si jsPDF est disponible avec différentes méthodes
+        let jsPDF;
+        if (window.jsPDF && window.jsPDF.jsPDF) {
+            jsPDF = window.jsPDF.jsPDF;
+        } else if (window.jsPDF) {
+            jsPDF = window.jsPDF;
+        } else if (typeof window.jspdf !== 'undefined') {
+            jsPDF = window.jspdf.jsPDF;
+        } else {
+            showToast('Erreur: Bibliothèque PDF non disponible. Vérifiez votre connexion internet.');
+            console.error('jsPDF not found. Available:', Object.keys(window).filter(k => k.toLowerCase().includes('pdf')));
+            
+            // Alternative : créer un fichier texte avec les informations
+            createTextRIB();
+            return;
+        }
+        const doc = new jsPDF();
+        
+        // Configuration des couleurs
+        const primaryColor = [106, 17, 203]; // Violet K-Bank
+        const textColor = [51, 51, 51]; // Gris foncé
+        const accentColor = [37, 117, 252]; // Bleu
+        
+        // En-tête avec logo K-Bank
+        doc.setFillColor(...primaryColor);
+        doc.rect(0, 0, 210, 40, 'F');
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(24);
+        doc.setFont(undefined, 'bold');
+        doc.text('K-BANK', 20, 25);
+        
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text('Banque Digitale Moderne', 20, 32);
+        
+        // Date de génération
+        const currentDate = new Date().toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        doc.setTextColor(...textColor);
+        doc.setFontSize(10);
+        doc.text(`Généré le ${currentDate}`, 150, 32);
+        
+        // Titre du document
+        doc.setTextColor(...primaryColor);
+        doc.setFontSize(18);
+        doc.setFont(undefined, 'bold');
+        doc.text('RELEVÉ D\'IDENTITÉ BANCAIRE (RIB)', 20, 60);
+        
+        // Informations du compte
+        doc.setTextColor(...textColor);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('INFORMATIONS DU TITULAIRE', 20, 80);
+        
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(11);
+        
+        // Données du client
+        const clientData = [
+            ['Nom du titulaire:', 'BATOLA Godwin Alpha'],
+            ['Numéro de compte:', '30420001234567890'],
+            ['Type de compte:', 'Compte Principal'],
+            ['Date d\'ouverture:', '15 janvier 2023']
+        ];
+        
+        let yPos = 90;
+        clientData.forEach(([label, value]) => {
+            doc.setFont(undefined, 'bold');
+            doc.text(label, 25, yPos);
+            doc.setFont(undefined, 'normal');
+            doc.text(value, 80, yPos);
+            yPos += 8;
+        });
+        
+        // Section IBAN avec encadré
+        yPos += 10;
+        doc.setDrawColor(...accentColor);
+        doc.setLineWidth(0.5);
+        doc.rect(20, yPos - 5, 170, 25);
+        
+        doc.setTextColor(...primaryColor);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('IBAN (International Bank Account Number)', 25, yPos + 3);
+        
+        doc.setTextColor(...textColor);
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('GA21 3042 0001 2345 6789 0304', 25, yPos + 13);
+        
+        // Coordonnées bancaires
+        yPos += 35;
+        doc.setTextColor(...primaryColor);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('COORDONNÉES BANCAIRES', 20, yPos);
+        
+        doc.setTextColor(...textColor);
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        
+        const bankData = [
+            ['Banque:', 'K-BANK Gabon'],
+            ['Code banque:', '30420'],
+            ['Code guichet:', '00012'],
+            ['Clé RIB:', '04'],
+            ['BIC/SWIFT:', 'KBANKGAXXX'],
+            ['Adresse:', 'Boulevard de l\'Indépendance'],
+            ['', 'BP 20000 Libreville, Gabon'],
+            ['Téléphone:', '+241 01 23 45 67'],
+            ['Email:', 'batolaalpha@gmail.com']
+        ];
+        
+        yPos += 10;
+        bankData.forEach(([label, value]) => {
+            if (label) {
+                doc.setFont(undefined, 'bold');
+                doc.text(label, 25, yPos);
+                doc.setFont(undefined, 'normal');
+                doc.text(value, 80, yPos);
+            } else {
+                doc.text(value, 80, yPos);
+            }
+            yPos += 6;
+        });
+        
+        // Pied de page avec mentions légales
+        yPos = 260;
+        doc.setDrawColor(...primaryColor);
+        doc.setLineWidth(0.3);
+        doc.line(20, yPos, 190, yPos);
+        
+        doc.setTextColor(...textColor);
+        doc.setFontSize(8);
+        doc.setFont(undefined, 'italic');
+        doc.text('Ce document est confidentiel et ne doit être communiqué qu\'aux organismes autorisés.', 20, yPos + 8);
+        doc.text('K-Bank est une banque digitale régulée par la Banque Centrale du Gabon.', 20, yPos + 14);
+        doc.text('Pour toute question, contactez notre service client au +241 01 23 45 67', 20, yPos + 20);
+        
+        // Téléchargement du PDF
+        const fileName = `RIB_K-Bank_${new Date().toISOString().slice(0, 10)}.pdf`;
+        doc.save(fileName);
+        
+        showToast('RIB téléchargé avec succès !');
+        
+    } catch (error) {
+        console.error('Erreur lors de la génération du PDF:', error);
+        showToast('Erreur lors de la génération du PDF');
+    }
 }
 
 // Functions for Others page
@@ -4086,4 +4241,64 @@ function showNotification(message, type = 'info') {
 document.addEventListener('DOMContentLoaded', function() {
     updateCardLimitsDisplay();
 });
+
+// Alternative de fallback pour créer un RIB en texte si PDF ne fonctionne pas
+function createTextRIB() {
+    const currentDate = new Date().toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    const ribContent = `
+╔══════════════════════════════════════════════════════════════════════════╗
+║                            K-BANK GABON                                 ║
+║                      RELEVÉ D'IDENTITÉ BANCAIRE                         ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Généré le ${currentDate}
+
+INFORMATIONS DU TITULAIRE
+─────────────────────────────────────────
+Nom et Prénom     : Godwin BATOLA
+Adresse          : Quartier Louis derrière Jeanne Ebori
+                   BP 20000 Libreville, Gabon
+
+COORDONNÉES BANCAIRES
+─────────────────────────────────────────
+IBAN             : GA21 XXXX XXXX XXXX XXXXXXXX 304
+BIC/SWIFT        : KBANKGAXXX
+Banque           : K-BANK Gabon
+Code banque      : 30420
+Code guichet     : 00012
+Numéro de compte : XXXXXXXXXXXX304
+Clé RIB          : 04
+
+COORDONNÉES DE LA BANQUE
+─────────────────────────────────────────
+Banque           : K-BANK Gabon
+Adresse          : Boulevard de l'Indépendance
+                   BP 20000 Libreville, Gabon
+Téléphone        : +241 01 23 45 67
+Email            : contact@k-bank.ga
+
+─────────────────────────────────────────
+Ce document est confidentiel et ne doit être communiqué qu'aux organismes autorisés.
+K-Bank est une banque digitale régulée par la Banque Centrale du Gabon.
+Pour toute question, contactez notre service client au +241 01 23 45 67
+    `;
+    
+    // Créer et télécharger le fichier texte
+    const blob = new Blob([ribContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `RIB_K-Bank_${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showToast('RIB téléchargé au format texte !');
+}
 
