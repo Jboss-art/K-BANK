@@ -736,7 +736,7 @@ input:focus, textarea:focus, select:focus {
 /* Responsive pour desktop */
 @media (min-width: 1024px) {
     .app-container {
-        max-width: 420px;
+        
         border-radius: 20px;
     }
     
@@ -748,7 +748,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Structure principale */
 .app-container {
-    max-width: 420px;
+    
     width: 100%;
     margin: 0 auto;
     height: 100vh;
@@ -1808,7 +1808,7 @@ input:focus, textarea:focus, select:focus {
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: 420px;
+    
     display: flex;
     justify-content: space-around;
     background: rgba(26, 26, 46, 0.9);
@@ -4254,7 +4254,7 @@ h6 {
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: 420px;
+    
     display: flex;
     justify-content: space-around;
     background: rgba(26, 26, 46, 0.9);
