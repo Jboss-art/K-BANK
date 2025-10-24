@@ -47,6 +47,30 @@
         }
 
         /* Content wrapper pour gérer l'espacement avec header et nav fixes */
+        /* ===============================================
+           SUPPRESSION GLOBALE DES SCROLLBARS
+           =============================================== */
+
+        /* Cacher toutes les scrollbars pour Webkit (Chrome, Safari, Edge) */
+        *::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        *::-webkit-scrollbar-track,
+        *::-webkit-scrollbar-thumb,
+        *::-webkit-scrollbar-corner {
+            display: none !important;
+        }
+
+        /* Cacher toutes les scrollbars pour Firefox */
+        * {
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+        }
+
+        /* Configuration spécifique du contenu */
         .content {
             flex: 1;
             overflow-y: auto;
@@ -4083,6 +4107,261 @@
             color: var(--secondary-color);
         }
 
+        /* Page Modifier le Profil */
+        .edit-profile-container {
+            padding: 0 20px;
+            padding-bottom: 100px;
+        }
+
+        .profile-photo-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .current-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .photo-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--silver-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary-color);
+            border: 3px solid rgba(192, 192, 192, 0.3);
+        }
+
+        .change-photo-btn {
+            background: var(--professional-color);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .change-photo-btn:hover {
+            background: #0891b2;
+            transform: translateY(-2px);
+        }
+
+        .edit-profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .form-section h3 {
+            color: var(--secondary-color);
+            font-size: 16px;
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section h3::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--professional-color);
+            border-radius: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .input-field input,
+        .input-field select,
+        .input-field textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field input:focus,
+        .input-field select:focus,
+        .input-field textarea:focus {
+            outline: none;
+            border-color: var(--professional-color);
+            background: rgba(6, 182, 212, 0.1);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .input-field textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .preference-item:last-child {
+            border-bottom: none;
+        }
+
+        .preference-info {
+            flex: 1;
+        }
+
+        .preference-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .preference-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .toggle-switch input[type="checkbox"] {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-switch label {
+            display: block;
+            width: 50px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch label::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + label {
+            background: var(--professional-color);
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + label::before {
+            transform: translateX(22px);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive pour la page de modification */
+        @media (max-width: 480px) {
+            .edit-profile-container {
+                padding: 0 15px;
+            }
+            
+            .form-section {
+                padding: 15px;
+            }
+            
+            .photo-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+        }
+
         /* Page Notifications */
         .notifications-container {
             padding: 0 20px;
@@ -6471,7 +6750,7 @@
                     </div>
                     
                     <div class="profile-menu">
-                        <div class="menu-item" onclick="showToast('Fonctionnalité à venir')">
+                        <div class="menu-item" onclick="switchTab('edit-profile')">
                             <i class="fas fa-user-edit"></i>
                             <span>Modifier le profil</span>
                         </div>
@@ -6496,6 +6775,155 @@
                             <span>Déconnexion</span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Page Modifier le Profil -->
+            <div class="page edit-profile-page" id="edit-profile-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('profile')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Modifier le profil</h2>
+                </div>
+                
+                <div class="edit-profile-container">
+                    <!-- Photo de profil -->
+                    <div class="profile-photo-section">
+                        <div class="current-photo">
+                            <div class="photo-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <button class="change-photo-btn" onclick="changeProfilePhoto()">
+                                <i class="fas fa-camera"></i>
+                                Changer la photo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de modification -->
+                    <form class="edit-profile-form" onsubmit="saveProfileChanges(event)">
+                        <div class="form-section">
+                            <h3>Informations personnelles</h3>
+                            
+                            <div class="input-group">
+                                <label>Nom complet</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-name" value="Godwin BATOLA" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Email</label>
+                                <div class="input-field">
+                                    <input type="email" id="profile-email" value="godwin.batola@gmail.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Téléphone</label>
+                                <div class="input-field">
+                                    <input type="tel" id="profile-phone" value="+241 01 23 45 67" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Date de naissance</label>
+                                <div class="input-field">
+                                    <input type="date" id="profile-birthdate" value="1990-05-15">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Profession</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-profession" value="Entrepreneur" placeholder="Votre profession">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Adresse</h3>
+                            
+                            <div class="input-group">
+                                <label>Adresse complète</label>
+                                <div class="input-field">
+                                    <textarea id="profile-address" rows="3" placeholder="Votre adresse complète">Quartier Louis derrière Jeanne Ebori
+BP 20000 Libreville</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Ville</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-city" value="Libreville" placeholder="Ville">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Pays</label>
+                                <div class="input-field">
+                                    <select id="profile-country">
+                                        <option value="GA" selected>Gabon</option>
+                                        <option value="CM">Cameroun</option>
+                                        <option value="GQ">Guinée Équatoriale</option>
+                                        <option value="CG">République du Congo</option>
+                                        <option value="TD">Tchad</option>
+                                        <option value="CF">République Centrafricaine</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Préférences</h3>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Notifications par email</div>
+                                    <div class="preference-desc">Recevoir des notifications sur votre email</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="email-notifications" checked>
+                                    <label for="email-notifications"></label>
+                                </div>
+                            </div>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Notifications SMS</div>
+                                    <div class="preference-desc">Recevoir des alertes par SMS</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="sms-notifications" checked>
+                                    <label for="sms-notifications"></label>
+                                </div>
+                            </div>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Authentification biométrique</div>
+                                    <div class="preference-desc">Utiliser l'empreinte digitale ou Face ID</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="biometric-auth">
+                                    <label for="biometric-auth"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="cancelProfileEdit()">
+                                <i class="fas fa-times"></i>
+                                Annuler
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i>
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -7380,6 +7808,183 @@
             if (backSwipeIndicator) {
                 backSwipeIndicator.style.left = '-100px';
             }
+        }
+
+        // ===============================================
+        // FONCTIONS DE MODIFICATION DU PROFIL
+        // ===============================================
+        
+        // Changer la photo de profil
+        function changeProfilePhoto() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Simuler le changement de photo
+                        showToast('Photo de profil mise à jour avec succès !');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+        
+        // Sauvegarder les modifications du profil
+        function saveProfileChanges(event) {
+            event.preventDefault();
+            
+            // Récupérer les valeurs du formulaire
+            const profileData = {
+                name: document.getElementById('profile-name').value,
+                email: document.getElementById('profile-email').value,
+                phone: document.getElementById('profile-phone').value,
+                birthdate: document.getElementById('profile-birthdate').value,
+                profession: document.getElementById('profile-profession').value,
+                address: document.getElementById('profile-address').value,
+                city: document.getElementById('profile-city').value,
+                country: document.getElementById('profile-country').value,
+                emailNotifications: document.getElementById('email-notifications').checked,
+                smsNotifications: document.getElementById('sms-notifications').checked,
+                biometricAuth: document.getElementById('biometric-auth').checked
+            };
+            
+            // Validation des champs obligatoires
+            if (!profileData.name || !profileData.email || !profileData.phone) {
+                showToast('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Validation de l'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(profileData.email)) {
+                showToast('Veuillez saisir une adresse email valide');
+                return;
+            }
+            
+            // Simuler la sauvegarde
+            showLoadingToast('Sauvegarde en cours...');
+            
+            setTimeout(() => {
+                // Mettre à jour les données globales
+                appData.user.name = profileData.name;
+                appData.user.email = profileData.email;
+                appData.user.phone = profileData.phone;
+                
+                // Mettre à jour l'affichage dans la page profil
+                updateProfileDisplay(profileData);
+                
+                showToast('Profil mis à jour avec succès !');
+                
+                // Retourner à la page profil
+                switchTab('profile');
+            }, 1500);
+        }
+        
+        // Mettre à jour l'affichage du profil
+        function updateProfileDisplay(profileData) {
+            // Mettre à jour la page profil
+            const profileHeader = document.querySelector('.profile-info h3');
+            const profileEmails = document.querySelectorAll('.profile-info p');
+            
+            if (profileHeader) {
+                profileHeader.textContent = profileData.name;
+            }
+            
+            if (profileEmails.length >= 2) {
+                profileEmails[0].textContent = profileData.email;
+                profileEmails[1].textContent = profileData.phone;
+            }
+            
+            // Mettre à jour d'autres sections si nécessaire
+            const welcomeText = document.querySelector('.welcome-text');
+            if (welcomeText) {
+                welcomeText.textContent = `Bonjour, ${profileData.name}`;
+            }
+        }
+        
+        // Annuler la modification du profil
+        function cancelProfileEdit() {
+            if (confirm('Êtes-vous sûr de vouloir annuler ? Les modifications non sauvegardées seront perdues.')) {
+                // Réinitialiser le formulaire avec les valeurs originales
+                resetProfileForm();
+                switchTab('profile');
+            }
+        }
+        
+        // Réinitialiser le formulaire
+        function resetProfileForm() {
+            document.getElementById('profile-name').value = appData.user.name;
+            document.getElementById('profile-email').value = appData.user.email;
+            document.getElementById('profile-phone').value = appData.user.phone;
+            document.getElementById('profile-birthdate').value = '1990-05-15';
+            document.getElementById('profile-profession').value = 'Entrepreneur';
+            document.getElementById('profile-address').value = 'Quartier Louis derrière Jeanne Ebori\nBP 20000 Libreville';
+            document.getElementById('profile-city').value = 'Libreville';
+            document.getElementById('profile-country').value = 'GA';
+            document.getElementById('email-notifications').checked = true;
+            document.getElementById('sms-notifications').checked = true;
+            document.getElementById('biometric-auth').checked = false;
+        }
+        
+        // Toast de chargement
+        function showLoadingToast(message) {
+            const existingToast = document.querySelector('.loading-toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = 'loading-toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--card-bg);
+                color: var(--text-light);
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border: 1px solid rgba(192, 192, 192, 0.1);
+                animation: slideDown 0.3s ease;
+            `;
+            
+            toast.innerHTML = `
+                <div style="
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid rgba(6, 182, 212, 0.3);
+                    border-top: 2px solid var(--professional-color);
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                "></div>
+                <span>${message}</span>
+                <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    @keyframes slideDown {
+                        from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+                        to { transform: translateX(-50%) translateY(0); opacity: 1; }
+                    }
+                </style>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 2000);
         }
 
         // Initialise les écouteurs de glissement de retour

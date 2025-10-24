@@ -611,13 +611,26 @@
                 
                 <div class="profile-section">
                     <h3>Mon compte</h3>
+                    <div class="profile-item" onclick="switchTab('edit-profile')">
+                        <div class="item-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">Modifier le profil</div>
+                            <div class="item-subtitle">Mettre à jour vos informations</div>
+                        </div>
+                        <div class="item-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    
                     <div class="profile-item" onclick="switchTab('personal-info')">
                         <div class="item-icon">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="item-info">
                             <div class="item-title">Informations personnelles</div>
-                            <div class="item-subtitle">Gérer vos données</div>
+                            <div class="item-subtitle">Voir vos données</div>
                         </div>
                         <div class="item-action">
                             <i class="fas fa-chevron-right"></i>
@@ -654,6 +667,155 @@
                 <div class="logout-button" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Déconnexion</span>
+                </div>
+            </div>
+
+            <!-- Page Modifier le Profil -->
+            <div class="page edit-profile-page" id="edit-profile-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('profile')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2>Modifier le profil</h2>
+                </div>
+                
+                <div class="edit-profile-container">
+                    <!-- Photo de profil -->
+                    <div class="profile-photo-section">
+                        <div class="current-photo">
+                            <div class="photo-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <button class="change-photo-btn" onclick="changeProfilePhoto()">
+                                <i class="fas fa-camera"></i>
+                                Changer la photo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de modification -->
+                    <form class="edit-profile-form" onsubmit="saveProfileChanges(event)">
+                        <div class="form-section">
+                            <h3>Informations personnelles</h3>
+                            
+                            <div class="input-group">
+                                <label>Nom complet</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-name" value="Godwin Batola" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Email</label>
+                                <div class="input-field">
+                                    <input type="email" id="profile-email" value="batolaalpha@gmail.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Téléphone</label>
+                                <div class="input-field">
+                                    <input type="tel" id="profile-phone" value="+241 01 23 45 67" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Date de naissance</label>
+                                <div class="input-field">
+                                    <input type="date" id="profile-birthdate" value="1990-05-15">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Profession</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-profession" value="Entrepreneur" placeholder="Votre profession">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Adresse</h3>
+                            
+                            <div class="input-group">
+                                <label>Adresse complète</label>
+                                <div class="input-field">
+                                    <textarea id="profile-address" rows="3" placeholder="Votre adresse complète">Quartier Louis derrière Jeanne Ebori
+BP 20000 Libreville</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Ville</label>
+                                <div class="input-field">
+                                    <input type="text" id="profile-city" value="Libreville" placeholder="Ville">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Pays</label>
+                                <div class="input-field">
+                                    <select id="profile-country">
+                                        <option value="GA" selected>Gabon</option>
+                                        <option value="CM">Cameroun</option>
+                                        <option value="GQ">Guinée Équatoriale</option>
+                                        <option value="CG">République du Congo</option>
+                                        <option value="TD">Tchad</option>
+                                        <option value="CF">République Centrafricaine</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Préférences</h3>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Notifications par email</div>
+                                    <div class="preference-desc">Recevoir des notifications sur votre email</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="email-notifications" checked>
+                                    <label for="email-notifications"></label>
+                                </div>
+                            </div>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Notifications SMS</div>
+                                    <div class="preference-desc">Recevoir des alertes par SMS</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="sms-notifications" checked>
+                                    <label for="sms-notifications"></label>
+                                </div>
+                            </div>
+                            
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <div class="preference-title">Authentification biométrique</div>
+                                    <div class="preference-desc">Utiliser l'empreinte digitale ou Face ID</div>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="biometricPref">
+                                    <label for="biometricPref"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="cancelProfileEdit()">
+                                <i class="fas fa-times"></i>
+                                Annuler
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i>
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

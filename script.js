@@ -1036,6 +1036,13 @@ function switchTab(tab) {
         }, 100);
     }
 
+    // Initialiser la page de modification du profil
+    if (tab === 'edit-profile') {
+        setTimeout(() => {
+            loadProfileData();
+        }, 100);
+    }
+
     // Gérer l'affichage du bouton flottant K-Shop
     const kshopFloat = document.querySelector('.kshop-float');
     if (kshopFloat) {
@@ -3047,17 +3054,42 @@ function toggleNotifications() {
 }
 
 function toggleBiometric() {
+    // Fonction pour les paramètres principaux
     const toggle = document.getElementById('bio-toggle');
-    const isEnabled = toggle.checked;
-    
-    if (isEnabled) {
-        // Simuler l'authentification biométrique
-        showToast('Configuration de l\'empreinte digitale...', 'info');
-        setTimeout(() => {
-            showToast('Empreinte digitale configurée avec succès!', 'success');
-        }, 2000);
-    } else {
-        showToast('Authentification biométrique désactivée', 'info');
+    if (toggle) {
+        const isEnabled = toggle.checked;
+        
+        if (isEnabled) {
+            // Simuler l'authentification biométrique
+            showToast('Configuration de l\'empreinte digitale...', 'info');
+            setTimeout(() => {
+                showToast('Empreinte digitale configurée avec succès!', 'success');
+            }, 2000);
+        } else {
+            showToast('Authentification biométrique désactivée', 'info');
+        }
+    }
+}
+
+// Fonction pour gérer le toggle biométrique dans la page de modification du profil
+function handleBiometricToggle() {
+    const biometricToggle = document.getElementById('biometricPref');
+    if (biometricToggle) {
+        biometricToggle.addEventListener('change', function() {
+            const isEnabled = this.checked;
+            
+            if (isEnabled) {
+                showToast('Authentification biométrique activée', 'success');
+                // Mettre à jour le profil
+                userProfile.preferences.biometric = true;
+            } else {
+                showToast('Authentification biométrique désactivée', 'info');
+                userProfile.preferences.biometric = false;
+            }
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        });
     }
 }
 
@@ -4301,4 +4333,218 @@ Pour toute question, contactez notre service client au +241 01 23 45 67
     
     showToast('RIB téléchargé au format texte !');
 }
+
+// ===========================================
+// SYSTÈME DE GESTION DU PROFIL
+// ===========================================
+
+// Données du profil utilisateur
+let userProfile = {
+    personalInfo: {
+        firstName: 'Godwin',
+        lastName: 'Batola',
+        email: 'godwin.batola@k-bank.ga',
+        phone: '+241 01 23 45 67',
+        birthDate: '1990-01-01',
+        nationality: 'Gabonaise',
+        profession: 'Entrepreneur',
+        address: '123 Boulevard Leon Mba, Libreville'
+    },
+    preferences: {
+        notifications: true,
+        biometric: false,
+        marketing: true,
+        autoSave: true
+    }
+};
+
+// Fonction pour sauvegarder les modifications du profil
+function saveProfileChanges() {
+    const form = document.getElementById('editProfileForm');
+    if (!form) return;
+
+    // Récupérer les données du formulaire
+    const formData = new FormData(form);
+    const newProfile = {
+        personalInfo: {
+            firstName: formData.get('firstName') || userProfile.personalInfo.firstName,
+            lastName: formData.get('lastName') || userProfile.personalInfo.lastName,
+            email: formData.get('email') || userProfile.personalInfo.email,
+            phone: formData.get('phone') || userProfile.personalInfo.phone,
+            birthDate: formData.get('birthDate') || userProfile.personalInfo.birthDate,
+            nationality: formData.get('nationality') || userProfile.personalInfo.nationality,
+            profession: formData.get('profession') || userProfile.personalInfo.profession,
+            address: formData.get('address') || userProfile.personalInfo.address
+        },
+        preferences: {
+            notifications: document.getElementById('notificationsPref')?.checked || false,
+            biometric: document.getElementById('biometricPref')?.checked || false,
+            marketing: document.getElementById('marketingPref')?.checked || false,
+            autoSave: document.getElementById('autoSavePref')?.checked || false
+        }
+    };
+
+    // Validation des données
+    if (!newProfile.personalInfo.firstName || !newProfile.personalInfo.lastName) {
+        showToast('Veuillez remplir tous les champs obligatoires', 'error');
+        return;
+    }
+
+    if (!isValidEmail(newProfile.personalInfo.email)) {
+        showToast('Veuillez entrer une adresse e-mail valide', 'error');
+        return;
+    }
+
+    // Afficher l'animation de chargement
+    const saveBtn = document.querySelector('.btn-primary');
+    const originalText = saveBtn.innerHTML;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sauvegarde...';
+    saveBtn.disabled = true;
+
+    // Simuler la sauvegarde
+    setTimeout(() => {
+        // Mettre à jour le profil
+        userProfile = { ...userProfile, ...newProfile };
+        
+        // Sauvegarder dans localStorage
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        
+        // Mettre à jour l'affichage
+        updateProfileDisplay();
+        
+        // Restaurer le bouton
+        saveBtn.innerHTML = originalText;
+        saveBtn.disabled = false;
+        
+        // Afficher le message de succès
+        showToast('Profil mis à jour avec succès !', 'success');
+        
+        // Retourner à la page profil
+        setTimeout(() => {
+            switchTab('profile');
+        }, 1000);
+        
+    }, 1500);
+}
+
+// Fonction pour mettre à jour l'affichage du profil
+function updateProfileDisplay() {
+    // Mettre à jour le nom dans l'en-tête
+    const profileName = document.querySelector('.profile-name');
+    if (profileName) {
+        profileName.textContent = `${userProfile.personalInfo.firstName} ${userProfile.personalInfo.lastName}`;
+    }
+
+    // Mettre à jour l'email dans le profil
+    const profileEmail = document.querySelector('.profile-email');
+    if (profileEmail) {
+        profileEmail.textContent = userProfile.personalInfo.email;
+    }
+
+    // Mettre à jour les initiales dans l'avatar
+    const profileAvatar = document.querySelector('.profile-avatar');
+    if (profileAvatar) {
+        profileAvatar.innerHTML = '<i class="fas fa-user"></i>';
+    }
+
+    // Mettre à jour l'avatar dans la page d'édition
+    const photoAvatar = document.querySelector('.photo-avatar');
+    if (photoAvatar) {
+        photoAvatar.innerHTML = '<i class="fas fa-user"></i>';
+    }
+}
+
+// Fonction pour charger les données du profil dans le formulaire
+function loadProfileData() {
+    // Charger depuis localStorage si disponible
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+        userProfile = JSON.parse(savedProfile);
+    }
+
+    // Remplir le formulaire avec les données actuelles
+    const form = document.getElementById('editProfileForm');
+    if (!form) return;
+
+    // Remplir les champs personnels
+    const fields = [
+        'firstName', 'lastName', 'email', 'phone', 
+        'birthDate', 'nationality', 'profession', 'address'
+    ];
+
+    fields.forEach(field => {
+        const input = form.querySelector(`[name="${field}"]`);
+        if (input && userProfile.personalInfo[field]) {
+            input.value = userProfile.personalInfo[field];
+        }
+    });
+
+    // Remplir les préférences
+    const preferences = ['notifications', 'biometric', 'marketing', 'autoSave'];
+    preferences.forEach(pref => {
+        const checkbox = document.getElementById(`${pref}Pref`);
+        if (checkbox) {
+            checkbox.checked = userProfile.preferences[pref];
+        }
+    });
+
+    // Mettre à jour l'affichage
+    updateProfileDisplay();
+}
+
+// Fonction pour valider l'email
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Fonction pour annuler les modifications
+function cancelProfileEdit() {
+    // Retourner à la page profil sans sauvegarder
+    switchTab('profile');
+    showToast('Modifications annulées', 'info');
+}
+
+// Fonction pour changer la photo de profil
+function changeProfilePhoto() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const photoAvatar = document.querySelector('.photo-avatar');
+                if (photoAvatar) {
+                    photoAvatar.style.backgroundImage = `url(${e.target.result})`;
+                    photoAvatar.style.backgroundSize = 'cover';
+                    photoAvatar.style.backgroundPosition = 'center';
+                    photoAvatar.innerHTML = ''; // Supprimer l'icône
+                }
+                showToast('Photo de profil mise à jour !', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    
+    input.click();
+}
+
+// Initialiser le profil au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    loadProfileData();
+    updateProfileDisplay();
+    handleBiometricToggle();
+    
+    // Gestionnaire pour le formulaire de modification du profil
+    const editProfileForm = document.getElementById('editProfileForm');
+    if (editProfileForm) {
+        editProfileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveProfileChanges();
+        });
+    }
+});
 
