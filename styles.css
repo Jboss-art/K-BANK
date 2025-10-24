@@ -937,8 +937,8 @@ input:focus, textarea:focus, select:focus {
 
 .main-balance-card {
     position: relative;
-    width: 100%;
-    margin: 0;
+    width: calc(100% + 40px);
+    margin: 0 -20px;
     background: linear-gradient(135deg, 
         rgba(106, 17, 203, 0.78) 0%, 
         rgba(37, 117, 252, 0.85) 50%,
@@ -1097,10 +1097,21 @@ input:focus, textarea:focus, select:focus {
     padding-top: 0; /* Retour au flux normal */
 }
 
+/* Supprimer l'espace au-dessus de la carte de solde */
+.home-page {
+    padding-top: 0;
+}
+
+.home-page .main-balance-card {
+    margin-top: 0;
+}
+
 /* Responsive */
 @media screen and (max-width: 768px) {
     .main-balance-card {
         border-radius: 0 0 20px 20px;
+        width: calc(100% + 30px);
+        margin: 0 -15px;
     }
     
     .main-balance-card .balance-content {
@@ -1116,6 +1127,8 @@ input:focus, textarea:focus, select:focus {
 @media screen and (max-width: 480px) {
     .main-balance-card {
         border-radius: 0 0 15px 15px;
+        width: calc(100% + 30px);
+        margin: 0 -15px;
     }
     
     .main-balance-card .balance-content {
