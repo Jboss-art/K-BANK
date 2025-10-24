@@ -4462,24 +4462,31 @@ function loadProfileData() {
         userProfile = JSON.parse(savedProfile);
     }
 
-    // Remplir le formulaire avec les données actuelles
+    // Définir des placeholders avec les données actuelles comme exemples
     const form = document.getElementById('editProfileForm');
     if (!form) return;
 
-    // Remplir les champs personnels
-    const fields = [
-        'firstName', 'lastName', 'email', 'phone', 
-        'birthDate', 'nationality', 'profession', 'address'
-    ];
+    // Définir les placeholders pour les champs personnels
+    const fieldPlaceholders = {
+        'firstName': userProfile.personalInfo.firstName || 'Ex: Godwin',
+        'lastName': userProfile.personalInfo.lastName || 'Ex: Batola',
+        'email': userProfile.personalInfo.email || 'Ex: godwin.batola@k-bank.ga',
+        'phone': userProfile.personalInfo.phone || 'Ex: +241 01 23 45 67',
+        'birthDate': userProfile.personalInfo.birthDate || '1990-01-01',
+        'nationality': userProfile.personalInfo.nationality || 'Ex: Gabonaise',
+        'profession': userProfile.personalInfo.profession || 'Ex: Entrepreneur',
+        'address': userProfile.personalInfo.address || 'Ex: 123 Boulevard Leon Mba, Libreville'
+    };
 
-    fields.forEach(field => {
+    Object.keys(fieldPlaceholders).forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
-        if (input && userProfile.personalInfo[field]) {
-            input.value = userProfile.personalInfo[field];
+        if (input) {
+            input.placeholder = fieldPlaceholders[field];
+            input.value = ''; // Laisser vide pour que l'utilisateur puisse taper
         }
     });
 
-    // Remplir les préférences
+    // Charger les préférences (garder le comportement actuel pour les toggles)
     const preferences = ['notifications', 'biometric', 'marketing', 'autoSave'];
     preferences.forEach(pref => {
         const checkbox = document.getElementById(`${pref}Pref`);
