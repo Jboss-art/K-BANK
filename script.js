@@ -221,6 +221,12 @@ window.toggleCardFreeze = function() {
     // Si la carte est bloquée, ne rien faire
     if (card && card.classList.contains('blocked')) {
         console.log('Card is blocked, cannot freeze/unfreeze');
+        // Afficher un message d'avertissement à l'utilisateur
+        if (typeof showToast === 'function') {
+            showToast('Carte bloquée - Action impossible', 'warning');
+        } else {
+            alert('Carte bloquée - Action impossible');
+        }
         return;
     }
 
@@ -264,11 +270,64 @@ function freezeCard() {
         freezeText.textContent = 'Dégeler';
     }
     
+    // Créer dynamiquement l'icône gelée
+    createFrozenIndicator();
+    
     // Fallback pour notification
     if (typeof showToast === 'function') {
         showToast('Carte gelée avec succès');
     } else {
         console.log('Carte gelée avec succès');
+    }
+}
+
+function createFrozenIndicator() {
+    // Supprimer l'indicateur existant s'il y en a un
+    removeFrozenIndicator();
+    
+    const card = document.getElementById('main-card');
+    if (!card) return;
+    
+    // Créer l'indicateur dynamiquement
+    const indicator = document.createElement('div');
+    indicator.id = 'dynamic-frozen-indicator';
+    indicator.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(173, 216, 230, 0.95);
+            border: 4px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            pointer-events: none;
+        ">
+            <span style="
+                font-size: 40px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            ">❄️</span>
+        </div>
+    `;
+    
+    // Ajouter l'indicateur directement à la carte
+    card.style.position = 'relative';
+    card.appendChild(indicator);
+    
+    console.log('Indicateur gelé créé dynamiquement');
+}
+
+function removeFrozenIndicator() {
+    const existingIndicator = document.getElementById('dynamic-frozen-indicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+        console.log('Indicateur gelé existant supprimé');
     }
 }
 
@@ -287,6 +346,9 @@ function unfreezeCard() {
         freezeText.textContent = 'Geler';
     }
     
+    // Supprimer l'indicateur dynamique de gel
+    removeFrozenIndicator();
+    
     // Fallback pour notification
     if (typeof showToast === 'function') {
         showToast('Carte dégelée avec succès');
@@ -294,6 +356,154 @@ function unfreezeCard() {
         console.log('Carte dégelée avec succès');
     }
 }
+
+// Fonctions pour gérer l'état bloqué de la carte
+function blockCard() {
+    console.log('blockCard called');
+    const card = document.getElementById('main-card');
+    const blockedIcon = document.getElementById('blocked-icon');
+    const frozenIcon = document.getElementById('frozen-icon');
+    
+    console.log('Elements found:', { card, blockedIcon, frozenIcon });
+    
+    if (card) {
+        card.classList.add('blocked');
+        // Retirer l'état gelé si présent
+        card.classList.remove('frozen');
+        console.log('Card classes updated:', card.className);
+    }
+    
+    // Créer dynamiquement l'icône bloquée directement sur la carte
+    createBlockedIndicator();
+    
+    // Supprimer l'icône de gelée si elle existe
+    removeFrozenIndicator();
+    
+    // Remettre le texte du bouton à "Geler" si c'était gelé
+    const freezeText = document.getElementById('freeze-text');
+    if (freezeText) {
+        freezeText.textContent = 'Geler';
+    }
+    isCardFrozen = false;
+    
+    if (typeof showToast === 'function') {
+        showToast('Carte bloquée avec succès', 'warning');
+    }
+}
+
+function createBlockedIndicator() {
+    // Supprimer l'indicateur existant s'il y en a un
+    removeBlockedIndicator();
+    
+    const card = document.getElementById('main-card');
+    if (!card) return;
+    
+    // Créer l'indicateur dynamiquement
+    const indicator = document.createElement('div');
+    indicator.id = 'dynamic-blocked-indicator';
+    indicator.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(220, 53, 69, 0.95);
+            border: 4px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            pointer-events: none;
+        ">
+            <span style="
+                font-size: 40px;
+                color: white;
+                font-weight: bold;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            ">∅</span>
+        </div>
+    `;
+    
+    // Ajouter l'indicateur directement à la carte
+    card.style.position = 'relative';
+    card.appendChild(indicator);
+    
+    console.log('Indicateur bloqué créé dynamiquement');
+}
+
+function removeBlockedIndicator() {
+    const existingIndicator = document.getElementById('dynamic-blocked-indicator');
+    if (existingIndicator) {
+        existingIndicator.remove();
+        console.log('Indicateur bloqué existant supprimé');
+    }
+}
+    
+    // Remettre le texte du bouton à "Geler" si c'était gelé
+    const freezeText = document.getElementById('freeze-text');
+    if (freezeText) {
+        freezeText.textContent = 'Geler';
+    }
+    isCardFrozen = false;
+    
+    if (typeof showToast === 'function') {
+        showToast('Carte bloquée avec succès', 'warning');
+    }
+
+
+function unblockCard() {
+    console.log('unblockCard called');
+    const card = document.getElementById('main-card');
+    
+    if (card) {
+        card.classList.remove('blocked');
+    }
+    
+    // Supprimer l'indicateur dynamique de blocage
+    removeBlockedIndicator();
+    
+    if (typeof showToast === 'function') {
+        showToast('Carte débloquée avec succès', 'success');
+    }
+}
+
+// Rendre les fonctions accessibles globalement
+window.blockCard = blockCard;
+window.unblockCard = unblockCard;
+
+// Fonction de test pour diagnostiquer le problème
+window.testBlockedIcon = function() {
+    console.log('=== TEST BLOCKED ICON ===');
+    
+    const blockedIcon = document.getElementById('blocked-icon');
+    const cardStatusIndicator = document.getElementById('card-status-indicator');
+    
+    console.log('blocked-icon element:', blockedIcon);
+    console.log('card-status-indicator element:', cardStatusIndicator);
+    
+    if (blockedIcon) {
+        console.log('blocked-icon current style.display:', blockedIcon.style.display);
+        console.log('blocked-icon computed style:', window.getComputedStyle(blockedIcon).display);
+        console.log('blocked-icon visibility:', window.getComputedStyle(blockedIcon).visibility);
+        console.log('blocked-icon opacity:', window.getComputedStyle(blockedIcon).opacity);
+        
+        // Force l'affichage
+        blockedIcon.style.display = 'flex';
+        blockedIcon.style.visibility = 'visible';
+        blockedIcon.style.opacity = '1';
+        
+        console.log('Forced display - checking again...');
+        console.log('blocked-icon style.display after force:', blockedIcon.style.display);
+    } else {
+        console.error('blocked-icon element NOT FOUND!');
+    }
+    
+    console.log('=== END TEST ===');
+};
 
 // Données des bénéficiaires
 const beneficiaries = [
@@ -1799,11 +2009,11 @@ function temporaryBlockCard() {
         'Bloquer',
         'Annuler',
         () => {
-            const card = document.getElementById('main-card');
+            // Utiliser notre fonction blockCard() qui gère l'icône ∅
+            blockCard();
+
             const freezeButton = document.querySelector('.freeze-button');
             
-            card.classList.add('blocked');
-
             // Désactiver le bouton geler
             if (freezeButton) {
                 freezeButton.disabled = true;
@@ -1811,8 +2021,6 @@ function temporaryBlockCard() {
                 freezeButton.style.cursor = 'not-allowed';
                 freezeButton.onclick = null; // Enlever l'événement click
             }
-
-            showToast('Carte bloquée avec succès');
             
             // Redirection vers la page de commande après un court délai
             setTimeout(() => {

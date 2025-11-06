@@ -162,6 +162,15 @@
                 <div class="cards-container">
                     <!-- Carte principale moderne -->
                     <div class="modern-card-container">
+                        <!-- Indicateur d'état de la carte - SORTI de la carte -->
+                        <div class="card-status-indicator" id="card-status-indicator" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 99999 !important; pointer-events: none;">
+                            <div class="status-icon frozen-icon" id="frozen-icon" style="display: none; width: 60px; height: 60px; border-radius: 50%; background: rgba(173, 216, 230, 0.95) !important; border: 3px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 99999 !important;">
+                                <span style="font-size: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.7));">❄️</span>
+                            </div>
+                            <div class="status-icon blocked-icon" id="blocked-icon" style="display: none; width: 60px; height: 60px; border-radius: 50%; background: rgba(220, 53, 69, 0.95) !important; border: 3px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 99999 !important;">
+                                <span style="font-size: 32px; color: white; font-weight: bold; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.7));">∅</span>
+                            </div>
+                        </div>
                         <div class="modern-card" id="main-card">
                             <div class="modern-card-face modern-card-front">
                                 <div class="bank-name-left">K-BANK</div>
@@ -1816,5 +1825,76 @@ BP 20000 Libreville</div>
         }
     </script>
     <script src="script.js"></script>
+    
+    <!-- Script de test pour les icônes -->
+    <script>
+        function forceShowBlockedIcon() {
+            console.log('=== FORCE SHOW BLOCKED ICON ===');
+            const blockedIcon = document.getElementById('blocked-icon');
+            const container = document.getElementById('card-status-indicator');
+            
+            if (blockedIcon && container) {
+                // Force tous les styles possibles
+                blockedIcon.style.cssText = `
+                    display: flex !important; 
+                    visibility: visible !important; 
+                    opacity: 1 !important; 
+                    z-index: 999999 !important; 
+                    position: relative !important;
+                    width: 80px !important;
+                    height: 80px !important;
+                    border-radius: 50% !important;
+                    background: red !important;
+                    border: 5px solid yellow !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    box-shadow: 0 0 20px rgba(255,0,0,0.8) !important;
+                `;
+                
+                container.style.cssText = `
+                    position: absolute !important; 
+                    top: 50% !important; 
+                    left: 50% !important; 
+                    transform: translate(-50%, -50%) !important; 
+                    z-index: 999999 !important; 
+                    display: block !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                `;
+                
+                console.log('Icône forcée avec styles maximaux');
+                console.log('Rect blockedIcon:', blockedIcon.getBoundingClientRect());
+            } else {
+                console.error('Éléments manquants:', { blockedIcon, container });
+            }
+        }
+        
+        function testBlockedIconSimple() {
+            console.log('=== TEST SIMPLE BLOCKED ICON ===');
+            const blockedIcon = document.getElementById('blocked-icon');
+            if (blockedIcon) {
+                blockedIcon.style.display = 'flex';
+                console.log('Blocked icon forcé à display: flex');
+            } else {
+                console.error('blocked-icon pas trouvé !');
+            }
+        }
+        
+        function testFrozenIconSimple() {
+            console.log('=== TEST SIMPLE FROZEN ICON ===');
+            const frozenIcon = document.getElementById('frozen-icon');
+            if (frozenIcon) {
+                frozenIcon.style.display = 'flex';
+                console.log('Frozen icon forcé à display: flex');
+            } else {
+                console.error('frozen-icon pas trouvé !');
+            }
+        }
+        
+        // Attendre que la page soit chargée
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Page chargée - tests disponibles: forceShowBlockedIcon(), testBlockedIconSimple(), testFrozenIconSimple()');
+        });
+    </script>
 </body>
 </html>

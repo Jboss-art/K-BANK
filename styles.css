@@ -8583,6 +8583,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     height: 240px;
     margin: 0 auto 25px;
     perspective: 1000px;
+    position: relative; /* Ajouté pour positionner les indicateurs */
 }
 
 /* La carte elle-même */

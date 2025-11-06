@@ -75,12 +75,12 @@
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            margin-top: 80px; /* Hauteur du header */
-            margin-bottom: 70px; /* Hauteur de la navigation */
-            height: calc(100vh - 150px); /* 80px (header) + 70px (navbar) */
             -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
             scrollbar-width: none;     /* Pour Firefox */
-            padding: 0 5px; /* Espacement latéral optimisé */
+            margin-top: 80px; /* Espace pour le header fixe */
+            margin-bottom: 70px; /* Espace pour la navbar fixe */
+            padding: 20px 15px; /* Padding pour le contenu */
+            height: calc(100vh - 150px); /* Hauteur entre header (80px) et navbar (70px) */
         }
 
         .content::-webkit-scrollbar {
@@ -348,8 +348,10 @@
         /* Pages */
         .page {
             display: none;
-            padding: 20px 0;
             animation: fadeIn 0.3s ease-out;
+            background: var(--dark-bg);
+            min-height: 100vh;
+            position: relative;
         }
 
         .page.active {
@@ -360,9 +362,17 @@
             padding: 20px;
             display: flex;
             align-items: center;
-            position: relative;
-            background: rgba(30, 58, 138, 0.1);
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
             border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+            min-height: 60px;
+            z-index: 99;
+            box-sizing: border-box;
         }
 
         .page-header h2 {
