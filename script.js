@@ -39,20 +39,20 @@ function updateBalanceDisplay() {
                 ">00</small>
             `;
         } else {
-            mainBalanceElement.innerHTML = `FCFA ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
+            mainBalanceElement.innerHTML = `Fcfa ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
         }
     }
     
     // Mise à jour des revenus mensuels
     const revenueElement = document.querySelector('.balance-detail .detail-value');
     if (revenueElement) {
-        revenueElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">CFA</span> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
+        revenueElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des dépenses mensuelles
     const expenseElements = document.querySelectorAll('.balance-detail .detail-value');
     if (expenseElements.length > 1) {
-        expenseElements[1].innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">CFA</span> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
+        expenseElements[1].innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des options de compte dans le coffre-fort
