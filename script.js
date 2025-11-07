@@ -1635,7 +1635,9 @@ function downloadIban() {
         'Annuler',
         () => {
             generateIbanPDF();
-        }
+        },
+        'fas fa-download',  // Icône de téléchargement
+        '#007AFF'           // Couleur bleue
     );
 }
 
