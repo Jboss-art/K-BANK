@@ -7,8 +7,8 @@
 // ===========================================
 
 let userBalances = {
-    main: 780245,           // Solde principal en F CFA
-    professional: 2450800,  // Solde professionnel en F CFA
+    main: 780245,           // Solde principal en Fcfa
+    professional: 2450800,  // Solde professionnel en Fcfa
     monthlyRevenue: 245200, // Revenus mensuels
     monthlyExpenses: 133274 // Dépenses mensuelles
 };
@@ -1494,7 +1494,7 @@ function processTopup() {
     
     showConfirmDialog(
         'Confirmer la recharge',
-        `Voulez-vous recharger ${Number(amount).toLocaleString()} F CFA via ${methodNames[selectedPaymentMethod]} ?`,
+        `Voulez-vous recharger ${Number(amount).toLocaleString()} Fcfa via ${methodNames[selectedPaymentMethod]} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -2806,9 +2806,9 @@ function renderVaultDeposits() {
             <div class="transaction-icon" style="background: #22c55e20; color: #22c55e;">
                 <i class="fas fa-plus-circle"></i>
             </div>
-            <div class="transaction-info">
+            <div class="transaction-details">
                 <div class="transaction-title">${transaction.description}</div>
-                <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
+                <div class="transaction-date">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: #22c55e;">
                 +${transaction.amount.toLocaleString('fr-FR')} Fcfa
@@ -2844,9 +2844,9 @@ function renderVaultWithdrawals() {
             <div class="transaction-icon" style="background: #ef444420; color: #ef4444;">
                 <i class="fas fa-minus-circle"></i>
             </div>
-            <div class="transaction-info">
+            <div class="transaction-details">
                 <div class="transaction-title">${transaction.description}</div>
-                <div class="transaction-subtitle">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
+                <div class="transaction-date">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
             </div>
             <div class="transaction-amount" style="color: #ef4444;">
                 -${transaction.amount.toLocaleString('fr-FR')} Fcfa
@@ -4309,7 +4309,7 @@ function updateChartValues() {
 
 // Fonction utilitaire pour formater les devises
 function formatCurrency(amount) {
-    return amount.toLocaleString('fr-FR') + ' FCFA';
+    return amount.toLocaleString('fr-FR') + ' Fcfa';
 }
 
 // ===========================================
@@ -4318,8 +4318,8 @@ function formatCurrency(amount) {
 
 // Variables de plafonds
 let cardLimits = {
-    payment: 500000,    // Plafond de paiement en FCFA
-    withdrawal: 200000  // Plafond de retrait en FCFA
+    payment: 500000,    // Plafond de paiement en Fcfa
+    withdrawal: 200000  // Plafond de retrait en Fcfa
 };
 
 // Usage actuel (simulé)
@@ -4361,13 +4361,13 @@ function updatePaymentLimitDisplay() {
     const inputElement = document.getElementById('new-payment-limit');
     
     if (currentLimitElement) {
-        currentLimitElement.innerHTML = `${cardLimits.payment.toLocaleString('fr-FR')} <span>FCFA / jour</span>`;
+        currentLimitElement.innerHTML = `${cardLimits.payment.toLocaleString('fr-FR')} <span>Fcfa / jour</span>`;
     }
     
     if (usageProgressElement && usageTextElement) {
         const usagePercentage = (currentUsage.payment / cardLimits.payment) * 100;
         usageProgressElement.style.width = `${usagePercentage}%`;
-        usageTextElement.textContent = `${currentUsage.payment.toLocaleString('fr-FR')} FCFA utilisés sur ${cardLimits.payment.toLocaleString('fr-FR')} FCFA`;
+        usageTextElement.textContent = `${currentUsage.payment.toLocaleString('fr-FR')} Fcfa utilisés sur ${cardLimits.payment.toLocaleString('fr-FR')} Fcfa`;
     }
     
     if (inputElement) {
@@ -4386,13 +4386,13 @@ function updateWithdrawalLimitDisplay() {
     const inputElement = document.getElementById('new-withdrawal-limit');
     
     if (currentLimitElement) {
-        currentLimitElement.innerHTML = `${cardLimits.withdrawal.toLocaleString('fr-FR')} <span>FCFA / jour</span>`;
+        currentLimitElement.innerHTML = `${cardLimits.withdrawal.toLocaleString('fr-FR')} <span>Fcfa / jour</span>`;
     }
     
     if (usageProgressElement && usageTextElement) {
         const usagePercentage = (currentUsage.withdrawal / cardLimits.withdrawal) * 100;
         usageProgressElement.style.width = `${usagePercentage}%`;
-        usageTextElement.textContent = `${currentUsage.withdrawal.toLocaleString('fr-FR')} FCFA retirés sur ${cardLimits.withdrawal.toLocaleString('fr-FR')} FCFA`;
+        usageTextElement.textContent = `${currentUsage.withdrawal.toLocaleString('fr-FR')} Fcfa retirés sur ${cardLimits.withdrawal.toLocaleString('fr-FR')} Fcfa`;
     }
     
     if (inputElement) {
@@ -4455,7 +4455,7 @@ function updatePaymentLimit() {
     const newLimit = parseInt(inputElement.value);
     
     if (!newLimit || newLimit < 50000 || newLimit > 1000000) {
-        showNotification('Veuillez entrer un montant valide entre 50 000 et 1 000 000 FCFA', 'error');
+        showNotification('Veuillez entrer un montant valide entre 50 000 et 1 000 000 Fcfa', 'error');
         return;
     }
     
@@ -4466,7 +4466,7 @@ function updatePaymentLimit() {
     updateCardLimitsDisplay();
     
     // Afficher notification de succès
-    showNotification(`Demande de modification du plafond de paiement soumise : ${newLimit.toLocaleString('fr-FR')} FCFA/jour. Votre demande sera étudiée par nos équipes.`, 'success');
+    showNotification(`Demande de modification du plafond de paiement soumise : ${newLimit.toLocaleString('fr-FR')} Fcfa/jour. Votre demande sera étudiée par nos équipes.`, 'success');
     
     // Retourner à la page cartes
     setTimeout(() => {
@@ -4480,7 +4480,7 @@ function updateWithdrawalLimit() {
     const newLimit = parseInt(inputElement.value);
     
     if (!newLimit || newLimit < 25000 || newLimit > 500000) {
-        showNotification('Veuillez entrer un montant valide entre 25 000 et 500 000 FCFA', 'error');
+        showNotification('Veuillez entrer un montant valide entre 25 000 et 500 000 Fcfa', 'error');
         return;
     }
     

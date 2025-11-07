@@ -6992,7 +6992,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     font-weight: 600;
 }
 
-[data-theme="light"] .vault-history-sections .transaction-subtitle {
+[data-theme="light"] .vault-history-sections .transaction-date {
     color: var(--text-muted) !important;
 }
 
