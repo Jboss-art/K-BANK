@@ -1301,12 +1301,10 @@ input:focus, textarea:focus, select:focus {
     font-size: 1em;
     font-weight: 600;
     margin-right: 0px;
-    /* Corrections pour le flou mobile */
+    /* Corrections pour le flou mobile - VERSION SIMPLE */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transform: translateZ(0); /* Force hardware acceleration */
-    will-change: transform; /* Optimisation mobile */
 }
 
 .balance-amount .currency-code {
@@ -1315,12 +1313,10 @@ input:focus, textarea:focus, select:focus {
     color: rgba(255, 255, 255, 1.0); /* Plus opaque */
     font-weight: 600; /* Même poids que currency-symbol */
     margin-right: 8px;
-    /* Corrections pour le flou mobile */
+    /* Corrections pour le flou mobile - VERSION SIMPLE */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transform: translateZ(0);
-    will-change: transform;
     font-weight: 400;
     text-transform: lowercase;
 }
@@ -10813,15 +10809,19 @@ select,
         perspective: 1000px !important;
     }
     
-    /* Réduction du backdrop-filter sur mobile si nécessaire */
+    /* SUPPRESSION COMPLÈTE des effets de flou sur mobile */
     .main-balance-card {
-        backdrop-filter: blur(5px) !important;
-        -webkit-backdrop-filter: blur(5px) !important;
-        /* Alternative sans blur pour mobile */
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+        /* Background solide sans transparence */
         background: linear-gradient(135deg, 
-            rgba(106, 17, 203, 0.95) 0%, 
-            rgba(37, 117, 252, 0.95) 50%,
-            rgba(106, 17, 203, 0.95) 100%) !important;
+            rgb(106, 17, 203) 0%, 
+            rgb(37, 117, 252) 50%,
+            rgb(106, 17, 203) 100%) !important;
+        /* Suppression de tous les effets pouvant causer du flou */
+        transform: none !important;
+        will-change: auto !important;
     }
     
     /* Force le texte à être net */
@@ -10842,19 +10842,16 @@ select,
         }
     }
     
-    /* Classe spéciale pour texte ultra-net sur mobile */
+    /* Classe spéciale pour texte ultra-net sur mobile - VERSION SIMPLE */
     .sharp-text-mobile {
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
         text-rendering: optimizeLegibility !important;
-        transform: translate3d(0, 0, 0) !important;
-        backface-visibility: hidden !important;
-        perspective: 1000px !important;
-        font-feature-settings: "liga" 0 !important;
-        -webkit-transform-style: preserve-3d !important;
-        transform-style: preserve-3d !important;
+        /* Suppression des propriétés problématiques */
+        transform: none !important;
+        filter: none !important;
         will-change: auto !important;
-        filter: contrast(1.1) !important;
+        backface-visibility: visible !important;
     }
     
     .btn-primary,
