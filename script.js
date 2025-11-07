@@ -4824,3 +4824,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Solution ultime pour texte net sur mobile
+function createCrispBalanceText() {
+    const balanceDisplay = document.getElementById('balance-display');
+    if (!balanceDisplay) return;
+    
+    // Détection mobile
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Créer le texte avec des propriétés optimisées pour mobile
+        balanceDisplay.innerHTML = `
+            <span style="
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                font-weight: 800;
+                font-size: 28px;
+                color: rgb(255, 255, 255);
+                text-rendering: geometricPrecision;
+                -webkit-font-smoothing: subpixel-antialiased;
+                letter-spacing: 0.5px;
+                display: inline-block;
+                transform: translateZ(0);
+                will-change: auto;
+            ">FCFA 780 245,</span><small style="
+                font-size: 18px;
+                color: rgb(255, 255, 255);
+                opacity: 0.9;
+            ">00</small>
+        `;
+    } else {
+        // Version desktop normale
+        balanceDisplay.innerHTML = 'FCFA 780 245,<small>00</small>';
+    }
+}
+
+// Initialiser au chargement
+document.addEventListener('DOMContentLoaded', createCrispBalanceText);
+

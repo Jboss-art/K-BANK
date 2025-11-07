@@ -10842,16 +10842,36 @@ select,
         }
     }
     
-    /* Classe spéciale pour texte ultra-net sur mobile - VERSION SIMPLE */
-    .sharp-text-mobile {
-        -webkit-font-smoothing: antialiased !important;
-        -moz-osx-font-smoothing: grayscale !important;
-        text-rendering: optimizeLegibility !important;
-        /* Suppression des propriétés problématiques */
+    /* Solution ultime pour texte net sur mobile */
+    .mobile-crisp-text {
+        /* Forcer le rendu net */
+        -webkit-font-smoothing: subpixel-antialiased !important;
+        -moz-osx-font-smoothing: auto !important;
+        font-smooth: never !important;
+        text-rendering: geometricPrecision !important;
+        
+        /* Désactiver toute optimisation browser */
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+        
+        /* Font native */
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 28px !important;
+        
+        /* Supprimer tout effet */
         transform: none !important;
         filter: none !important;
-        will-change: auto !important;
-        backface-visibility: visible !important;
+        backdrop-filter: none !important;
+        opacity: 1 !important;
+        
+        /* Couleur solide */
+        color: #ffffff !important;
+        text-shadow: none !important;
+        
+        /* Position fixe */
+        position: relative !important;
+        z-index: 999 !important;
     }
     
     .btn-primary,
