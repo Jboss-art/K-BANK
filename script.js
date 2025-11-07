@@ -32,7 +32,7 @@ function updateBalanceDisplay() {
                     -webkit-font-smoothing: subpixel-antialiased;
                     letter-spacing: 0.5px;
                     display: inline-block;
-                ">FCFA ${userBalances.main.toLocaleString('fr-FR')},</span><small style="
+                ">Fcfa ${userBalances.main.toLocaleString('fr-FR')},</span><small style="
                     font-size: 18px;
                     color: rgb(255, 255, 255);
                     opacity: 0.9;
@@ -58,12 +58,12 @@ function updateBalanceDisplay() {
     // Mise à jour des options de compte dans le coffre-fort
     const mainAccountOption = document.querySelector('option[value="main"]');
     if (mainAccountOption) {
-        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} FCFA)`;
+        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} Fcfa)`;
     }
     
     const professionalAccountOption = document.querySelector('option[value="professional"]');
     if (professionalAccountOption) {
-        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} FCFA)`;
+        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} Fcfa)`;
     }
 }
 
