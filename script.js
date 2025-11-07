@@ -15,33 +15,55 @@ let userBalances = {
 
 // Fonction pour mettre à jour l'affichage des soldes
 function updateBalanceDisplay() {
-    // Mise à jour du solde principal sur la page d'accueil
+    // Mise à jour du solde principal sur la page d'accueil - Version mobile optimisée
     const mainBalanceElement = document.querySelector('.balance-amount');
     if (mainBalanceElement) {
-        mainBalanceElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
+        // Utiliser notre fonction pour texte net sur mobile
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            mainBalanceElement.innerHTML = `
+                <span style="
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                    font-weight: 800;
+                    font-size: 28px;
+                    color: rgb(255, 255, 255);
+                    text-rendering: geometricPrecision;
+                    -webkit-font-smoothing: subpixel-antialiased;
+                    letter-spacing: 0.5px;
+                    display: inline-block;
+                ">FCFA ${userBalances.main.toLocaleString('fr-FR')},</span><small style="
+                    font-size: 18px;
+                    color: rgb(255, 255, 255);
+                    opacity: 0.9;
+                ">00</small>
+            `;
+        } else {
+            mainBalanceElement.innerHTML = `FCFA ${userBalances.main.toLocaleString('fr-FR')},<small>00</small>`;
+        }
     }
     
     // Mise à jour des revenus mensuels
     const revenueElement = document.querySelector('.balance-detail .detail-value');
     if (revenueElement) {
-        revenueElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
+        revenueElement.innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">CFA</span> ${userBalances.monthlyRevenue.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des dépenses mensuelles
     const expenseElements = document.querySelectorAll('.balance-detail .detail-value');
     if (expenseElements.length > 1) {
-        expenseElements[1].innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">cfa</span> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
+        expenseElements[1].innerHTML = `<span class="currency-symbol">F</span> <span class="currency-code">CFA</span> ${userBalances.monthlyExpenses.toLocaleString('fr-FR')},<small>00</small>`;
     }
     
     // Mise à jour des options de compte dans le coffre-fort
     const mainAccountOption = document.querySelector('option[value="main"]');
     if (mainAccountOption) {
-        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} Fcfa)`;
+        mainAccountOption.textContent = `Compte principal (${userBalances.main.toLocaleString('fr-FR')} FCFA)`;
     }
     
     const professionalAccountOption = document.querySelector('option[value="professional"]');
     if (professionalAccountOption) {
-        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} Fcfa)`;
+        professionalAccountOption.textContent = `Compte professionnel (${userBalances.professional.toLocaleString('fr-FR')} FCFA)`;
     }
 }
 
