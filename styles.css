@@ -1301,13 +1301,26 @@ input:focus, textarea:focus, select:focus {
     font-size: 1em;
     font-weight: 600;
     margin-right: 0px;
+    /* Corrections pour le flou mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transform: translateZ(0); /* Force hardware acceleration */
+    will-change: transform; /* Optimisation mobile */
 }
 
 .balance-amount .currency-code {
     font-size: 0.4em;
-    opacity: 0.8;
-    -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
+    opacity: 1.0; /* Même opacité que currency-symbol */
+    color: rgba(255, 255, 255, 1.0); /* Plus opaque */
+    font-weight: 600; /* Même poids que currency-symbol */
     margin-right: 8px;
+    /* Corrections pour le flou mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transform: translateZ(0);
+    will-change: transform;
     font-weight: 400;
     text-transform: lowercase;
 }
@@ -1373,10 +1386,10 @@ input:focus, textarea:focus, select:focus {
 
 .detail-value .currency-code {
     font-size: 0.7em;
-    opacity: 0.8;
+    opacity: 1.0; /* Même opacité que currency-symbol */
     margin-right: 8px;
-    font-weight: 400;
-    text-transform: lowercase;
+    font-weight: 700; /* Même poids que currency-symbol */
+    text-transform: uppercase; /* CFA en majuscules comme currency-symbol */
 }
 
 .detail-value h6 {
@@ -10779,6 +10792,69 @@ select,
     
     .form-actions {
         gap: 8px;
+    }
+}
+
+/* ===============================================
+   CORRECTIONS SPÉCIFIQUES POUR MOBILE - ANTI-FLOU
+   =============================================== */
+
+@media screen and (max-width: 768px) {
+    /* Corrections anti-flou pour les devises sur mobile */
+    .balance-amount .currency-symbol,
+    .balance-amount .currency-code,
+    .detail-value .currency-symbol,
+    .detail-value .currency-code {
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+        transform: translateZ(0) !important;
+        backface-visibility: hidden !important;
+        perspective: 1000px !important;
+    }
+    
+    /* Réduction du backdrop-filter sur mobile si nécessaire */
+    .main-balance-card {
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        /* Alternative sans blur pour mobile */
+        background: linear-gradient(135deg, 
+            rgba(106, 17, 203, 0.95) 0%, 
+            rgba(37, 117, 252, 0.95) 50%,
+            rgba(106, 17, 203, 0.95) 100%) !important;
+    }
+    
+    /* Force le texte à être net */
+    .balance-amount {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+    
+    /* Solution de dernier recours - supprime complètement les effets de flou sur mobile */
+    @supports not (backdrop-filter: blur(1px)) {
+        .main-balance-card {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            background: linear-gradient(135deg, 
+                rgba(106, 17, 203, 0.98) 0%, 
+                rgba(37, 117, 252, 0.98) 50%,
+                rgba(106, 17, 203, 0.98) 100%) !important;
+        }
+    }
+    
+    /* Classe spéciale pour texte ultra-net sur mobile */
+    .sharp-text-mobile {
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+        transform: translate3d(0, 0, 0) !important;
+        backface-visibility: hidden !important;
+        perspective: 1000px !important;
+        font-feature-settings: "liga" 0 !important;
+        -webkit-transform-style: preserve-3d !important;
+        transform-style: preserve-3d !important;
+        will-change: auto !important;
+        filter: contrast(1.1) !important;
     }
     
     .btn-primary,
