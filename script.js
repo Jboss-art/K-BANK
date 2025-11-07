@@ -102,6 +102,7 @@ class PinAuth {
         this.appContainer = document.getElementById('app-container');
         
         this.initEventListeners();
+        this.checkFaceIDAvailability();
     }
 
     initEventListeners() {
@@ -220,6 +221,16 @@ class PinAuth {
         this.updateDisplay();
     }
 
+    checkFaceIDAvailability() {
+        // Vérifier si Face ID est activé et disponible
+        const faceIDEnabled = localStorage.getItem('faceIDEnabled') === 'true';
+        const faceIDOption = document.getElementById('face-id-option');
+        
+        if (faceIDEnabled && faceIDOption) {
+            faceIDOption.style.display = 'block';
+        }
+    }
+
     initializeApp() {
         // Initialiser l'application principale après l'authentification
         updateBalanceDisplay();
@@ -228,6 +239,7 @@ class PinAuth {
         initializeSpecificPages();
         renderVaultCarousel(); // Initialiser le carousel du coffre-fort
         updateVaultDisplay(); // Initialiser l'affichage du coffre-fort
+        initializeFaceID(); // Initialiser l'état Face ID
         console.log('Application initialisée après authentification');
     }
 }
@@ -1409,11 +1421,214 @@ function changePassword() {
 function toggle2FA() {
     const toggle = document.getElementById('2fa-toggle');
     toggle.checked = !toggle.checked;
-    showToast(toggle.checked ? '2FA activé' : '2FA désactivé');
 }
 
 function viewSessions() {
     showToast('Affichage des sessions actives');
+}
+
+// Variable pour Face ID
+let isFaceIDEnabled = false;
+
+function toggleFaceID() {
+    const toggle = document.getElementById('faceid-toggle');
+    const toggleOthers = document.getElementById('faceid-toggle-others');
+    
+    // Déterminer quel toggle a été cliqué
+    const activeToggle = toggle || toggleOthers;
+    
+    if (activeToggle) {
+        const isToggling = !activeToggle.checked;
+        
+        if (isToggling && !isFaceIDEnabled) {
+            // Vérifier si Face ID est disponible sur l'appareil
+            if (!checkFaceIDAvailability()) {
+                showToast('Face ID non disponible sur cet appareil', 'warning');
+                if (toggle) toggle.checked = false;
+                if (toggleOthers) toggleOthers.checked = false;
+                return;
+            }
+            
+            showConfirmDialog(
+                'Activer Face ID',
+                'Voulez-vous activer Face ID pour vous connecter plus facilement à votre compte K-Bank ?',
+                'Activer',
+                'Annuler',
+                () => {
+                    enableFaceID();
+                },
+                'fas fa-user-check',
+                '#007AFF'
+            );
+        } else if (!isToggling && isFaceIDEnabled) {
+            showConfirmDialog(
+                'Désactiver Face ID',
+                'Êtes-vous sûr de vouloir désactiver Face ID ?',
+                'Désactiver',
+                'Annuler',
+                () => {
+                    disableFaceID();
+                },
+                'fas fa-user-times',
+                '#ff3b30'
+            );
+        }
+    }
+}
+
+function checkFaceIDAvailability() {
+    // Vérifier si l'appareil supporte Face ID (simulation pour demo)
+    const userAgent = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+    const isAndroid = /Android/.test(userAgent);
+    
+    // Simuler la disponibilité Face ID sur mobile
+    return isIOS || isAndroid || window.location.hostname === 'localhost';
+}
+
+function enableFaceID() {
+    isFaceIDEnabled = true;
+    const toggle = document.getElementById('faceid-toggle');
+    const toggleOthers = document.getElementById('faceid-toggle-others');
+    const status = document.getElementById('faceid-status');
+    
+    // Synchroniser les deux toggles
+    if (toggle) {
+        toggle.checked = true;
+    }
+    if (toggleOthers) {
+        toggleOthers.checked = true;
+    }
+    
+    if (status) {
+        status.textContent = 'Activé';
+        status.style.color = '#28a745';
+    }
+    
+    // Sauvegarder le paramètre dans le localStorage
+    localStorage.setItem('faceIDEnabled', 'true');
+    
+    // Afficher le bouton Face ID sur la page de connexion si on y est
+    const faceIDOption = document.getElementById('face-id-option');
+    if (faceIDOption) {
+        faceIDOption.style.display = 'block';
+    }
+}
+
+function disableFaceID() {
+    isFaceIDEnabled = false;
+    const toggle = document.getElementById('faceid-toggle');
+    const toggleOthers = document.getElementById('faceid-toggle-others');
+    const status = document.getElementById('faceid-status');
+    
+    // Synchroniser les deux toggles
+    if (toggle) {
+        toggle.checked = false;
+    }
+    if (toggleOthers) {
+        toggleOthers.checked = false;
+    }
+    
+    if (status) {
+        status.textContent = 'Désactivé';
+        status.style.color = '#6c757d';
+    }
+    
+    // Supprimer le paramètre du localStorage
+    localStorage.removeItem('faceIDEnabled');
+    
+    // Masquer le bouton Face ID sur la page de connexion
+    const faceIDOption = document.getElementById('face-id-option');
+    if (faceIDOption) {
+        faceIDOption.style.display = 'none';
+    }
+}
+
+// Fonction pour initialiser l'état Face ID au chargement
+function initializeFaceID() {
+    const savedState = localStorage.getItem('faceIDEnabled');
+    if (savedState === 'true') {
+        isFaceIDEnabled = true;
+        const toggle = document.getElementById('faceid-toggle');
+        const toggleOthers = document.getElementById('faceid-toggle-others');
+        const status = document.getElementById('faceid-status');
+        
+        // Synchroniser les deux toggles
+        if (toggle) {
+            toggle.checked = true;
+        }
+        if (toggleOthers) {
+            toggleOthers.checked = true;
+        }
+        
+        if (status) {
+            status.textContent = 'Activé';
+            status.style.color = '#28a745';
+        }
+    }
+}
+
+// Fonction pour l'authentification Face ID sur la page de connexion
+function authenticateWithFaceID() {
+    const faceIDButton = document.querySelector('.face-id-button');
+    const loading = document.querySelector('.loading');
+    
+    // Désactiver le bouton et afficher le loading
+    if (faceIDButton) {
+        faceIDButton.disabled = true;
+        faceIDButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Authentification...</span>';
+    }
+    
+    // Simuler l'authentification Face ID
+    setTimeout(() => {
+        // Simuler un succès (90% de chances de succès)
+        const isSuccess = Math.random() > 0.1;
+        
+        if (isSuccess) {
+            // Succès de l'authentification Face ID
+            if (faceIDButton) {
+                faceIDButton.innerHTML = '<i class="fas fa-check"></i><span>Succès</span>';
+                faceIDButton.style.background = '#28a745';
+            }
+            
+            // Connexion automatique après un court délai
+            setTimeout(() => {
+                const authOverlay = document.getElementById('auth-overlay');
+                const appContainer = document.getElementById('app-container');
+                
+                if (authOverlay) authOverlay.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    if (authOverlay) authOverlay.style.display = 'none';
+                    if (appContainer) appContainer.style.display = 'block';
+                    
+                    // Initialiser l'application
+                    updateBalanceDisplay();
+                    renderTransactions();
+                    updateNotificationBadge();
+                    initializeSpecificPages();
+                    renderVaultCarousel();
+                    updateVaultDisplay();
+                    initializeFaceID();
+                }, 800);
+            }, 1000);
+            
+        } else {
+            // Échec de l'authentification Face ID
+            if (faceIDButton) {
+                faceIDButton.innerHTML = '<i class="fas fa-times"></i><span>Échec</span>';
+                faceIDButton.style.background = '#dc3545';
+            }
+            
+            setTimeout(() => {
+                if (faceIDButton) {
+                    faceIDButton.disabled = false;
+                    faceIDButton.innerHTML = '<i class="fas fa-user-check"></i><span>Face ID</span>';
+                    faceIDButton.style.background = '';
+                }
+            }, 2000);
+        }
+    }, 2000); // Délai de 2 secondes pour simuler la vérification
 }
 
 // Variables pour la recharge
@@ -4881,5 +5096,8 @@ function createCrispBalanceText() {
 }
 
 // Initialiser au chargement
-document.addEventListener('DOMContentLoaded', createCrispBalanceText);
+document.addEventListener('DOMContentLoaded', function() {
+    createCrispBalanceText();
+    initializeFaceID();
+});
 

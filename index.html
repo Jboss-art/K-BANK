@@ -67,6 +67,13 @@
 
                 <div class="error-message">Code PIN incorrect. Veuillez réessayer.</div>
 
+                <div id="face-id-option" style="display: none; margin-top: 20px;">
+                    <button class="face-id-button" onclick="authenticateWithFaceID()">
+                        <i class="fas fa-user-check"></i>
+                        <span>Face ID</span>
+                    </button>
+                </div>
+
                 <div class="auth-footer">
                     <i class="fas fa-shield-alt"></i>
                     Votre sécurité est notre priorité
@@ -533,6 +540,20 @@
                         <div class="toggle-switch">
                             <input type="checkbox" id="2fa-toggle" checked>
                             <label for="2fa-toggle"></label>
+                        </div>
+                    </div>
+
+                    <div class="security-item" onclick="toggleFaceID()">
+                        <div class="security-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="security-info">
+                            <div class="security-title">Face ID</div>
+                            <div class="security-description" id="faceid-status">Désactivé</div>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="faceid-toggle">
+                            <label for="faceid-toggle"></label>
                         </div>
                     </div>
                     
@@ -1274,6 +1295,20 @@ BP 20000 Libreville</div>
                                 <div class="setting-toggle">
                                     <input type="checkbox" id="bio-toggle">
                                     <label for="bio-toggle" class="toggle-slider"></label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item" onclick="toggleFaceID()">
+                                <div class="setting-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="setting-content">
+                                    <h4>Face ID</h4>
+                                    <p>Reconnaissance faciale</p>
+                                </div>
+                                <div class="setting-toggle">
+                                    <input type="checkbox" id="faceid-toggle-others">
+                                    <label for="faceid-toggle-others" class="toggle-slider"></label>
                                 </div>
                             </div>
 

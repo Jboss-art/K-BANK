@@ -9293,6 +9293,44 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     opacity: 0.8;
 }
 
+/* Face ID Button */
+.face-id-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #007AFF, #0056CC);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+.face-id-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+}
+
+.face-id-button:active {
+    transform: translateY(0);
+}
+
+.face-id-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.face-id-button i {
+    font-size: 18px;
+}
+
 .error-message {
     color: #ff6b6b;
     font-size: 13px;
@@ -10680,7 +10718,7 @@ select,
     display: inline-block;
     flex-shrink: 0;
     margin-left: auto;
-    margin-top: -22px;
+    margin-top: 0;
 }
 
 .toggle-switch input[type="checkbox"] {
@@ -10884,4 +10922,44 @@ select,
 /* Corrections Avatar Profil */
 .profile-avatar i {
     color: #64748b !important;
+}
+
+/* Correction alignement boutons toggle sécurité */
+.security-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 60px !important;
+}
+
+.security-item .security-info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.security-item .toggle-switch {
+    position: relative !important;
+    top: -20px !important;
+    margin: 0 !important;
+    margin-left: 15px !important;
+    align-self: flex-start !important;
+    transform: translateY(-15px) !important;
+    vertical-align: top !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    width: 50px !important;
+    height: 24px !important;
+}
+
+/* Force l'alignement pour les éléments spécifiques */
+.security-item:has(.toggle-switch) {
+    padding: 20px 15px !important;
+}
+
+.security-item .security-icon {
+    align-self: center !important;
+    margin-right: 15px !important;
+    flex-shrink: 0 !important;
 }
