@@ -966,6 +966,62 @@ const appData = {
             amount: -500.00,
             icon: "☕",
             category: "Café"
+        },
+        {
+            id: 4,
+            title: "Pharmacie Central",
+            date: "Avant-hier, 11:20",
+            amount: -12500.00,
+            icon: "💊",
+            category: "Santé"
+        },
+        {
+            id: 5,
+            title: "Virement Jean Mvoumbi",
+            date: "3 nov, 16:00",
+            amount: 45000.00,
+            icon: "💸",
+            category: "Virement"
+        },
+        {
+            id: 6,
+            title: "Station Total",
+            date: "3 nov, 08:15",
+            amount: -15000.00,
+            icon: "⛽",
+            category: "Carburant"
+        },
+        {
+            id: 7,
+            title: "Restaurant Le Bambou",
+            date: "2 nov, 20:30",
+            amount: -8750.00,
+            icon: "🍽️",
+            category: "Restaurant"
+        },
+        {
+            id: 8,
+            title: "Orange Money",
+            date: "2 nov, 14:45",
+            amount: -2000.00,
+            icon: "📱",
+            category: "Mobile Money"
+        },
+        {
+            id: 9,
+            title: "Salaire novembre",
+            date: "1er nov, 00:01",
+            amount: 850000.00,
+            icon: "💼",
+            category: "Salaire"
+        },
+        {
+            id: 10,
+            title: "Supermarché Carrefour",
+            date: "31 oct, 18:30",
+            amount: -32500.00,
+            icon: "🛍️",
+            category: "Shopping"
         }
     ],
      notifications: [
@@ -1179,12 +1235,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Affiche les transactions
-function renderTransactions() {
+// Affiche les transactions (limité à 10 par défaut)
+function renderTransactions(limit = 10) {
     const container = document.getElementById('transactions-list');
     container.innerHTML = '';
     
-    appData.transactions.forEach(transaction => {
+    // Limiter le nombre de transactions affichées
+    const transactionsToShow = appData.transactions.slice(0, limit);
+    
+    transactionsToShow.forEach(transaction => {
         const element = document.createElement('div');
         element.className = 'transaction-item';
         element.innerHTML = `
@@ -1194,7 +1253,7 @@ function renderTransactions() {
                 <div class="transaction-date">${transaction.date}</div>
             </div>
             <div class="transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}">
-                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h6>cfa</h6>
+                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h6>CFA</h6>
             </div>
         `;
         container.appendChild(element);
