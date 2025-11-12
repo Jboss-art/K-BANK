@@ -11573,8 +11573,10 @@ select,
 .kshop-page {
     background: linear-gradient(135deg, var(--kshop-primary) 0%, var(--kshop-secondary) 100%);
     min-height: 100vh;
+    height: auto;
     position: relative;
     overflow-x: hidden;
+    overflow-y: visible;
 }
 
 .kshop-page::before {
@@ -11683,9 +11685,11 @@ select,
 /* Container K-Shop - Style Mobile App */
 .kshop-container {
     padding: var(--kshop-spacing-lg);
-    padding-bottom: 100px;
+    padding-bottom: var(--kshop-spacing-lg);
     position: relative;
     z-index: 1;
+    min-height: auto;
+    height: auto;
 }
 
 /* Section Partenaires Vedettes - Style Mobile App */
@@ -11695,29 +11699,42 @@ select,
 
 .featured-partners h3 {
     color: white;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: var(--kshop-spacing-md);
-    display: flex;
-    align-items: center;
-    gap: var(--kshop-spacing-xs);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
 }
 
-/* Carousel Container - Style Mobile App */
-.carousel-container {
-    position: relative;
-    overflow: hidden;
+.featured-partners h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, var(--kshop-accent) 0%, white 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(240, 147, 251, 0.5);
 }
+
+/* Carousel Container - Sans Conteneur */
 
 .partners-carousel {
     display: flex;
-    gap: var(--kshop-spacing-md);
+    gap: var(--kshop-spacing-lg);
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: var(--kshop-spacing-xs) 0;
+    padding: var(--kshop-spacing-md) 0 var(--kshop-spacing-xl) 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .partners-carousel::-webkit-scrollbar {
@@ -11726,20 +11743,40 @@ select,
 
 /* Partner Cards - Style Mobile App Moderne */
 .partner-card.featured {
-    min-width: 280px;
-    background: var(--kshop-surface);
-    border-radius: var(--kshop-card-radius);
+    min-width: 300px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    position: relative;
+}
+
+.partner-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.05) 0%, rgba(102, 126, 234, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 18px;
+}
+
+.partner-card.featured:hover::before {
+    opacity: 1;
 }
 
 .partner-card.featured:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    border-color: rgba(240, 147, 251, 0.4);
 }
 
 .partner-banner {
@@ -11989,7 +12026,7 @@ select,
 
 /* Section Autres Partenaires - Sections Individuelles */
 .premium-partners-section {
-    margin: 40px 0 60px 0;
+    margin: 40px 0 80px 0;
     /* Sortir du conteneur et prendre tout l'écran */
     position: relative;
     left: 50%;
@@ -11997,7 +12034,7 @@ select,
     margin-left: -50vw;
     margin-right: -50vw;
     width: 100vw;
-    padding: 0 20px;
+    padding: 0 20px 40px 20px;
     box-sizing: border-box;
 }
 
@@ -12137,8 +12174,26 @@ select,
         height: 30px;
     }
     
+    .featured-partners h3 {
+        font-size: 20px;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+    }
+    
+    .featured-partners h3::after {
+        width: 50px;
+        height: 3px;
+    }
+    
+    .partners-carousel {
+        gap: var(--kshop-spacing-md);
+        margin: 0 -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
     .partner-card.featured {
-        min-width: 240px;
+        min-width: 260px;
     }
     
     .partner-banner {
