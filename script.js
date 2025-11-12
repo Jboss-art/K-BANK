@@ -4706,7 +4706,7 @@ function updateWithdrawalLimit() {
     updateCardLimitsDisplay();
     
     // Afficher notification de succès
-    showNotification(`Demande de modification du plafond de retrait soumise : ${newLimit.toLocaleString('fr-FR')} FCFA/jour. Votre demande sera étudiée par nos équipes.`, 'success');
+    showNotification(`Demande de modification du plafond de retrait soumise : ${newLimit.toLocaleString('fr-FR')} Fcfa/jour. Votre demande sera étudiée par nos équipes.`, 'success');
     
     // Retourner à la page cartes
     setTimeout(() => {
@@ -4719,13 +4719,13 @@ function updateCardLimitsDisplay() {
     // Mettre à jour le plafond de paiement
     const paymentLimitElement = document.querySelector('[onclick="adjustPaymentLimit()"] .card-meta');
     if (paymentLimitElement) {
-        paymentLimitElement.innerHTML = `F <h6>cfa</h6> ${cardLimits.payment.toLocaleString('fr-FR')} / jour`;
+        paymentLimitElement.innerHTML = `F<h6>cfa</h6> ${cardLimits.payment.toLocaleString('fr-FR')} / jour`;
     }
     
     // Mettre à jour le plafond de retrait
     const withdrawalLimitElement = document.querySelector('[onclick="adjustWithdrawalLimit()"] .card-meta');
     if (withdrawalLimitElement) {
-        withdrawalLimitElement.innerHTML = `F <h6>cfa</h6> ${cardLimits.withdrawal.toLocaleString('fr-FR')} / jour`;
+        withdrawalLimitElement.innerHTML = `F<h6>cfa</h6> ${cardLimits.withdrawal.toLocaleString('fr-FR')} / jour`;
     }
 }
 
