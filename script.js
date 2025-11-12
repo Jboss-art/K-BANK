@@ -623,6 +623,9 @@ function initializeSpecificPages() {
     // Initialiser le thème
     initializeTheme();
     
+    // Initialiser les animations des partenaires premium
+    initializePremiumPartnersAnimations();
+    
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -2444,6 +2447,248 @@ function startCarouselAutoScroll() {
             nextPartner();
         }
     }, 4000); // Change toutes les 4 secondes
+}
+
+// ===============================================
+// FONCTIONS PARTENAIRES PREMIUM
+// ===============================================
+
+// Données des partenaires premium avec détails
+const premiumPartnersData = {
+    microsoft: {
+        name: 'Microsoft',
+        category: 'Tech & Cloud',
+        offer: '-20%',
+        description: 'Solutions cloud et logiciels professionnels',
+        benefits: ['Office 365', 'Azure', 'Windows', 'Support technique'],
+        website: 'https://microsoft.com',
+        color: '#00A4EF'
+    },
+    nike: {
+        name: 'Nike',
+        category: 'Sport & Mode',
+        offer: '-15%',
+        description: 'Équipements sportifs et mode urbaine',
+        benefits: ['Sneakers exclusives', 'Vêtements sport', 'Nike Air', 'Livraison gratuite'],
+        website: 'https://nike.com',
+        color: '#FF6900'
+    },
+    tesla: {
+        name: 'Tesla',
+        category: 'Auto & Tech',
+        offer: '-10%',
+        description: 'Véhicules électriques et technologies durables',
+        benefits: ['Supercharger gratuit', 'Autopilot', 'Service premium', 'Garantie étendue'],
+        website: 'https://tesla.com',
+        color: '#CC0000'
+    },
+    metanoia: {
+        name: 'Metanoïa',
+        category: 'Formation',
+        offer: '-25%',
+        description: 'Formation professionnelle et développement personnel',
+        benefits: ['Cours en ligne', 'Certification', 'Coaching', 'Suivi personnalisé'],
+        website: 'https://metanoia-formation.com',
+        color: '#2E86AB'
+    },
+    airtel: {
+        name: 'Airtel',
+        category: 'Télécom',
+        offer: '-30%',
+        description: 'Services de télécommunications et internet mobile',
+        benefits: ['Data illimitée', '4G+', 'Roaming international', 'Support 24/7'],
+        website: 'https://airtel.com',
+        color: '#ED1C24'
+    },
+    reebok: {
+        name: 'Reebok',
+        category: 'Sport',
+        offer: '-18%',
+        description: 'Équipements de fitness et chaussures de sport',
+        benefits: ['CrossFit gear', 'Running shoes', 'Fitness wear', 'Training programs'],
+        website: 'https://reebok.com',
+        color: '#005BBB'
+    },
+    airfrance: {
+        name: 'Air France',
+        category: 'Voyage',
+        offer: '-12%',
+        description: 'Compagnie aérienne internationale premium',
+        benefits: ['Miles gratuits', 'Surclassement', 'Bagages supplémentaires', 'Salons'],
+        website: 'https://airfrance.com',
+        color: '#002157'
+    },
+    samsung: {
+        name: 'Samsung',
+        category: 'Tech',
+        offer: '-22%',
+        description: 'Smartphones, tablettes et appareils connectés',
+        benefits: ['Galaxy exclusive', 'Garantie étendue', 'Samsung Pay', 'Support premium'],
+        website: 'https://samsung.com',
+        color: '#1428A0'
+    },
+    apple: {
+        name: 'Apple',
+        category: 'Premium Tech',
+        offer: '-8%',
+        description: 'Produits Apple et écosystème premium',
+        benefits: ['iPhone exclusif', 'AppleCare+', 'iCloud premium', 'Genius Bar'],
+        website: 'https://apple.com',
+        color: '#A6B1B7'
+    },
+    uber: {
+        name: 'Uber',
+        category: 'Transport',
+        offer: '-15%',
+        description: 'Services de transport et livraison',
+        benefits: ['Uber Black', 'Livraison gratuite', 'Priority support', 'Uber Eats'],
+        website: 'https://uber.com',
+        color: '#000000'
+    }
+};
+
+// Fonction pour ouvrir un partenaire premium
+function openPremiumPartner(partnerId) {
+    const partner = premiumPartnersData[partnerId];
+    
+    if (!partner) {
+        showToast('Partenaire non trouvé', 'error');
+        return;
+    }
+    
+    // Créer et afficher une modal détaillée
+    showPremiumPartnerModal(partner);
+    
+    // Analytics - tracker l'interaction
+    console.log(`Partenaire premium ouvert: ${partner.name}`);
+}
+
+// Fonction pour afficher la modal d'un partenaire premium
+function showPremiumPartnerModal(partner) {
+    // Supprimer une modal existante
+    const existingModal = document.getElementById('premium-partner-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Créer la modal
+    const modal = document.createElement('div');
+    modal.id = 'premium-partner-modal';
+    modal.className = 'premium-partner-modal';
+    modal.innerHTML = `
+        <div class="modal-overlay" onclick="closePremiumPartnerModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header" style="background: ${partner.color}">
+                <h3>${partner.name}</h3>
+                <button class="modal-close" onclick="closePremiumPartnerModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="partner-modal-offer">
+                    <span class="offer-badge">${partner.offer}</span>
+                    <span class="offer-text">de réduction exclusive</span>
+                </div>
+                <div class="partner-modal-category">${partner.category}</div>
+                <div class="partner-modal-description">${partner.description}</div>
+                
+                <div class="partner-benefits-section">
+                    <h4>🎁 Avantages exclusifs</h4>
+                    <ul class="benefits-list">
+                        ${partner.benefits.map(benefit => `<li><i class="fas fa-check-circle"></i>${benefit}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" onclick="closePremiumPartnerModal()">
+                        <i class="fas fa-times"></i>
+                        Fermer
+                    </button>
+                    <button class="btn-primary" onclick="activatePremiumOffer('${partner.name}')">
+                        <i class="fas fa-gift"></i>
+                        Activer l'offre
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Animation d'entrée
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+// Fonction pour fermer la modal partenaire premium
+function closePremiumPartnerModal() {
+    const modal = document.getElementById('premium-partner-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+// Fonction pour activer une offre partenaire
+function activatePremiumOffer(partnerName) {
+    showConfirmDialog(
+        'Activer l\'offre partenaire',
+        `Voulez-vous activer l'offre exclusive ${partnerName} ? Cette offre sera disponible dans votre portefeuille K-Bank.`,
+        'Activer',
+        'Annuler',
+        () => {
+            // Simuler l'activation
+            showToast(`Offre ${partnerName} activée avec succès ! 🎉`, 'success');
+            closePremiumPartnerModal();
+            
+            // Ajouter au portefeuille (simulation)
+            updateKShopBadge(1);
+        },
+        'fas fa-gift',
+        '#10b981'
+    );
+}
+
+// Fonction pour afficher tous les partenaires premium
+function showAllPremiumPartners() {
+    showToast('Redirection vers la page complète des partenaires...', 'info');
+    
+    // Smooth scroll vers le haut de la section partenaires
+    const partnersSection = document.querySelector('.premium-partners-section');
+    if (partnersSection) {
+        partnersSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }
+}
+
+// Fonction d'initialisation des animations partenaires
+function initializePremiumPartnersAnimations() {
+    // Observer pour déclencher les animations quand la section devient visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                
+                // Déclencher les animations des cartes avec un délai
+                const cards = entry.target.querySelectorAll('.premium-partner-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.animationPlayState = 'running';
+                    }, index * 100);
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    const premiumSection = document.querySelector('.premium-partners-section');
+    if (premiumSection) {
+        observer.observe(premiumSection);
+    }
 }
 
 // Gestion du thème
