@@ -11550,3 +11550,687 @@ select,
         text-align: left;
     }
 }
+
+/* ===============================================
+   K-SHOP - STYLE MOBILE APP MODERNE
+   =============================================== */
+
+/* Variables spécifiques K-Shop */
+:root {
+    --kshop-primary: #667eea;
+    --kshop-secondary: #764ba2;
+    --kshop-accent: #f093fb;
+    --kshop-surface: rgba(255, 255, 255, 0.95);
+    --kshop-card-radius: 16px;
+    --kshop-spacing-xs: 8px;
+    --kshop-spacing-sm: 12px;
+    --kshop-spacing-md: 16px;
+    --kshop-spacing-lg: 20px;
+    --kshop-spacing-xl: 24px;
+}
+
+/* Page K-Shop Container */
+.kshop-page {
+    background: linear-gradient(135deg, var(--kshop-primary) 0%, var(--kshop-secondary) 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.kshop-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(102, 126, 234, 0.2) 100%);
+    pointer-events: none;
+}
+
+/* Header K-Shop - Style Mobile App */
+.kshop-page .page-header {
+    background: transparent;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--kshop-spacing-md) var(--kshop-spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.kshop-page .page-header h2 {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.kshop-page .back-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.kshop-page .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-2px);
+}
+
+.cart-icon {
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.cart-icon:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.cart-icon i {
+    color: white;
+    font-size: 18px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(238, 90, 36, 0.4);
+    animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Container K-Shop - Style Mobile App */
+.kshop-container {
+    padding: var(--kshop-spacing-lg);
+    padding-bottom: 100px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Section Partenaires Vedettes - Style Mobile App */
+.featured-partners {
+    margin-bottom: var(--kshop-spacing-xl);
+}
+
+.featured-partners h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--kshop-spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--kshop-spacing-xs);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Carousel Container - Style Mobile App */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.partners-carousel {
+    display: flex;
+    gap: var(--kshop-spacing-md);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: var(--kshop-spacing-xs) 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.partners-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Partner Cards - Style Mobile App Moderne */
+.partner-card.featured {
+    min-width: 280px;
+    background: var(--kshop-surface);
+    border-radius: var(--kshop-card-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.partner-card.featured:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.partner-banner {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--kshop-accent) 0%, var(--kshop-primary) 100%);
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.partner-card.featured:hover .banner-image {
+    transform: scale(1.1);
+}
+
+.partner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-logo-text {
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.partner-discount {
+    position: absolute;
+    top: var(--kshop-spacing-sm);
+    left: var(--kshop-spacing-sm);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    animation: pulse-discount 2s infinite;
+}
+
+@keyframes pulse-discount {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.partner-badge {
+    position: absolute;
+    top: var(--kshop-spacing-sm);
+    right: var(--kshop-spacing-sm);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.4);
+}
+
+.partner-info {
+    padding: var(--kshop-spacing-md);
+}
+
+.partner-details h4 {
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+}
+
+.partner-details p {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0 0 var(--kshop-spacing-sm) 0;
+}
+
+.partner-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--kshop-spacing-xs);
+    margin-bottom: var(--kshop-spacing-sm);
+}
+
+.stars {
+    color: #fbbf24;
+    font-size: 14px;
+}
+
+.rating-text {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.partner-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--kshop-spacing-xs);
+}
+
+.benefit {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    color: var(--kshop-primary);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Contrôles Carousel - Style Mobile App */
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--kshop-spacing-md);
+    margin-top: var(--kshop-spacing-md);
+    padding-top: var(--kshop-spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: var(--kshop-spacing-xs);
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.indicator.active {
+    background: white;
+    transform: scale(1.3);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Catégories - Style Mobile App Moderne */
+.shop-categories {
+    margin-bottom: var(--kshop-spacing-xl);
+}
+
+.shop-categories h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: var(--kshop-spacing-md);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--kshop-spacing-md);
+}
+
+.category-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--kshop-card-radius);
+    padding: var(--kshop-spacing-lg) var(--kshop-spacing-md);
+    text-align: center;
+    cursor: pointer;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    background: white;
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--kshop-accent) 0%, var(--kshop-primary) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--kshop-spacing-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+}
+
+.category-item:hover .category-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.category-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.category-item span {
+    color: #1f2937;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Section Autres Partenaires - Sections Individuelles */
+.premium-partners-section {
+    margin: 40px 0 60px 0;
+    /* Sortir du conteneur et prendre tout l'écran */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.premium-partners-section h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.premium-partners-section .section-subtitle {
+    display: none;
+}
+
+.premium-partners-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.premium-partner-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.premium-partner-card:hover {
+    background: white;
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.partner-logo-container {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.partner-logo-svg {
+    width: 40px;
+    height: 40px;
+}
+
+.premium-partner-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.partner-name {
+    color: #1f2937;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.partner-offer {
+    color: #059669;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 6px 12px;
+    border-radius: 10px;
+    display: inline-block;
+    width: fit-content;
+    margin: 4px 0;
+}
+
+.partner-category {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.partner-arrow {
+    color: #cbd5e0;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.premium-partner-card:hover .partner-arrow {
+    color: var(--kshop-primary);
+    transform: translateX(4px);
+}
+
+/* Responsive Mobile App Style */
+@media screen and (max-width: 480px) {
+    :root {
+        --kshop-spacing-xs: 6px;
+        --kshop-spacing-sm: 10px;
+        --kshop-spacing-md: 14px;
+        --kshop-spacing-lg: 18px;
+        --kshop-spacing-xl: 22px;
+    }
+    
+    .kshop-container {
+        padding: var(--kshop-spacing-md);
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--kshop-spacing-sm);
+    }
+    
+    .category-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .category-image {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .partner-card.featured {
+        min-width: 240px;
+    }
+    
+    .partner-banner {
+        height: 100px;
+    }
+    
+    .partner-logo-text {
+        font-size: 18px;
+    }
+    
+    .partners-section {
+        margin: 30px 0 40px 0;
+        padding: 0 16px;
+    }
+    
+    .partners-section h3 {
+        margin-bottom: 30px;
+        font-size: 18px;
+    }
+    
+    .premium-partners-section {
+        padding: 0 16px;
+        margin: 30px 0 40px 0;
+    }
+    
+    .premium-partners-grid {
+        gap: 20px;
+        padding: 0;
+    }
+    
+    .premium-partner-card {
+        max-width: 100%;
+        padding: 20px;
+        gap: 16px;
+    }
+    
+    .partner-logo-container {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .partner-logo-svg {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .partner-name {
+        font-size: 16px;
+    }
+    
+    .partner-offer {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+    
+    .partner-category {
+        font-size: 13px;
+    }
+    
+    .partner-logo {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .partner-info h4 {
+        font-size: 15px;
+    }
+    
+    .partner-info p {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .category-grid {
+        gap: var(--kshop-spacing-xs);
+    }
+    
+    .category-item {
+        padding: var(--kshop-spacing-md) var(--kshop-spacing-xs);
+    }
+    
+    .category-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .partner-card.featured {
+        min-width: 200px;
+    }
+    
+    .partners-carousel {
+        gap: var(--kshop-spacing-xs);
+    }
+}

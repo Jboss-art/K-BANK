@@ -2604,9 +2604,9 @@ function showPremiumPartnerModal(partner) {
                         <i class="fas fa-times"></i>
                         Fermer
                     </button>
-                    <button class="btn-primary" onclick="activatePremiumOffer('${partner.name}')">
-                        <i class="fas fa-gift"></i>
-                        Activer l'offre
+                    <button class="btn-primary" onclick="viewPartnerOffer('${partner.name}')">
+                        <i class="fas fa-eye"></i>
+                        Voir
                     </button>
                 </div>
             </div>
@@ -2632,24 +2632,10 @@ function closePremiumPartnerModal() {
     }
 }
 
-// Fonction pour activer une offre partenaire
-function activatePremiumOffer(partnerName) {
-    showConfirmDialog(
-        'Activer l\'offre partenaire',
-        `Voulez-vous activer l'offre exclusive ${partnerName} ? Cette offre sera disponible dans votre portefeuille K-Bank.`,
-        'Activer',
-        'Annuler',
-        () => {
-            // Simuler l'activation
-            showToast(`Offre ${partnerName} activée avec succès ! 🎉`, 'success');
-            closePremiumPartnerModal();
-            
-            // Ajouter au portefeuille (simulation)
-            updateKShopBadge(1);
-        },
-        'fas fa-gift',
-        '#10b981'
-    );
+// Fonction pour voir une offre partenaire
+function viewPartnerOffer(partnerName) {
+    showToast(`Redirection vers ${partnerName}...`, 'info');
+    closePremiumPartnerModal();
 }
 
 // Fonction pour afficher tous les partenaires premium
