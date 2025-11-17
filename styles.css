@@ -3551,6 +3551,14 @@ input[type="number"] {
     background: rgba(243, 156, 18, 0.7);
 }
 
+.pharmacie-overlay {
+    background: rgba(34, 139, 34, 0.7);
+}
+
+.total-overlay {
+    background: rgba(0, 123, 191, 0.7);
+}
+
 .partner-logo-placeholder {
     width: 100%;
     height: 100%;
@@ -3676,16 +3684,18 @@ input[type="number"] {
     position: relative;
     margin-bottom: 20px;
     overflow: hidden;
+    width: 100vw; /* Toute la largeur de l'écran */
+    margin-left: calc(-50vw + 50%); /* Centrer en dépassant du conteneur parent */
+    padding: 0 20px; /* Padding pour éviter les débordements */
+    box-sizing: border-box;
 }
 
 .partners-carousel {
     display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
+    width: 600%; /* 6 cartes × 100% du viewport */
+    transition: transform 0.3s ease-out;
+    gap: 0;
     padding: 8px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .partners-carousel::-webkit-scrollbar {
@@ -3693,57 +3703,28 @@ input[type="number"] {
 }
 
 .partner-card.featured {
-    min-width: 240px;
-    max-width: 240px;
-}
-
-.carousel-controls {
+    flex: 0 0 16.666%; /* Chaque carte = 1/6 du carrousel (= 100% du viewport) */
+    width: 16.666%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 12px;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding: 0 20px; /* Padding horizontal pour centrer */
 }
 
-.carousel-btn {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 12px;
+.carousel-viewport {
+    width: 100%;
+    overflow: hidden; /* Cache les autres slides */
+    cursor: grab;
+    touch-action: pan-y; /* Permet le scroll vertical mais gère le horizontal */
+    user-select: none; /* Empêche la sélection de texte pendant le glissement */
 }
 
-.carousel-btn:hover {
-    background: rgba(106, 17, 203, 0.3);
-    border-color: #6a11cb;
-    transform: scale(1.1);
+.carousel-viewport:active {
+    cursor: grabbing;
 }
 
-.carousel-indicators {
-    display: flex;
-    gap: 6px;
-}
-
-.indicator {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: #6a11cb;
-    transform: scale(1.2);
-}
+/* Styles des indicateurs supprimés - Navigation tactile uniquement */
 
 .featured-partners h3 {
     display: flex;
@@ -11692,21 +11673,31 @@ select,
     height: auto;
 }
 
-/* Section Partenaires Vedettes - Style Mobile App */
+/* Section Partenaires Vedettes - Plein Écran */
 .featured-partners {
-    margin-bottom: var(--kshop-spacing-xl);
+    margin: var(--kshop-spacing-xl) 0;
+    /* Sortir du conteneur et prendre tout l'écran */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .featured-partners h3 {
     color: white;
     font-size: 24px;
     font-weight: 800;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
     text-align: center;
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
     letter-spacing: 1px;
     position: relative;
     padding-bottom: 15px;
+    max-width: 1200px;
 }
 
 .featured-partners h3::after {
@@ -11729,28 +11720,26 @@ select,
     gap: var(--kshop-spacing-lg);
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: var(--kshop-spacing-md) 0 var(--kshop-spacing-xl) 0;
+    padding: var(--kshop-spacing-md) 20px var(--kshop-spacing-xl) 20px;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin: 0 -20px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .partners-carousel::-webkit-scrollbar {
     display: none;
 }
 
-/* Partner Cards - Style Mobile App Moderne */
-.partner-card.featured {
-    min-width: 300px;
+/* Partner Cards - Contenu des cartes avec taille fixe */
+
+.partner-card.featured > div {
+    width: 180px;
     background: rgba(255, 255, 255, 0.98);
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
 }
@@ -11774,14 +11763,14 @@ select,
 }
 
 .partner-card.featured:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
     border-color: rgba(240, 147, 251, 0.4);
 }
 
 .partner-banner {
     position: relative;
-    height: 120px;
+    height: 70px;
     overflow: hidden;
     background: linear-gradient(135deg, var(--kshop-accent) 0%, var(--kshop-primary) 100%);
 }
@@ -11811,10 +11800,10 @@ select,
 
 .partner-logo-text {
     color: white;
-    font-size: 20px;
-    font-weight: 800;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.2px;
 }
 
 .partner-discount {
@@ -11852,20 +11841,20 @@ select,
 }
 
 .partner-info {
-    padding: var(--kshop-spacing-md);
+    padding: 8px 10px;
 }
 
 .partner-details h4 {
     color: #1f2937;
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 4px 0;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 1px 0;
 }
 
 .partner-details p {
     color: #6b7280;
-    font-size: 14px;
-    margin: 0 0 var(--kshop-spacing-sm) 0;
+    font-size: 11px;
+    margin: 0 0 4px 0;
 }
 
 .partner-rating {
@@ -12174,6 +12163,10 @@ select,
         height: 30px;
     }
     
+    .featured-partners {
+        padding: 0 16px;
+    }
+    
     .featured-partners h3 {
         font-size: 20px;
         margin-bottom: 24px;
@@ -12187,13 +12180,31 @@ select,
     
     .partners-carousel {
         gap: var(--kshop-spacing-md);
-        margin: 0 -16px;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding: var(--kshop-spacing-md) 16px var(--kshop-spacing-xl) 16px;
     }
     
     .partner-card.featured {
-        min-width: 260px;
+        min-width: 170px;
+    }
+    
+    .partner-banner {
+        height: 60px;
+    }
+    
+    .partner-logo-text {
+        font-size: 12px;
+    }
+    
+    .partner-info {
+        padding: 6px 8px;
+    }
+    
+    .partner-details h4 {
+        font-size: 12px;
+    }
+    
+    .partner-details p {
+        font-size: 10px;
     }
     
     .partner-banner {

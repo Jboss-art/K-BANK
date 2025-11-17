@@ -617,8 +617,7 @@ function initializeSpecificPages() {
     initializeHomeSwipeListeners();
     
     // Initialiser le carrousel des partenaires K-Shop
-    initCarouselIndicators();
-    startCarouselAutoScroll();
+    initPartnersCarousel();
     
     // Initialiser le thème
     initializeTheme();
@@ -1355,6 +1354,12 @@ function switchTab(tab) {
         if (tab === 'kshop') {
             kshopFloat.style.display = 'none'; // Cacher le bouton sur la page K-Shop
             console.log('Bouton K-Shop caché - page kshop active');
+            
+            // Initialiser le carousel des partenaires vedettes
+            setTimeout(() => {
+                console.log('🎠 Initialisation carousel partenaires');
+                initPartnersCarousel();
+            }, 300);
         } else {
             kshopFloat.style.display = 'block'; // Afficher le bouton sur les autres pages
             console.log('Bouton K-Shop affiché - page:', tab);
@@ -2390,64 +2395,146 @@ function openKShop() {
     }, 100);
 }
 
-// Carrousel des partenaires
+// ===== CARROUSEL PARTENAIRES SIMPLIFIÉ =====
 let currentPartnerIndex = 0;
-const partnersData = ['ckdo', 'mbolo', 'kfc', 'paul'];
+const partnersCount = 6; // CKDO, Mbolo, KFC, Paul, + 2 nouveaux
 
-function nextPartner() {
-    currentPartnerIndex = (currentPartnerIndex + 1) % partnersData.length;
-    updateCarousel();
-}
-
-function previousPartner() {
-    currentPartnerIndex = (currentPartnerIndex - 1 + partnersData.length) % partnersData.length;
-    updateCarousel();
-}
-
-function updateCarousel() {
-    const carousel = document.getElementById('partners-carousel');
-    const indicators = document.querySelectorAll('.indicator');
-    const cards = document.querySelectorAll('.partner-card.featured');
+// Fonction principale pour changer de partenaire
+function changePartner(direction) {
+    const oldIndex = currentPartnerIndex;
     
-    if (carousel && cards.length > 0) {
-        // Déplacer le carrousel avec la nouvelle largeur
-        const cardWidth = 252; // 240px + 12px gap
-        carousel.scrollTo({
-            left: currentPartnerIndex * cardWidth,
-            behavior: 'smooth'
-        });
-        
-        // Mettre à jour les indicateurs
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentPartnerIndex);
-        });
-        
-        // Mettre à jour les cartes actives
-        cards.forEach((card, index) => {
-            card.classList.toggle('active', index === currentPartnerIndex);
-        });
+    if (direction === 'next' && currentPartnerIndex < partnersCount - 1) {
+        currentPartnerIndex++;
+        console.log(`➡️ NEXT: ${oldIndex} → ${currentPartnerIndex}`);
+    } else if (direction === 'prev' && currentPartnerIndex > 0) {
+        currentPartnerIndex--;
+        console.log(`⬅️ PREV: ${oldIndex} → ${currentPartnerIndex}`);
+    } else {
+        console.log(`🚫 Changement ${direction} ignoré - Limite atteinte (index: ${currentPartnerIndex})`);
+        return;
     }
+    
+    updateCarouselDisplay();
 }
 
-// Gestion des clics sur les indicateurs
-function initCarouselIndicators() {
-    const indicators = document.querySelectorAll('.indicator');
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentPartnerIndex = index;
-            updateCarousel();
-        });
+// Mettre à jour l'affichage du carrousel
+function updateCarouselDisplay() {
+    const carousel = document.getElementById('partners-carousel');
+    if (!carousel) {
+        console.log('❌ Carrousel non trouvé');
+        return;
+    }
+    
+    // Vérifier les limites
+    if (currentPartnerIndex < 0) {
+        currentPartnerIndex = 0;
+        console.log('🔄 Index corrigé à 0');
+    }
+    if (currentPartnerIndex >= partnersCount) {
+        currentPartnerIndex = partnersCount - 1;
+        console.log(`🔄 Index corrigé à ${partnersCount - 1}`);
+    }
+    
+    // Translation corrigée : -100% par slide (car chaque carte = 100% du viewport)
+    const translateX = -currentPartnerIndex * 100;
+    carousel.style.transform = `translateX(${translateX}%)`;
+    carousel.style.transition = 'transform 0.3s ease-out';
+    
+    console.log(`🎯 Slide ${currentPartnerIndex}/${partnersCount - 1} - Translation: ${translateX}%`);
+    
+    // Vérifier les cartes visibles
+    const cards = carousel.querySelectorAll('.partner-card.featured');
+    console.log(`🃏 ${cards.length} cartes trouvées`);
+}
+
+function showSlide_OLD(slideIndex) {
+    console.log('🎯 Affichage du slide:', slideIndex);
+    
+    const carousel = document.getElementById('partners-carousel');
+    if (!carousel) {
+        console.log('❌ Carrousel non trouvé');
+        return;
+    }
+    
+    // Calculer la position de translation (-100% par slide)
+    const translateX = -slideIndex * 100;
+    
+    // Appliquer la transformation CSS avec transition
+    carousel.style.transition = 'transform 0.5s ease-in-out';
+    carousel.style.transform = `translateX(${translateX}%)`;
+    
+    console.log(`� Translation appliquée: translateX(${translateX}%)`);
+    
+    // Plus d'indicateurs - juste les cartes
+    
+    // Mettre à jour les cartes actives
+    const cards = carousel.querySelectorAll('.partner-card.featured');
+    cards.forEach((card, index) => {
+        card.classList.toggle('active', index === slideIndex);
     });
 }
 
-// Auto-scroll du carrousel
-function startCarouselAutoScroll() {
-    setInterval(() => {
-        if (document.querySelector('.kshop-page.active')) {
-            nextPartner();
+// Initialiser le nouveau carrousel
+// Initialiser le carrousel
+function initPartnersCarousel() {
+    console.log('🚀 Initialisation carrousel partenaires');
+    
+    const viewport = document.querySelector('.carousel-viewport');
+    if (!viewport) {
+        console.log('❌ Viewport non trouvé');
+        return;
+    }
+    
+    // Variables pour le glissement
+    let startX = 0;
+    let isDragging = false;
+    
+    // Événements tactiles et souris
+    viewport.addEventListener('touchstart', handleStart, { passive: false });
+    viewport.addEventListener('touchend', handleEnd, { passive: false });
+    viewport.addEventListener('mousedown', handleStart);
+    viewport.addEventListener('mouseup', handleEnd);
+    
+    function handleStart(e) {
+        e.preventDefault();
+        isDragging = true;
+        const point = e.touches ? e.touches[0] : e;
+        startX = point.clientX;
+    }
+    
+    function handleEnd(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const point = e.changedTouches ? e.changedTouches[0] : e;
+        const endX = point.clientX;
+        const deltaX = endX - startX;
+        
+        console.log(`👋 Glissement terminé - deltaX: ${deltaX}px, index actuel: ${currentPartnerIndex}`);
+        
+        // Seuil minimum pour le glissement
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0 && currentPartnerIndex > 0) {
+                // Glissement vers la droite = partenaire précédent (seulement si pas au début)
+                console.log('⬅️ Glissement vers la droite - Partenaire précédent');
+                changePartner('prev');
+            } else if (deltaX < 0 && currentPartnerIndex < partnersCount - 1) {
+                // Glissement vers la gauche = partenaire suivant (seulement si pas à la fin)
+                console.log('➡️ Glissement vers la gauche - Partenaire suivant');
+                changePartner('next');
+            } else {
+                console.log('🚫 Glissement ignoré - Limite atteinte');
+            }
+        } else {
+            console.log('🚫 Glissement trop petit - Ignoré');
         }
-    }, 4000); // Change toutes les 4 secondes
+    }
+    
+    // Afficher le premier partenaire
+    updateCarouselDisplay();
 }
+
+// Système simplifié intégré dans initPartnersCarousel()
 
 // ===============================================
 // FONCTIONS PARTENAIRES PREMIUM

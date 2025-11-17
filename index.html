@@ -1353,9 +1353,10 @@ BP 20000 Libreville</div>
                 <div class="kshop-container">
                     <!-- Partenaires vedettes avec carrousel -->
                     <div class="featured-partners">
-                        <h3>🌟 Partenaires vedettes</h3>
+                        <h3>Nos partenaires</h3>
                         <div class="carousel-container">
-                            <div class="partners-carousel" id="partners-carousel">
+                            <div class="carousel-viewport">
+                                <div class="partners-carousel" id="partners-carousel">
                                 <!-- CKDO Gabon -->
                                 <div class="partner-card featured active" data-partner="ckdo">
                                     <div class="partner-banner">
@@ -1459,23 +1460,62 @@ BP 20000 Libreville</div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Nouveau partenaire 5: Pharmacie du Centre -->
+                                <div class="partner-card featured" data-partner="pharmacie">
+                                    <div class="partner-banner">
+                                        <img src="assets/pharmacie.jpg" alt="Pharmacie du Centre" class="banner-image">
+                                        <div class="partner-overlay pharmacie-overlay">
+                                            <div class="partner-logo-text">PHARMACIE</div>
+                                        </div>
+                                        <div class="partner-discount">-8%</div>
+                                        <div class="partner-badge">SANTÉ</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>Pharmacie du Centre</h4>
+                                            <p>Santé & Bien-être</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★☆</span>
+                                                <span class="rating-text">4.7/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Médicaments</span>
+                                                <span class="benefit">Conseils santé</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nouveau partenaire 6: Total Energies -->
+                                <div class="partner-card featured" data-partner="total">
+                                    <div class="partner-banner">
+                                        <img src="assets/total.jpg" alt="Total Energies" class="banner-image">
+                                        <div class="partner-overlay total-overlay">
+                                            <div class="partner-logo-text">TOTAL</div>
+                                        </div>
+                                        <div class="partner-discount">-5%</div>
+                                        <div class="partner-badge">ÉNERGIE</div>
+                                    </div>
+                                    <div class="partner-info">
+                                        <div class="partner-details">
+                                            <h4>Total Energies</h4>
+                                            <p>Station-service & Carburant</p>
+                                            <div class="partner-rating">
+                                                <span class="stars">★★★★☆</span>
+                                                <span class="rating-text">4.5/5</span>
+                                            </div>
+                                            <div class="partner-benefits">
+                                                <span class="benefit">Carburant</span>
+                                                <span class="benefit">Boutique</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
 
-                            <!-- Contrôles du carrousel -->
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" onclick="previousPartner()">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <div class="carousel-indicators" id="carousel-indicators">
-                                    <span class="indicator active" data-slide="0"></span>
-                                    <span class="indicator" data-slide="1"></span>
-                                    <span class="indicator" data-slide="2"></span>
-                                    <span class="indicator" data-slide="3"></span>
-                                </div>
-                                <button class="carousel-btn next" onclick="nextPartner()">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
+
                         </div>
                     </div>
 
