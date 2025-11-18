@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#1a1a2e">
     <title>K-Bank - Finance Moderne</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="k-shop.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         // Initialiser le thème avant le rendu
@@ -1338,6 +1339,7 @@ BP 20000 Libreville</div>
             </div>
 
             <!-- Nouvelle page K-Shop -->
+            <!-- Page K-Shop -->
             <div class="page kshop-page" id="kshop-page">
                 <div class="page-header">
                     <button class="back-button" onclick="switchTab('home')">
@@ -1350,337 +1352,279 @@ BP 20000 Libreville</div>
                     </div>
                 </div>
 
-                <div class="kshop-container">
-                    <!-- Partenaires vedettes avec carrousel -->
-                    <div class="featured-partners">
-                        <h3>Nos partenaires</h3>
-                        <div class="carousel-container">
-                            <div class="carousel-viewport">
-                                <div class="partners-carousel" id="partners-carousel">
-                                <!-- CKDO Gabon -->
-                                <div class="partner-card featured active" data-partner="ckdo">
-                                    <div class="partner-banner">
-                                        <img src="assets/logos/shopping.png" alt="CKDO Gabon" class="banner-image">
-                                        <div class="partner-overlay">
-                                            <div class="partner-logo-text">CKDO</div>
-                                        </div>
-                                        <div class="partner-discount">-15%</div>
-                                        <div class="partner-badge">POPULAIRE</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>CKDO Gabon</h4>
-                                            <p>Supermarché & Shopping</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★★</span>
-                                                <span class="rating-text">4.8/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Réduction permanente</span>
-                                                <span class="benefit">Cashback 2%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Mbolo -->
-                                <div class="partner-card featured" data-partner="mbolo">
-                                    <div class="partner-banner">
-                                        <img src="assets/logos/mbolo.png" alt="Mbolo Restaurant" class="banner-image">
-                                        <div class="partner-overlay">
-                                            <div class="partner-logo-text">MBOLO</div>
-                                        </div>
-                                        <div class="partner-discount">-20%</div>
-                                        <div class="partner-badge">NOUVEAU</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>Mbolo</h4>
-                                            <p>Restaurant Africain</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★☆</span>
-                                                <span class="rating-text">4.6/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Plats traditionnels</span>
-                                                <span class="benefit">Livraison gratuite</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- KFC Gabon -->
-                                <div class="partner-card featured" data-partner="kfc">
-                                    <div class="partner-banner">
-                                        <img src="assets/logos/kfc.jpg" alt="KFC Gabon" class="banner-image">
-                                        <div class="partner-overlay kfc-overlay">
-                                            <div class="partner-logo-text">KFC</div>
-                                        </div>
-                                        <div class="partner-discount">-10%</div>
-                                        <div class="partner-badge">HOT</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>KFC Gabon</h4>
-                                            <p>Fast Food International</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★☆</span>
-                                                <span class="rating-text">4.4/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Menu famillial</span>
-                                                <span class="benefit">Drive disponible</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Paul Gabon -->
-                                <div class="partner-card featured" data-partner="paul">
-                                    <div class="partner-banner">
-                                        <img src="assets/paul.jpg" alt="Paul Gabon" class="banner-image">
-                                        <div class="partner-overlay paul-overlay">
-                                            <div class="partner-logo-text">PAUL</div>
-                                        </div>
-                                        <div class="partner-discount">-12%</div>
-                                        <div class="partner-badge">PREMIUM</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>Paul Gabon</h4>
-                                            <p>Boulangerie & Pâtisserie</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★★</span>
-                                                <span class="rating-text">4.9/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Produits frais</span>
-                                                <span class="benefit">Café premium</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Nouveau partenaire 5: Pharmacie du Centre -->
-                                <div class="partner-card featured" data-partner="pharmacie">
-                                    <div class="partner-banner">
-                                        <img src="assets/pharmacie.jpg" alt="Pharmacie du Centre" class="banner-image">
-                                        <div class="partner-overlay pharmacie-overlay">
-                                            <div class="partner-logo-text">PHARMACIE</div>
-                                        </div>
-                                        <div class="partner-discount">-8%</div>
-                                        <div class="partner-badge">SANTÉ</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>Pharmacie du Centre</h4>
-                                            <p>Santé & Bien-être</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★☆</span>
-                                                <span class="rating-text">4.7/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Médicaments</span>
-                                                <span class="benefit">Conseils santé</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Nouveau partenaire 6: Total Energies -->
-                                <div class="partner-card featured" data-partner="total">
-                                    <div class="partner-banner">
-                                        <img src="assets/total.jpg" alt="Total Energies" class="banner-image">
-                                        <div class="partner-overlay total-overlay">
-                                            <div class="partner-logo-text">TOTAL</div>
-                                        </div>
-                                        <div class="partner-discount">-5%</div>
-                                        <div class="partner-badge">ÉNERGIE</div>
-                                    </div>
-                                    <div class="partner-info">
-                                        <div class="partner-details">
-                                            <h4>Total Energies</h4>
-                                            <p>Station-service & Carburant</p>
-                                            <div class="partner-rating">
-                                                <span class="stars">★★★★☆</span>
-                                                <span class="rating-text">4.5/5</span>
-                                            </div>
-                                            <div class="partner-benefits">
-                                                <span class="benefit">Carburant</span>
-                                                <span class="benefit">Boutique</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-
-
-                        </div>
+                <!-- Barre de recherche -->
+                <div class="search-section">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Rechercher partenaires, offres..." class="search-input">
                     </div>
+                </div>
 
-                    <!-- Catégories -->
-                    <div class="shop-categories">
+                <!-- Section des catégories -->
+                <div class="section-container">
+                    <div class="section-header">
                         <h3>Catégories</h3>
-                        <div class="category-grid">
-                            <div class="category-item">
-                                <div class="category-icon">
-                                    <img src="./assets/restauration.jpg" alt="Restauration" class="category-image">
+                    </div>
+                    <div class="categories-grid">
+                        <div class="category-card" data-category="restauration">
+                            <div class="category-image-container">
+                                <img src="./assets/restauration.jpg" alt="Restauration" class="category-bg-image">
+                                <div class="category-overlay">
+                                    <i class="fas fa-utensils category-icon-modern"></i>
                                 </div>
-                                <span>Restauration</span>
                             </div>
-                            <div class="category-item">
-                                <div class="category-icon">
-                                    <img src="./assets/logos/shopping.png" alt="Shopping" class="category-image">
-                                </div>
-                                <span>Shopping</span>
+                            <div class="category-content">
+                                <span class="category-name">Restauration</span>
+                                <span class="category-count">8 partenaires</span>
+                                <div class="category-badge">-20%</div>
                             </div>
-                            <div class="category-item">
-                                <div class="category-icon">
-                                    <img src="./assets/logos/loisirs.jpg" alt="Loisirs" class="category-image">
+                        </div>
+                        <div class="category-card" data-category="shopping">
+                            <div class="category-image-container">
+                                <img src="./assets/logos/shopping.png" alt="Shopping" class="category-bg-image">
+                                <div class="category-overlay">
+                                    <i class="fas fa-shopping-bag category-icon-modern"></i>
                                 </div>
-                                <span>Loisirs</span>
+                            </div>
+                            <div class="category-content">
+                                <span class="category-name">Shopping</span>
+                                <span class="category-count">6 partenaires</span>
+                                <div class="category-badge">-15%</div>
+                            </div>
+                        </div>
+                        <div class="category-card" data-category="loisirs">
+                            <div class="category-image-container">
+                                <img src="./assets/logos/loisirs.jpg" alt="Loisirs" class="category-bg-image">
+                                <div class="category-overlay">
+                                    <i class="fas fa-gamepad category-icon-modern"></i>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <span class="category-name">Loisirs</span>
+                                <span class="category-count">4 partenaires</span>
+                                <div class="category-badge">-25%</div>
+                            </div>
+                        </div>
+                        <div class="category-card" data-category="pharmacie">
+                            <div class="category-image-container">
+                                <img src="./assets/pharmacie.jpg" alt="Pharmacie" class="category-bg-image">
+                                <div class="category-overlay">
+                                    <i class="fas fa-pills category-icon-modern"></i>
+                                </div>
+                            </div>
+                            <div class="category-content">
+                                <span class="category-name">Pharmacie</span>
+                                <span class="category-count">3 partenaires</span>
+                                <div class="category-badge">-10%</div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Section Partenaires Premium avec logos -->
-                    <div class="premium-partners-section">
-                        <h3>🚀 Autres partenaires</h3>
-                        <p class="section-subtitle">Bénéficiez d'avantages exclusifs avec les grandes marques internationales</p>
-                        
-                        <div class="premium-partners-grid">
-                            <!-- Microsoft -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('microsoft')" data-partner="microsoft">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="40" height="40" fill="#F25022"/>
-                                        <rect x="50" width="40" height="40" fill="#7FBA00"/>
-                                        <rect y="50" width="40" height="40" fill="#00A4EF"/>
-                                        <rect x="50" y="50" width="40" height="40" fill="#FFB900"/>
-                                    </svg>
+                <!-- Section des partenaires principaux -->
+                <div class="section-container">
+                    <div class="section-header">
+                        <h3>Nos partenaires</h3>
+                    </div>
+                    <div class="partners-grid">
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/CK2.png" alt="CKDO" class="partner-logo">
+                                <div class="discount-badge">-25%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
                                 </div>
-                                <div class="partner-name">Microsoft</div>
-                                <div class="partner-offer">-20%</div>
-                                <div class="partner-category">Tech & Cloud</div>
                             </div>
-
-                            <!-- Nike -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('nike')" data-partner="nike">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M78.4 8.5c-4.8 0-9.3 2.1-12.4 5.8L50 32l16-17.7c2.1-2.3 5.1-3.6 8.4-3.6 6.2 0 11.2 5 11.2 11.2s-5 11.2-11.2 11.2c-2.8 0-5.4-1-7.4-2.9L50 48l32.6-36.1c1.3-1.4 3.1-2.2 5.1-2.2 3.9 0 7 3.1 7 7s-3.1 7-7 7c-1.7 0-3.2-0.6-4.4-1.7L78.4 8.5z" fill="#FF6900"/>
-                                    </svg>
+                            <div class="partner-details">
+                                <h4>CKDO</h4>
+                                <p>Mode & Lifestyle</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>4.7</span>
                                 </div>
-                                <div class="partner-name">Nike</div>
-                                <div class="partner-offer">-15%</div>
-                                <div class="partner-category">Sport & Mode</div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Livraison gratuite</span>
+                                    <span class="benefit">Cashback 5%</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <!-- Tesla -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('tesla')" data-partner="tesla">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M50 10L20 30v40l30 20 30-20V30L50 10zm0 15l20 15v25l-20 15-20-15V40l20-15z" fill="#CC0000"/>
-                                        <text x="50" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">T</text>
-                                    </svg>
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/paul.jpg" alt="Paul" class="partner-logo">
+                                <div class="discount-badge">-15%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
                                 </div>
-                                <div class="partner-name">Tesla</div>
-                                <div class="partner-offer">-10%</div>
-                                <div class="partner-category">Auto & Tech</div>
                             </div>
-
-                            <!-- Metanoïa -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('metanoia')" data-partner="metanoia">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="50" cy="50" r="40" fill="#2E86AB" stroke="#A23B72" stroke-width="3"/>
-                                        <text x="50" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">META</text>
-                                        <text x="50" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">NOÏA</text>
-                                    </svg>
+                            <div class="partner-details">
+                                <h4>Paul</h4>
+                                <p>Boulangerie & Pâtisserie</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>4.9</span>
                                 </div>
-                                <div class="partner-name">Metanoïa</div>
-                                <div class="partner-offer">-25%</div>
-                                <div class="partner-category">Formation</div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Café offert</span>
+                                    <span class="benefit">Points fidélité</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <!-- Airtel -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('airtel')" data-partner="airtel">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <ellipse cx="50" cy="50" rx="45" ry="20" fill="#ED1C24"/>
-                                        <text x="50" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">airtel</text>
-                                    </svg>
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/logos/kfc.jpg" alt="KFC" class="partner-logo">
+                                <div class="discount-badge">-20%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
                                 </div>
-                                <div class="partner-name">Airtel</div>
-                                <div class="partner-offer">-30%</div>
-                                <div class="partner-category">Télécom</div>
                             </div>
-
-                            <!-- Reebok -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('reebok')" data-partner="reebok">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <polygon points="20,70 50,30 80,70" fill="#005BBB"/>
-                                        <text x="50" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#005BBB">REEBOK</text>
-                                    </svg>
+                            <div class="partner-details">
+                                <h4>KFC</h4>
+                                <p>Fast Food & Poulet</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>4.6</span>
                                 </div>
-                                <div class="partner-name">Reebok</div>
-                                <div class="partner-offer">-18%</div>
-                                <div class="partner-category">Sport</div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Livraison rapide</span>
+                                    <span class="benefit">Menu family</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <!-- Air France -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('airfrance')" data-partner="airfrance">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="50" cy="50" r="40" fill="#002157"/>
-                                        <path d="M30 45 L50 35 L70 45 L60 55 L50 50 L40 55 Z" fill="white"/>
-                                        <text x="50" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">AIR FRANCE</text>
-                                    </svg>
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/logos/mbolo.png" alt="Mbolo" class="partner-logo">
+                                <div class="discount-badge">-10%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
                                 </div>
-                                <div class="partner-name">Air France</div>
-                                <div class="partner-offer">-12%</div>
-                                <div class="partner-category">Voyage</div>
                             </div>
-
-                            <!-- Samsung -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('samsung')" data-partner="samsung">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <ellipse cx="50" cy="50" rx="45" ry="25" fill="#1428A0"/>
-                                        <text x="50" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">SAMSUNG</text>
-                                    </svg>
+                            <div class="partner-details">
+                                <h4>Mbolo</h4>
+                                <p>Services & Paiements</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span>4.2</span>
                                 </div>
-                                <div class="partner-name">Samsung</div>
-                                <div class="partner-offer">-22%</div>
-                                <div class="partner-category">Tech</div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Sans commission</span>
+                                    <span class="benefit">Support 24/7</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <!-- Apple -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('apple')" data-partner="apple">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M50 15c10 0 18 8 18 18v2c0 15-8 27-18 27s-18-12-18-27v-2c0-10 8-18 18-18zm8-5c2-3 3-6 3-9 0-1-1-1-1 0-1 2-2 4-4 6-2 2-4 3-6 3-1 0-1 1 0 1 3 0 6-1 8-1z" fill="#A6B1B7"/>
-                                    </svg>
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/total.jpg" alt="Total" class="partner-logo">
+                                <div class="discount-badge">-12%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
                                 </div>
-                                <div class="partner-name">Apple</div>
-                                <div class="partner-offer">-8%</div>
-                                <div class="partner-category">Premium Tech</div>
                             </div>
-
-                            <!-- Uber -->
-                            <div class="premium-partner-card" onclick="openPremiumPartner('uber')" data-partner="uber">
-                                <div class="partner-logo-container">
-                                    <svg class="partner-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="50" cy="50" r="40" fill="#000000"/>
-                                        <circle cx="50" cy="40" r="8" fill="white"/>
-                                        <rect x="42" y="50" width="16" height="20" rx="8" fill="white"/>
-                                    </svg>
+                            <div class="partner-details">
+                                <h4>Total Energies</h4>
+                                <p>Carburant & Services</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span>4.3</span>
                                 </div>
-                                <div class="partner-name">Uber</div>
-                                <div class="partner-offer">-15%</div>
-                                <div class="partner-category">Transport</div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Paiement mobile</span>
+                                    <span class="benefit">Points Club</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-image">
+                                <img src="./assets/logos/moov.png" alt="Moov" class="partner-logo">
+                                <div class="discount-badge">-8%</div>
+                                <div class="partner-favorite">
+                                    <i class="far fa-heart"></i>
+                                </div>
+                            </div>
+                            <div class="partner-details">
+                                <h4>Moov Money</h4>
+                                <p>Mobile Money & Services</p>
+                                <div class="partner-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>4.5</span>
+                                </div>
+                                <div class="partner-benefits">
+                                    <span class="benefit">Transfert gratuit</span>
+                                    <span class="benefit">Bonus recharge</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section statistiques -->
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number">100%</span>
+                                <span class="stat-label">Sécurisé</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number">25K+</span>
+                                <span class="stat-label">Utilisateurs</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Partenaires</span>
                             </div>
                         </div>
                     </div>
@@ -2097,5 +2041,6 @@ BP 20000 Libreville</div>
             console.log('Page chargée - tests disponibles: forceShowBlockedIcon(), testBlockedIconSimple(), testFrozenIconSimple()');
         });
     </script>
+    <script src="kshop-interactions.js"></script>
 </body>
 </html>
