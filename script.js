@@ -4023,7 +4023,6 @@ function openFAQ() {
                                 <li>Vérifiez les informations</li>
                                 <li>Confirmez avec votre code PIN</li>
                             </ol>
-                            <p><strong>Limites :</strong> 500 000 F <h6>cfa</h6> par jour, 2 000 000 F <h6>cfa</h6> par mois.</p>
                         </div>
                     </div>
 
