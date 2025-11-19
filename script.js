@@ -985,7 +985,7 @@ const appData = {
             id: 2,
             title: "cotisation couple Mboumba",
             date: "Hier, 09:15",
-            amount: 2450.00,
+            amount: -2450.00,
             icon: "💰",
             category: "Salaire"
         },
@@ -1031,7 +1031,7 @@ const appData = {
         },
         {
             id: 8,
-            title: "Orange Money",
+            title: "Moov Money",
             date: "2 nov, 14:45",
             amount: -2000.00,
             icon: "📱",
