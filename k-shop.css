@@ -529,12 +529,41 @@
 }
 
 .logo-container {
+    position: relative;
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    overflow: visible;
+}
+
+.partner-discount-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4);
+    z-index: 10;
+    animation: discountPulse 2s infinite;
+    line-height: 1;
+}
+
+@keyframes discountPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.6);
+    }
 }
 
 .partner-brand-logo {
@@ -545,19 +574,27 @@
     transition: all 0.3s ease;
 }
 
+/* Ajustements spécifiques pour certains noms de partenaires */
+.partner-logo-item:has(.partner-brand-logo[alt="Air France"]) .partner-brand-name,
+.partner-logo-item:has(.partner-brand-logo[alt="Western Union"]) .partner-brand-name {
+    margin-top: 2px;
+    transform: translateY(-2px);
+}
+
 .partner-logo-item:hover .partner-brand-logo {
     filter: grayscale(0%) opacity(1);
     transform: scale(1.1);
 }
 
 .partner-brand-name {
-    font-size: 10px;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11px;
     font-weight: 600;
-    color: #4A5568;
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1;
+    color: #2d3748;
+    margin-top: 6px;
+    text-transform: none;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 /* Responsive adjustments */
