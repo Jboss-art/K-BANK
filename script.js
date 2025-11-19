@@ -3989,19 +3989,19 @@ function openFAQ() {
                         <div class="modal-faq-question">
                             <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
                                 <i class="fas fa-lock" style="color: #7456ff; width: 20px;"></i>
-                                <span style="color: white; font-weight: 600;">Comment bloquer/débloquer ma carte ?</span>
+                                <span style="color: white; font-weight: 600;">Comment geler/dégeler ma carte ?</span>
                             </div>
                             <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
                         </div>
                         <div class="modal-faq-answer" style="display: none;">
-                            <p><strong>Pour bloquer votre carte :</strong></p>
+                            <p><strong>Pour geler votre carte :</strong></p>
                             <ol>
                                 <li>Appuyez longuement sur votre carte bancaire sur l'écran d'accueil</li>
                                 <li>Sélectionnez "Geler la carte"</li>
-                                <li>Confirmez l'action avec votre code PIN</li>
-                                <li>Votre carte sera immédiatement bloquée</li>
+                                <li>Votre carte sera immédiatement gelée</li>
+                                <li>Votre carte sera immédiatement gelée</li>
+                                <li>Pour dégeler appuyez sur le bouton dégeler</li>
                             </ol>
-                            <p><strong>Pour débloquer :</strong> Répétez la même procédure et sélectionnez "Dégeler la carte".</p>
                         </div>
                     </div>
 
