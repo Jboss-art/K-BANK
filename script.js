@@ -4676,17 +4676,22 @@ function showNotification(message, type = 'info') {
         notification.id = 'notification';
         notification.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 8px 12px;
+            border-radius: 20px;
             color: white;
-            font-weight: 500;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.2;
             z-index: 10000;
-            transform: translateX(400px);
             transition: all 0.3s ease;
-            max-width: 300px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            max-width: 280px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         `;
         document.body.appendChild(notification);
     }
@@ -4704,12 +4709,12 @@ function showNotification(message, type = 'info') {
     
     // Afficher la notification
     setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
+        notification.style.transform = 'translateX(-50%) translateY(0)';
     }, 100);
     
     // Masquer la notification après 3 secondes
     setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
+        notification.style.transform = 'translateX(-50%) translateY(100px)';
     }, 3000);
 }
 

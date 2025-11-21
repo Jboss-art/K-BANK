@@ -444,17 +444,8 @@ function showToast(message, type = 'info') {
     toast.className = `toast ${type} fullscreen`;
     toast.textContent = message;
     
-    // Icônes selon le type
-    const icons = {
-        success: '✅',
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
-    };
-    
-    if (icons[type]) {
-        toast.textContent = `${icons[type]} ${message}`;
-    }
+    // Message sans icône
+    toast.textContent = message;
     
     document.body.appendChild(toast);
     
