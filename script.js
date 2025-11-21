@@ -4036,10 +4036,10 @@ function openFAQ() {
                         </div>
                         <div class="modal-faq-answer" style="display: none;">
                             <p><strong>Trois méthodes pour ajouter un bénéficiaire :</strong></p>
-                            <h4>1. Via le numéro de téléphone :</h4>
+                            <h4>1. Via l'IBAN :</h4>
                             <ul>
                                 <li>Cliquez sur "Nouveau bénéficiaire"</li>
-                                <li>Saisissez le nom et le numéro</li>
+                                <li>Saisissez le nom et l'IBAN</li>
                                 <li>Validez l'ajout</li>
                             </ul>
                             <h4>2. Via QR Code :</h4>
