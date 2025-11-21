@@ -1170,15 +1170,15 @@ input:focus, textarea:focus, select:focus {
     }
     
     .main-balance-card .balance-details {
-        flex-direction: column;
-        gap: 12px;
+        flex-direction: row;
+        gap: 15px;
         text-align: center;
     }
     
     .main-balance-card .divider {
-        width: 60px;
-        height: 1px;
-        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+        width: 1px;
+        height: 35px;
+        background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent);
         align-self: center;
     }
     
