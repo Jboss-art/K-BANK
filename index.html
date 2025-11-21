@@ -907,8 +907,13 @@
                         <!-- Les bénéficiaires seront ajoutés dynamiquement -->
                     </div>
                     
-                    <button class="secondary-button" onclick="openAddVirementBeneficiaryModal()">
-                        <i class="fas fa-plus-circle"></i> Ajouter un nouveau bénéficiaire
+                    <button class="modern-add-beneficiary-btn" onclick="switchTab('add-beneficiary')">
+                        <div class="btn-gradient-bg"></div>
+                        <div class="btn-content">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Ajouter un nouveau bénéficiaire</span>
+                        </div>
+                        <div class="btn-ripple"></div>
                     </button>
                 </div>
             </div>
@@ -944,9 +949,202 @@
                         </div>
                     </div>
                     
-                    <button class="primary-button" onclick="addBeneficiary()">
-                        <i class="fas fa-check-circle"></i> Ajouter le bénéficiaire
+                    <button class="modern-add-beneficiary-btn confirm-style" onclick="addBeneficiary()">
+                        <div class="btn-gradient-bg"></div>
+                        <div class="btn-content">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ajouter le bénéficiaire</span>
+                        </div>
+                        <div class="btn-ripple"></div>
                     </button>
+                </div>
+            </div>
+
+            <!-- Page Ajouter un Bénéficiaire -->
+            <div class="page add-beneficiary-page" id="add-beneficiary-page">
+                <div class="page-header">
+                    <button class="back-button" onclick="switchTab('transfer')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Nouveau Bénéficiaire</h2>
+                    <div class="header-actions">
+                        <button class="help-button" onclick="showBeneficiaryHelp()">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="beneficiary-form-container">
+                    <!-- Méthodes d'ajout -->
+                    <div class="method-selector">
+                        <h3>Comment souhaitez-vous ajouter ce bénéficiaire ?</h3>
+                        <div class="method-cards">
+                            <div class="method-card active" data-method="manual" onclick="selectMethod('manual')">
+                                <div class="method-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>Saisie manuelle</h4>
+                                    <p>Entrez les informations manuellement</p>
+                                </div>
+                            </div>
+                            <div class="method-card" data-method="qr" onclick="selectMethod('qr')">
+                                <div class="method-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>Scanner QR Code</h4>
+                                    <p>Scannez le QR code du bénéficiaire</p>
+                                </div>
+                            </div>
+                            <div class="method-card" data-method="contacts" onclick="selectMethod('contacts')">
+                                <div class="method-icon">
+                                    <i class="fas fa-address-book"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>Depuis mes contacts</h4>
+                                    <p>Choisir dans votre répertoire</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de saisie manuelle -->
+                    <div class="form-section" id="manual-form" style="display: block;">
+                        <div class="form-card">
+                            <div class="form-header">
+                                <i class="fas fa-user-circle"></i>
+                                <h4>Informations du bénéficiaire</h4>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nom complet <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" class="modern-input" id="beneficiary-name" placeholder="Ex: Jean Dupont" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Type de compte</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="account-type" value="iban" checked>
+                                        <span class="radio-custom"></span>
+                                        <div class="radio-content">
+                                            <i class="fas fa-university"></i>
+                                            <span>IBAN</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="account-type" value="phone">
+                                        <span class="radio-custom"></span>
+                                        <div class="radio-content">
+                                            <i class="fas fa-mobile-alt"></i>
+                                            <span>Téléphone</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="iban-group">
+                                <label class="form-label">IBAN <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-credit-card input-icon"></i>
+                                    <input type="text" class="modern-input" id="beneficiary-iban" placeholder="FR76 1234 5678 9012 3456 7890 123" required>
+                                </div>
+                                <div class="input-help">Format: FR76 suivi de 23 chiffres</div>
+                            </div>
+
+                            <div class="form-group" id="phone-group" style="display: none;">
+                                <label class="form-label">Numéro de téléphone <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-phone input-icon"></i>
+                                    <input type="tel" class="modern-input" id="beneficiary-phone" placeholder="+241 01 23 45 67">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Banque</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-building input-icon"></i>
+                                    <select class="modern-select" id="beneficiary-bank">
+                                        <option value="">Sélectionner une banque</option>
+                                        <option value="bgfibank">BGFI Bank</option>
+                                        <option value="orabank">Orabank</option>
+                                        <option value="ecobank">Ecobank</option>
+                                        <option value="uba">UBA</option>
+                                        <option value="autre">Autre banque</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Catégorie (optionnel)</label>
+                                <div class="category-tags">
+                                    <button type="button" class="category-tag" data-category="famille">
+                                        <i class="fas fa-heart"></i> Famille
+                                    </button>
+                                    <button type="button" class="category-tag" data-category="amis">
+                                        <i class="fas fa-users"></i> Amis
+                                    </button>
+                                    <button type="button" class="category-tag" data-category="professionnel">
+                                        <i class="fas fa-briefcase"></i> Professionnel
+                                    </button>
+                                    <button type="button" class="category-tag" data-category="autre">
+                                        <i class="fas fa-tag"></i> Autre
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section QR Code -->
+                    <div class="form-section" id="qr-form" style="display: none;">
+                        <div class="qr-scanner-card">
+                            <div class="qr-scanner-content">
+                                <div class="qr-scanner-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <h4>Scanner le QR Code</h4>
+                                <p>Positionnez le QR code du bénéficiaire dans le cadre</p>
+                                <button class="start-scan-btn" onclick="startQRScan()">
+                                    <i class="fas fa-camera"></i> Démarrer le scan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Contacts -->
+                    <div class="form-section" id="contacts-form" style="display: none;">
+                        <div class="contacts-card">
+                            <div class="contacts-header">
+                                <h4>Sélectionner dans vos contacts</h4>
+                                <div class="search-contacts">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Rechercher un contact..." id="contact-search">
+                                </div>
+                            </div>
+                            <div class="contacts-list" id="contacts-list">
+                                <!-- Les contacts seront chargés dynamiquement -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="form-actions">
+                        <button class="cancel-btn" onclick="switchTab('transfer')">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                        <button class="modern-add-beneficiary-btn confirm-style" onclick="saveBeneficiary()">
+                            <div class="btn-gradient-bg"></div>
+                            <div class="btn-content">
+                                <i class="fas fa-check"></i>
+                                <span>Enregistrer le bénéficiaire</span>
+                            </div>
+                            <div class="btn-ripple"></div>
+                        </button>
+                    </div>
                 </div>
             </div>
 

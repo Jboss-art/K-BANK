@@ -4721,7 +4721,186 @@ function showNotification(message, type = 'info') {
 // Initialiser les plafonds au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
     updateCardLimitsDisplay();
+    initializeBeneficiaryPage();
 });
+
+// ===============================================
+// FONCTIONS POUR LA PAGE AJOUTER BÉNÉFICIAIRE
+// ===============================================
+
+function initializeBeneficiaryPage() {
+    // Initialiser les événements pour les types de compte
+    const accountTypeRadios = document.querySelectorAll('input[name="account-type"]');
+    accountTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleAccountTypeFields);
+    });
+    
+    // Initialiser les événements pour les tags de catégorie
+    const categoryTags = document.querySelectorAll('.category-tag');
+    categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            toggleCategoryTag(this);
+        });
+    });
+}
+
+function selectMethod(method) {
+    // Désactiver tous les cards
+    document.querySelectorAll('.method-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    
+    // Activer le card sélectionné
+    document.querySelector(`[data-method="${method}"]`).classList.add('active');
+    
+    // Masquer toutes les sections
+    document.querySelectorAll('.form-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Afficher la section correspondante
+    const targetSection = document.getElementById(`${method}-form`);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+}
+
+function toggleAccountTypeFields() {
+    const selectedType = document.querySelector('input[name="account-type"]:checked').value;
+    const ibanGroup = document.getElementById('iban-group');
+    const phoneGroup = document.getElementById('phone-group');
+    
+    if (selectedType === 'iban') {
+        ibanGroup.style.display = 'block';
+        phoneGroup.style.display = 'none';
+        document.getElementById('beneficiary-iban').required = true;
+        document.getElementById('beneficiary-phone').required = false;
+    } else {
+        ibanGroup.style.display = 'none';
+        phoneGroup.style.display = 'block';
+        document.getElementById('beneficiary-iban').required = false;
+        document.getElementById('beneficiary-phone').required = true;
+    }
+}
+
+function toggleCategoryTag(tag) {
+    // Désactiver tous les autres tags
+    document.querySelectorAll('.category-tag').forEach(t => {
+        if (t !== tag) {
+            t.classList.remove('active');
+        }
+    });
+    
+    // Toggle le tag cliqué
+    tag.classList.toggle('active');
+}
+
+function startQRScan() {
+    showToast('Fonctionnalité de scan QR en développement', 'info');
+    // TODO: Implémenter le scan QR
+}
+
+function saveBeneficiary() {
+    const name = document.getElementById('beneficiary-name').value.trim();
+    const accountType = document.querySelector('input[name="account-type"]:checked').value;
+    const bank = document.getElementById('beneficiary-bank').value;
+    
+    // Validation
+    if (!name) {
+        showToast('Veuillez saisir le nom du bénéficiaire', 'error');
+        return;
+    }
+    
+    let accountInfo = '';
+    if (accountType === 'iban') {
+        const iban = document.getElementById('beneficiary-iban').value.trim();
+        if (!iban) {
+            showToast('Veuillez saisir l\'IBAN', 'error');
+            return;
+        }
+        accountInfo = iban;
+    } else {
+        const phone = document.getElementById('beneficiary-phone').value.trim();
+        if (!phone) {
+            showToast('Veuillez saisir le numéro de téléphone', 'error');
+            return;
+        }
+        accountInfo = phone;
+    }
+    
+    // Récupérer la catégorie sélectionnée
+    const selectedCategory = document.querySelector('.category-tag.active');
+    const category = selectedCategory ? selectedCategory.dataset.category : 'autre';
+    
+    // Simuler l'enregistrement
+    showToast('Bénéficiaire ajouté avec succès !', 'success');
+    
+    // Attendre un peu puis revenir à la page de virement
+    setTimeout(() => {
+        switchTab('transfer');
+        
+        // Réinitialiser le formulaire
+        resetBeneficiaryForm();
+    }, 1500);
+}
+
+function resetBeneficiaryForm() {
+    // Réinitialiser tous les champs
+    document.getElementById('beneficiary-name').value = '';
+    document.getElementById('beneficiary-iban').value = '';
+    document.getElementById('beneficiary-phone').value = '';
+    document.getElementById('beneficiary-bank').value = '';
+    
+    // Réinitialiser les radio buttons
+    document.querySelector('input[name="account-type"][value="iban"]').checked = true;
+    toggleAccountTypeFields();
+    
+    // Réinitialiser les catégories
+    document.querySelectorAll('.category-tag').forEach(tag => {
+        tag.classList.remove('active');
+    });
+    
+    // Réinitialiser la méthode sélectionnée
+    selectMethod('manual');
+}
+
+function showBeneficiaryHelp() {
+    const helpContent = `
+        <div class="help-content">
+            <h4>Comment ajouter un bénéficiaire ?</h4>
+            <div class="help-methods">
+                <div class="help-method">
+                    <i class="fas fa-edit"></i>
+                    <div>
+                        <strong>Saisie manuelle</strong>
+                        <p>Entrez manuellement les informations du bénéficiaire (IBAN ou téléphone)</p>
+                    </div>
+                </div>
+                <div class="help-method">
+                    <i class="fas fa-qrcode"></i>
+                    <div>
+                        <strong>QR Code</strong>
+                        <p>Scannez le QR code partagé par votre bénéficiaire</p>
+                    </div>
+                </div>
+                <div class="help-method">
+                    <i class="fas fa-address-book"></i>
+                    <div>
+                        <strong>Contacts</strong>
+                        <p>Sélectionnez un contact déjà enregistré dans votre téléphone</p>
+                    </div>
+                </div>
+            </div>
+            <div class="help-note">
+                <i class="fas fa-info-circle"></i>
+                <p>Tous vos bénéficiaires sont sécurisés et cryptés</p>
+            </div>
+        </div>
+    `;
+    
+    showToast('Aide affichée', 'info');
+    // TODO: Afficher dans une vraie modal d'aide
+}
 
 // Alternative de fallback pour créer un RIB en texte si PDF ne fonctionne pas
 function createTextRIB() {

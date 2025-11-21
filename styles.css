@@ -11853,6 +11853,564 @@ select,
     animation: ripple 0.6s linear;
 }
 
+/* Bouton moderne d'ajout de bénéficiaire */
+.modern-add-beneficiary-btn {
+    position: relative;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+    border: none;
+    border-radius: 16px;
+    padding: 16px 24px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    width: 100%;
+    margin: 16px 0;
+}
+
+.modern-add-beneficiary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #c084fc 100%);
+}
+
+.modern-add-beneficiary-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.modern-add-beneficiary-btn.confirm-style {
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.modern-add-beneficiary-btn.confirm-style:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+    box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);
+}
+
+.btn-gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modern-add-beneficiary-btn:hover .btn-gradient-bg {
+    opacity: 1;
+}
+
+.btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-content i {
+    font-size: 18px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.btn-content span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    pointer-events: none;
+}
+
+.modern-add-beneficiary-btn:active .btn-ripple {
+    width: 300px;
+    height: 300px;
+}
+
+/* Responsive pour mobile */
+@media screen and (max-width: 768px) {
+    .modern-add-beneficiary-btn {
+        padding: 14px 20px;
+        font-size: 14px;
+        border-radius: 14px;
+        min-height: 52px;
+    }
+    
+    .btn-content i {
+        font-size: 16px;
+    }
+    
+    .btn-content {
+        gap: 10px;
+    }
+}
+
+/* ===============================================
+   PAGE AJOUTER UN BÉNÉFICIAIRE - DESIGN MODERNE
+   =============================================== */
+
+.add-beneficiary-page {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+}
+
+.beneficiary-form-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Sélecteur de méthodes */
+.method-selector {
+    margin-bottom: 30px;
+}
+
+.method-selector h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.method-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.method-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.method-card:hover {
+    border-color: #6366f1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+}
+
+.method-card.active {
+    border-color: #6366f1;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.2);
+}
+
+.method-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: white;
+    font-size: 20px;
+}
+
+.method-card.active .method-icon {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.method-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+}
+
+.method-content p {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Formulaire moderne */
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.form-header i {
+    font-size: 20px;
+    color: #6366f1;
+}
+
+.form-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.required {
+    color: #ef4444;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.modern-input, .modern-select {
+    width: 100%;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px 14px 48px;
+    font-size: 14px;
+    color: #1e293b;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.modern-input:focus, .modern-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.input-help {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+}
+
+/* Radio buttons modernes */
+.radio-group {
+    display: flex;
+    gap: 16px;
+}
+
+.radio-option {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.radio-option:hover {
+    border-color: #6366f1;
+    background: white;
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom {
+    border-color: #6366f1;
+    background: #6366f1;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.radio-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.radio-content i {
+    color: #6b7280;
+}
+
+.radio-option input[type="radio"]:checked ~ .radio-content i {
+    color: #6366f1;
+}
+
+/* Tags de catégories */
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.category-tag {
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.category-tag:hover {
+    border-color: #6366f1;
+    color: #6366f1;
+    background: #f0f4ff;
+}
+
+.category-tag.active {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: white;
+}
+
+/* Section QR Scanner */
+.qr-scanner-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.qr-scanner-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 32px;
+}
+
+.qr-scanner-content h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.qr-scanner-content p {
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+.start-scan-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+}
+
+.start-scan-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+/* Section Contacts */
+.contacts-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.contacts-header {
+    padding: 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.contacts-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+}
+
+.search-contacts {
+    position: relative;
+}
+
+.search-contacts i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.search-contacts input {
+    width: 100%;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 16px 12px 44px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.contacts-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Actions du formulaire */
+.form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.cancel-btn {
+    flex: 1;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.cancel-btn:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.form-actions .modern-add-beneficiary-btn {
+    flex: 2;
+    margin: 0;
+}
+
+/* Responsive mobile */
+@media screen and (max-width: 768px) {
+    .beneficiary-form-container {
+        padding: 16px;
+    }
+    
+    .method-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .modern-add-beneficiary-btn {
+        flex: 1;
+    }
+}
+
 /* Toast notifications améliorées */
 .toast {
     position: fixed;
