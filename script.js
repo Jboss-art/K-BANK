@@ -1342,6 +1342,20 @@ function switchTab(tab) {
         }, 100);
     }
 
+    // Initialiser la page K-Shop
+    if (tab === 'kshop') {
+        setTimeout(() => {
+            // Réinitialiser les interactions K-Shop
+            if (typeof initKShopInteractions === 'function') {
+                initKShopInteractions();
+            }
+            // Ou initialiser juste les favoris
+            if (typeof initFavoriteSystem === 'function') {
+                initFavoriteSystem();
+            }
+        }, 100);
+    }
+
     // Gérer l'affichage du bouton flottant K-Shop
     const kshopFloat = document.querySelector('.kshop-float');
     if (kshopFloat) {

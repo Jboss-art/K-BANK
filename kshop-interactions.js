@@ -232,23 +232,40 @@ function initFavoriteSystem() {
     const favoriteButtons = document.querySelectorAll('.partner-favorite');
     
     favoriteButtons.forEach(btn => {
+        // Empêcher tous les événements parasites
+        btn.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+        });
+        
+        btn.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        });
+        
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             
             const icon = btn.querySelector('i');
             const isFavorite = icon.classList.contains('fas');
             
             if (isFavorite) {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
+                // Dislike - retirer des favoris
+                icon.classList.remove('fas', 'fa-heart');
+                icon.classList.add('far', 'fa-heart');
+                btn.classList.remove('liked');
+                btn.style.background = 'rgba(255, 255, 255, 0.9)';
                 btn.style.color = '#ef4444';
                 showToast('Retiré des favoris', 'info');
             } else {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                btn.style.color = '#ef4444';
+                // Like - ajouter aux favoris
+                icon.classList.remove('far', 'fa-heart');
+                icon.classList.add('fas', 'fa-heart');
+                btn.classList.add('liked');
+                btn.style.background = '#ef4444';
+                btn.style.color = 'white';
                 createHeartAnimation(btn);
-                showToast('Ajouté aux favoris', 'success');
+                showToast('Ajouté aux favoris ❤️', 'success');
             }
             
             // Animation du bouton
@@ -256,6 +273,8 @@ function initFavoriteSystem() {
             setTimeout(() => {
                 btn.style.transform = 'scale(1)';
             }, 200);
+            
+            return false;
         });
     });
 }
@@ -467,7 +486,8 @@ function showToast(message, type = 'info') {
 
 // Auto-initialisation
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelector('.kshop-container')) {
+    // Vérifier si on est sur la page K-Shop
+    if (document.querySelector('.kshop-container') || document.querySelector('#kshop-page') || document.querySelector('.partner-card')) {
         initKShopInteractions();
         
         // Activer automatiquement le mode plein écran sur mobile
