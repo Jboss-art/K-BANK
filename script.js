@@ -4070,7 +4070,7 @@ function openFAQ() {
                                 <li>Sélectionnez "Sécurité"</li>
                                 <li>Choisissez "Changer le code PIN"</li>
                                 <li>Saisissez votre ancien code PIN</li>
-                                <li>Créez un nouveau code (4 chiffres)</li>
+                                <li>Créez un nouveau code (8 chiffres)</li>
                                 <li>Confirmez le nouveau code</li>
                             </ol>
                             <p><strong>Conseils :</strong> Évitez les codes évidents comme 0000, 1234. Choisissez une combinaison que vous seul connaissez.</p>
@@ -4114,7 +4114,6 @@ function openFAQ() {
                                 <li><strong>Conservez les preuves</strong> (captures d'écran, SMS, etc.)</li>
                             </ol>
                             <p><strong>Notre engagement :</strong> Enquête sous 24h.</p>
-                            <p><strong>Numéro d'urgence :</strong> +241 01 23 45 67 (24h/24, 7j/7)</p>
                         </div>
                     </div>
                 </div>
