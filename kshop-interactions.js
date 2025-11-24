@@ -494,7 +494,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth <= 768) {
             setTimeout(() => {
                 enableFullscreenMode();
-                showToast('🚀 K-Shop optimisé pour mobile', 'success');
             }, 1500);
         }
         
