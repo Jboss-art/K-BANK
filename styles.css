@@ -11999,6 +11999,33 @@ select,
     min-height: 100vh;
 }
 
+.add-beneficiary-page .page-header h2 {
+    color: #1e293b;
+    margin-left: 50px;
+}
+
+.add-beneficiary-page .back-button {
+    position: absolute;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.add-beneficiary-page .back-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateX(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .beneficiary-form-container {
     padding: 20px;
     max-width: 600px;
