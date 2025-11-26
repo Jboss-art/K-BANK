@@ -2782,26 +2782,14 @@ function updateVaultDisplay() {
 function renderVaultGoal() {
     const container = document.getElementById('vault-goal-container');
     const noGoalMessage = document.getElementById('no-goal-message');
-    const addGoalLink = document.getElementById('add-goal-link');
     
-    console.log('renderVaultGoal - Éléments trouvés:', { container, noGoalMessage, addGoalLink });
-    
-    if (!container) {
-        console.error('vault-goal-container non trouvé');
-        return;
-    }
+    if (!container) return;
     
     const currentVault = getCurrentVault();
-    console.log('renderVaultGoal - Coffre-fort actuel:', currentVault);
     
     if (currentVault && currentVault.goal) {
-        console.log('renderVaultGoal - Objectif trouvé:', currentVault.goal);
-        
         if (noGoalMessage) {
             noGoalMessage.style.display = 'none';
-        }
-        if (addGoalLink) {
-            addGoalLink.textContent = 'Modifier';
         }
         
         const progressPercent = Math.min((currentVault.goal.current / currentVault.goal.target) * 100, 100);
@@ -2814,71 +2802,64 @@ function renderVaultGoal() {
                     </div>
                     <div class="vault-goal-details">
                         <div class="vault-goal-name">${currentVault.goal.name}</div>
-                        <div class="vault-goal-amount">${currentVault.goal.current.toLocaleString('fr-FR')} Fcfa / ${currentVault.goal.target.toLocaleString('fr-FR')} Fcfa</div>
+                        <div class="vault-goal-amount">${currentVault.balance.toLocaleString('fr-FR')} Fcfa / ${currentVault.goal.target.toLocaleString('fr-FR')} Fcfa</div>
                         <div class="vault-progress-bar">
                             <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
                         </div>
-                        <div class="vault-goal-date">Objectif : ${formatVaultDate(currentVault.goal.date)}</div>
                     </div>
-                </div>
-                <div class="vault-goal-actions">
-                    <button onclick="contributeToGoal()" class="vault-contribute-btn">
-                        <i class="fas fa-plus"></i>
-                    </button>
                 </div>
             </div>
         `;
-        
-        console.log('renderVaultGoal - Objectif affiché avec succès');
     } else {
-        console.log('renderVaultGoal - Aucun objectif trouvé');
-        
         if (noGoalMessage) {
             noGoalMessage.style.display = 'block';
-        }
-        if (addGoalLink) {
-            addGoalLink.textContent = 'Ajouter';
         }
         container.innerHTML = '';
     }
 }
 
 function renderVaultHistory() {
-    renderVaultDeposits();
-    renderVaultWithdrawals();
-}
-
-function renderVaultDeposits() {
-    const container = document.getElementById('vault-deposits-list');
+    const container = document.getElementById('vault-transactions-list');
     if (!container) return;
     
     container.innerHTML = '';
     
     const currentVault = getCurrentVault();
-    const deposits = currentVault.history
-        .filter(t => t.type === 'deposit')
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 3);
-    
-    if (deposits.length === 0) {
-        container.innerHTML = '<div class="no-transactions">Aucun dépôt récent</div>';
+    if (!currentVault || !currentVault.history) {
+        container.innerHTML = '<div class="no-transactions">Aucune transaction</div>';
         return;
     }
     
-    deposits.forEach(transaction => {
+    // Trier les transactions par date (plus récente en premier) et prendre les 5 dernières
+    const transactions = [...currentVault.history]
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
+    
+    if (transactions.length === 0) {
+        container.innerHTML = '<div class="no-transactions">Aucune transaction</div>';
+        return;
+    }
+    
+    transactions.forEach(transaction => {
         const transactionElement = document.createElement('div');
         transactionElement.className = 'transaction-item';
         
+        const isDeposit = transaction.type === 'deposit';
+        const iconColor = isDeposit ? '#22c55e' : '#ef4444';
+        const iconBg = isDeposit ? '#22c55e20' : '#ef444420';
+        const icon = isDeposit ? 'plus-circle' : 'minus-circle';
+        const amountPrefix = isDeposit ? '+' : '-';
+        
         transactionElement.innerHTML = `
-            <div class="transaction-icon" style="background: #22c55e20; color: #22c55e;">
-                <i class="fas fa-plus-circle"></i>
+            <div class="transaction-icon" style="background: ${iconBg}; color: ${iconColor};">
+                <i class="fas fa-${icon}"></i>
             </div>
             <div class="transaction-details">
                 <div class="transaction-title">${transaction.description}</div>
-                <div class="transaction-date">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
+                <div class="transaction-date">${formatVaultDate(transaction.date)}</div>
             </div>
-            <div class="transaction-amount" style="color: #22c55e;">
-                +${transaction.amount.toLocaleString('fr-FR')} Fcfa
+            <div class="transaction-amount" style="color: ${iconColor};">
+                ${amountPrefix}${transaction.amount.toLocaleString('fr-FR')} Fcfa
             </div>
         `;
         
@@ -2886,62 +2867,10 @@ function renderVaultDeposits() {
     });
 }
 
-function renderVaultWithdrawals() {
-    const container = document.getElementById('vault-withdrawals-list');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
+// Fonction pour afficher toutes les transactions
+function showAllVaultTransactions() {
     const currentVault = getCurrentVault();
-    const withdrawals = currentVault.history
-        .filter(t => t.type === 'withdraw')
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 3);
-    
-    if (withdrawals.length === 0) {
-        container.innerHTML = '<div class="no-transactions">Aucun retrait récent</div>';
-        return;
-    }
-    
-    withdrawals.forEach(transaction => {
-        const transactionElement = document.createElement('div');
-        transactionElement.className = 'transaction-item';
-        
-        transactionElement.innerHTML = `
-            <div class="transaction-icon" style="background: #ef444420; color: #ef4444;">
-                <i class="fas fa-minus-circle"></i>
-            </div>
-            <div class="transaction-details">
-                <div class="transaction-title">${transaction.description}</div>
-                <div class="transaction-date">${formatVaultDate(transaction.date)}${transaction.goal ? ' • ' + transaction.goal : ''}</div>
-            </div>
-            <div class="transaction-amount" style="color: #ef4444;">
-                -${transaction.amount.toLocaleString('fr-FR')} Fcfa
-            </div>
-        `;
-        
-        container.appendChild(transactionElement);
-    });
-}
-
-// Fonctions pour afficher tous les historiques
-function showAllVaultDeposits() {
-    // Cette fonction pourrait ouvrir une modale ou naviguer vers une page dédiée
-    const currentVault = getCurrentVault();
-    const deposits = currentVault.history.filter(t => t.type === 'deposit');
-    showVaultNotification(`${deposits.length} dépôt(s) au total`, 'info');
-}
-
-function showAllVaultWithdrawals() {
-    // Cette fonction pourrait ouvrir une modale ou naviguer vers une page dédiée
-    const currentVault = getCurrentVault();
-    const withdrawals = currentVault.history.filter(t => t.type === 'withdraw');
-    showVaultNotification(`${withdrawals.length} retrait(s) au total`, 'info');
-}
-
-function showAllVaultHistory() {
-    // Fonction de compatibilité pour les anciens liens
-    const currentVault = getCurrentVault();
+    if (!currentVault) return;
     showVaultNotification(`${currentVault.history.length} transaction(s) au total`, 'info');
 }
 
@@ -3031,30 +2960,44 @@ function confirmVaultDeposit() {
         return;
     }
     
-    // Déduire du solde principal pour déposer dans le coffre-fort
-    if (!performTransaction('debit', 'main', amount)) {
+    // Vérifier si le solde est suffisant
+    if (userBalances.main < amount) {
         alert('Solde insuffisant dans le compte principal');
         return;
     }
+    
+    const currentVault = getCurrentVault();
+    if (!currentVault) {
+        alert('Aucun coffre-fort actif');
+        return;
+    }
+    
+    // Déduire du solde principal
+    userBalances.main -= amount;
     
     const newTransaction = {
         id: Date.now(),
         type: 'deposit',
         amount: amount,
-        date: new Date().toISOString().split('T')[0],
+        date: new Date(),
         description: 'Dépôt dans le coffre-fort',
         goal: null
     };
     
-    vaultHistory.unshift(newTransaction);
-    vaultBalance += amount;
+    currentVault.history.unshift(newTransaction);
+    currentVault.balance += amount;
     
-    updateVaultBalance();
+    // Mettre à jour l'objectif si il existe
+    if (currentVault.goal) {
+        currentVault.goal.current = currentVault.balance;
+    }
+    
     updateBalanceDisplay();
+    renderVaultCarousel();
     renderVaultHistory();
     closeVaultDepositModal();
     
-    showVaultNotification('Dépôt effectué avec succès !', 'success');
+    showVaultNotification(`${amount.toLocaleString('fr-FR')} Fcfa déposé avec succès !`, 'success');
 }
 
 function confirmVaultWithdrawal() {
@@ -3064,7 +3007,13 @@ function confirmVaultWithdrawal() {
         return;
     }
     
-    if (amount > vaultBalance) {
+    const currentVault = getCurrentVault();
+    if (!currentVault) {
+        alert('Aucun coffre-fort actif');
+        return;
+    }
+    
+    if (amount > currentVault.balance) {
         alert('Solde insuffisant dans le coffre-fort');
         return;
     }
@@ -3072,25 +3021,30 @@ function confirmVaultWithdrawal() {
     // Retirer du coffre-fort et ajouter au solde principal
     const newTransaction = {
         id: Date.now(),
-        type: 'withdrawal',
+        type: 'withdraw',
         amount: amount,
-        date: new Date().toISOString().split('T')[0],
+        date: new Date(),
         description: 'Retrait du coffre-fort',
         goal: null
     };
     
-    vaultHistory.unshift(newTransaction);
-    vaultBalance -= amount;
+    currentVault.history.unshift(newTransaction);
+    currentVault.balance -= amount;
+    
+    // Mettre à jour l'objectif si il existe
+    if (currentVault.goal) {
+        currentVault.goal.current = currentVault.balance;
+    }
     
     // Ajouter au solde principal
-    performTransaction('credit', 'main', amount);
+    userBalances.main += amount;
     
-    updateVaultBalance();
     updateBalanceDisplay();
+    renderVaultCarousel();
     renderVaultHistory();
     closeVaultWithdrawModal();
     
-    showVaultNotification('Retrait effectué avec succès !', 'success');
+    showVaultNotification(`${amount.toLocaleString('fr-FR')} Fcfa retiré avec succès !`, 'success');
 }
 
 function addVaultSavingsGoal() {
@@ -3206,10 +3160,10 @@ function showVaultNotification(message, type = 'info') {
     }, 3000);
 }
 
-function formatVaultDate(dateString) {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('fr-FR', options);
+function formatVaultDate(date) {
+    const d = date instanceof Date ? date : new Date(date);
+    const options = { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
+    return d.toLocaleDateString('fr-FR', options);
 }
 
 // Initialisation de l'application
@@ -4240,22 +4194,30 @@ function selectVaultIcon(icon) {
 
 function resetVaultForm() {
     document.getElementById('new-vault-name').value = '';
-    document.getElementById('new-vault-description').value = '';
+    document.getElementById('new-vault-target').value = '';
     selectedVaultIcon = 'vault';
     
     // Remettre à zéro la sélection d'icônes
-    document.querySelectorAll('.vault-icon-option').forEach(option => {
+    document.querySelectorAll('#new-vault-modal .vault-icon-option').forEach(option => {
         option.classList.remove('selected');
     });
-    document.querySelector('[data-icon="vault"]').classList.add('selected');
+    const defaultIcon = document.querySelector('#new-vault-modal [data-icon="vault"]');
+    if (defaultIcon) {
+        defaultIcon.classList.add('selected');
+    }
 }
 
 function createNewVault() {
     const name = document.getElementById('new-vault-name').value.trim();
-    const description = document.getElementById('new-vault-description').value.trim();
+    const target = parseFloat(document.getElementById('new-vault-target').value);
     
     if (!name) {
         alert('Veuillez entrer un nom pour le coffre-fort');
+        return;
+    }
+    
+    if (!target || target <= 0) {
+        alert('Veuillez entrer un montant objectif valide');
         return;
     }
     
@@ -4267,10 +4229,15 @@ function createNewVault() {
     const newVault = {
         id: Date.now(),
         name: name,
-        description: description,
+        description: 'Coffre-fort ' + (vaults.length + 1),
         icon: selectedVaultIcon,
         balance: 0,
-        goal: null,
+        goal: {
+            name: name,
+            target: target,
+            current: 0,
+            icon: selectedVaultIcon
+        },
         history: [],
         isMain: false
     };
