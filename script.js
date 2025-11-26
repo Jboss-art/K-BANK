@@ -1039,7 +1039,7 @@ const appData = {
         },
         {
             id: 10,
-            title: "Supermarché Carrefour",
+            title: "Supermarché Carrefour/Prix Import",
             date: "31 oct, 18:30",
             amount: -32500.00,
             icon: "🛍️",
@@ -4205,6 +4205,17 @@ function openNewVaultModal() {
         showVaultNotification('Vous avez atteint la limite de 3 coffres-forts', 'error');
         return;
     }
+    
+    // Mettre à jour le message d'information selon le nombre de coffres
+    const infoText = document.getElementById('vault-info-text');
+    if (infoText) {
+        if (vaults.length === 1) {
+            infoText.textContent = 'Vous pouvez créer jusqu\'à 2 coffres-forts supplémentaires pour mieux organiser votre épargne.';
+        } else if (vaults.length === 2) {
+            infoText.textContent = 'Vous ne pouvez plus créer qu\'un seul coffre-fort.';
+        }
+    }
+    
     document.getElementById('new-vault-modal').style.display = 'flex';
     resetVaultForm();
 }
