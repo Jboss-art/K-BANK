@@ -1320,10 +1320,9 @@ function switchTab(tab) {
     }
 
     // Initialiser la page des coffres-forts
-    if (tab === 'vaults') {
+    if (tab === 'coffre-fort') {
         setTimeout(() => {
-            updateVaultDisplay();
-            renderVaultCarousel();
+            checkVaultState();
         }, 100);
     }
 
@@ -2656,99 +2655,7 @@ function updateVaultBalance() {
 }
 
 // Structure modifiée pour gérer plusieurs coffres-forts
-let vaults = [
-    {
-        id: 1,
-        name: 'Coffre-Fort Principal',
-        description: 'Mon coffre-fort principal',
-        icon: 'key',
-        balance: 300000,
-        goal: null,
-        history: [
-            {
-                id: 1,
-                type: 'deposit',
-                amount: 120000,
-                description: 'Dépôt initial',
-                date: new Date(2024, 8, 15), // 15 septembre 2024
-                goal: null
-            },
-            {
-                id: 2,
-                type: 'deposit',
-                amount: 60000,
-                description: 'Épargne mensuelle',
-                date: new Date(2024, 9, 1), // 1 octobre 2024
-                goal: null
-            },
-            {
-                id: 3,
-                type: 'deposit',
-                amount: 70000,
-                description: 'Prime de fin d\'année',
-                date: new Date(2024, 11, 20), // 20 décembre 2024
-                goal: null
-            },
-            {
-                id: 4,
-                type: 'withdraw',
-                amount: 25000,
-                description: 'Frais médicaux',
-                date: new Date(2025, 1, 10), // 10 février 2025
-                goal: null
-            },
-            {
-                id: 5,
-                type: 'deposit',
-                amount: 35000,
-                description: 'Économies février',
-                date: new Date(2025, 1, 28), // 28 février 2025
-                goal: null
-            },
-            {
-                id: 6,
-                type: 'deposit',
-                amount: 40000,
-                description: 'Épargne mars',
-                date: new Date(2025, 2, 15), // 15 mars 2025
-                goal: null
-            },
-            {
-                id: 7,
-                type: 'withdraw',
-                amount: 20000,
-                description: 'Achat équipement',
-                date: new Date(2025, 3, 5), // 5 avril 2025
-                goal: null
-            },
-            {
-                id: 8,
-                type: 'deposit',
-                amount: 25000,
-                description: 'Épargne avril',
-                date: new Date(2025, 3, 30), // 30 avril 2025
-                goal: null
-            },
-            {
-                id: 9,
-                type: 'deposit',
-                amount: 20000,
-                description: 'Bonus travail',
-                date: new Date(2025, 7, 10), // 10 août 2025
-                goal: null
-            },
-            {
-                id: 10,
-                type: 'withdraw',
-                amount: 25000,
-                description: 'Frais divers',
-                date: new Date(2025, 8, 20), // 20 septembre 2025
-                goal: null
-            }
-        ],
-        isMain: true
-    }
-]; // Liste des coffres-forts disponibles
+let vaults = []; // Liste des coffres-forts disponibles
 let currentVaultIndex = 0; // Index du coffre-fort actuel
 
 function getCurrentVault() {
@@ -4206,7 +4113,91 @@ function openFAQPage() {
 
 // Variables pour la gestion des coffres-forts multiples
 let selectedVaultIcon = 'vault';
+let selectedFirstVaultIcon = 'vault';
 let maxVaults = 3; // Maximum 3 coffres-forts (1 principal + 2 supplémentaires)
+
+// Fonction pour vérifier l'état du coffre-fort et afficher la bonne vue
+function checkVaultState() {
+    const emptyState = document.getElementById('vault-empty-state');
+    const mainView = document.getElementById('vault-main-view');
+    
+    if (vaults.length === 0) {
+        // Aucun coffre-fort : afficher la vue de création
+        emptyState.style.display = 'flex';
+        mainView.style.display = 'none';
+    } else {
+        // Des coffres-forts existent : afficher la vue principale
+        emptyState.style.display = 'none';
+        mainView.style.display = 'block';
+        updateVaultDisplay();
+        renderVaultCarousel();
+        
+        // Gérer l'affichage du bouton "Nouveau coffre"
+        const newVaultAction = document.getElementById('new-vault-action');
+        if (newVaultAction) {
+            if (vaults.length >= 3) {
+                newVaultAction.style.display = 'none';
+            } else {
+                newVaultAction.style.display = 'flex';
+            }
+        }
+    }
+}
+
+// Fonction pour sélectionner l'icône du premier coffre
+function selectFirstVaultIcon(icon) {
+    // Retirer la sélection précédente
+    document.querySelectorAll('#vault-empty-state .vault-icon-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Ajouter la sélection à l'icône choisie
+    const selectedOption = document.querySelector(`#vault-empty-state [data-icon="${icon}"]`);
+    if (selectedOption) {
+        selectedOption.classList.add('selected');
+    }
+    selectedFirstVaultIcon = icon;
+}
+
+// Fonction pour créer le premier coffre-fort
+function createFirstVault() {
+    const name = document.getElementById('first-vault-name').value.trim();
+    const target = parseFloat(document.getElementById('first-vault-target').value);
+    
+    if (!name) {
+        alert('Veuillez entrer un nom pour votre objectif');
+        return;
+    }
+    
+    if (!target || target <= 0) {
+        alert('Veuillez entrer un montant objectif valide');
+        return;
+    }
+    
+    const newVault = {
+        id: Date.now(),
+        name: name,
+        description: 'Mon premier coffre-fort',
+        icon: selectedFirstVaultIcon,
+        balance: 0,
+        goal: {
+            name: name,
+            target: target,
+            current: 0,
+            icon: selectedFirstVaultIcon
+        },
+        history: [],
+        isMain: true
+    };
+    
+    vaults.push(newVault);
+    currentVaultIndex = 0;
+    
+    // Afficher la vue principale
+    checkVaultState();
+    
+    showVaultNotification(`Coffre-fort "${name}" créé avec succès !`, 'success');
+}
 
 // Fonctions pour le modal de création de nouveau coffre-fort
 function openNewVaultModal() {
@@ -4249,11 +4240,8 @@ function resetVaultForm() {
 }
 
 function createNewVault() {
-    console.log('createNewVault appelée');
     const name = document.getElementById('new-vault-name').value.trim();
     const description = document.getElementById('new-vault-description').value.trim();
-    
-    console.log('Valeurs récupérées:', { name, description });
     
     if (!name) {
         alert('Veuillez entrer un nom pour le coffre-fort');
@@ -4261,7 +4249,7 @@ function createNewVault() {
     }
     
     if (vaults.length >= 3) {
-        showVaultNotification('Limite de coffres-forts atteinte', 'error');
+        showVaultNotification('Limite de coffres-forts atteinte (maximum 3)', 'error');
         return;
     }
     
@@ -4276,37 +4264,22 @@ function createNewVault() {
         isMain: false
     };
     
-    console.log('Nouveau coffre-fort créé:', newVault);
-    console.log('Vaults avant ajout:', vaults);
-    
     vaults.push(newVault);
-    currentVaultIndex = vaults.length - 1; // Basculer vers le nouveau coffre-fort
+    currentVaultIndex = vaults.length - 1;
     
-    console.log('Vaults après ajout:', vaults);
-    console.log('currentVaultIndex:', currentVaultIndex);
-    
-    // Fermer la modale d'abord
+    // Fermer la modale
     closeNewVaultModal();
     
-    // Afficher une notification de succès
-    showVaultNotification(`Coffre-fort "${name}" créé avec succès !`, 'success');
-    
-    // Petit délai pour permettre à la notification d'apparaître, puis basculer vers le nouveau coffre
-    setTimeout(() => {
-        // Mettre à jour l'affichage et basculer vers le nouveau coffre-fort
-        forceVaultUpdate();
-        goToVault(currentVaultIndex); // Basculer explicitement vers le nouveau coffre
-        
-        // Notification supplémentaire pour indiquer qu'on est sur le nouveau coffre
-        setTimeout(() => {
-            showVaultNotification(`Vous êtes maintenant sur votre nouveau coffre-fort "${name}"`, 'info');
-        }, 1000);
-    }, 500);
+    // Mettre à jour l'affichage
+    checkVaultState();
+    goToVault(currentVaultIndex);
     
     const remaining = 3 - vaults.length;
     let message = `Coffre-fort "${name}" créé avec succès !`;
     if (remaining > 0) {
         message += ` (${remaining} coffre${remaining > 1 ? 's' : ''} restant${remaining > 1 ? 's' : ''})`;
+    } else {
+        message += ' (Limite atteinte)';
     }
     
     showVaultNotification(message, 'success');

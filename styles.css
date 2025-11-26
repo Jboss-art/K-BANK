@@ -5782,6 +5782,66 @@ input[type="number"] {
 }
 
 @media (max-width: 480px) {
+    .vault-animation-container {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 30px;
+    }
+    
+    .vault-door-container {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .vault-lock-circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .vault-lock-center {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .coin {
+        width: 32px;
+        height: 32px;
+        font-size: 8px;
+    }
+    
+    .vault-empty-content h2 {
+        font-size: 24px;
+    }
+    
+    .vault-empty-content > p {
+        font-size: 14px;
+    }
+    
+    .vault-create-form {
+        padding: 20px;
+    }
+    
+    .vault-icon-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .vault-icon-option {
+        padding: 15px;
+    }
+    
+    .vault-icon-option i {
+        font-size: 20px;
+    }
+    
+    .vault-features {
+        gap: 15px;
+    }
+    
+    .vault-feature-item {
+        font-size: 12px;
+    }
+    
     .vault-modal-content {
         width: 98%;
         padding: 15px;
@@ -5859,6 +5919,238 @@ input[type="number"] {
     color: var(--text-muted);
 }
 
+/* État vide du coffre-fort */
+.vault-empty-state {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.vault-empty-content {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Animation du coffre-fort */
+.vault-animation-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vault-door-container {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    perspective: 1000px;
+}
+
+.vault-door-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 20px;
+    box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 4px solid #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vault-door-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 40px rgba(106, 17, 203, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.2);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    transform-origin: left center;
+    animation: vaultDoorOpen 4s ease-in-out infinite;
+}
+
+@keyframes vaultDoorOpen {
+    0%, 100% {
+        transform: rotateY(0deg);
+    }
+    25%, 75% {
+        transform: rotateY(-120deg);
+    }
+}
+
+.vault-lock-circle {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 4px 15px rgba(251, 191, 36, 0.5),
+        inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    animation: lockRotate 4s ease-in-out infinite;
+}
+
+@keyframes lockRotate {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    25%, 75% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.vault-lock-center {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #dc2626;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.6);
+}
+
+.vault-lock-handle {
+    position: absolute;
+    width: 30px;
+    height: 6px;
+    background: #fbbf24;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+}
+
+.vault-hinges {
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.vault-hinge {
+    width: 12px;
+    height: 20px;
+    background: linear-gradient(90deg, #64748b, #94a3b8);
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.vault-coins {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coin {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 9px;
+    color: #78350f;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.6);
+    animation: coinFloatInside 3s ease-in-out infinite;
+}
+
+.coin-1 {
+    top: 15%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.coin-2 {
+    top: 55%;
+    left: 15%;
+    animation-delay: 0.5s;
+}
+
+.coin-3 {
+    top: 35%;
+    right: 15%;
+    animation-delay: 1s;
+}
+
+@keyframes coinFloatInside {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(-15px) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.vault-empty-content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-light);
+}
+
+.vault-empty-content > p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+.vault-create-form {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.vault-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.vault-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.vault-feature-item i {
+    color: var(--accent-color);
+    font-size: 18px;
+}
+
 .vault-icon-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -5867,7 +6159,7 @@ input[type="number"] {
 }
 
 .vault-icon-option {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 20px;
@@ -5878,15 +6170,15 @@ input[type="number"] {
 }
 
 .vault-icon-option:hover {
-    border-color: var(--accent-color);
-    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-color);
+    background: rgba(106, 17, 203, 0.1);
     transform: translateY(-2px);
 }
 
 .vault-icon-option.selected {
-    border-color: var(--accent-color);
-    background: rgba(59, 130, 246, 0.2);
-    color: var(--accent-color);
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(59, 130, 246, 0.2));
+    color: var(--primary-color);
 }
 
 .vault-icon-option i {
