@@ -419,10 +419,6 @@ function blockCard() {
         freezeText.textContent = 'Geler';
     }
     isCardFrozen = false;
-    
-    if (typeof showToast === 'function') {
-        showToast('Carte bloquée avec succès', 'warning');
-    }
 }
 
 function createBlockedIndicator() {
@@ -483,10 +479,6 @@ function removeBlockedIndicator() {
         freezeText.textContent = 'Geler';
     }
     isCardFrozen = false;
-    
-    if (typeof showToast === 'function') {
-        showToast('Carte bloquée avec succès', 'warning');
-    }
 
 
 function unblockCard() {
