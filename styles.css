@@ -11729,6 +11729,11 @@ select,
     background: #dc2626 !important;
 }
 
+.partner-favorite:not(.liked) {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #ef4444 !important;
+}
+
 .partner-favorite i {
     pointer-events: none;
 }

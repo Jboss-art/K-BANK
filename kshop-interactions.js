@@ -254,16 +254,12 @@ function initFavoriteSystem() {
                 icon.classList.remove('fas', 'fa-heart');
                 icon.classList.add('far', 'fa-heart');
                 btn.classList.remove('liked');
-                btn.style.background = 'rgba(255, 255, 255, 0.9)';
-                btn.style.color = '#ef4444';
                 showToast('Retiré des favoris', 'info');
             } else {
                 // Like - ajouter aux favoris
                 icon.classList.remove('far', 'fa-heart');
                 icon.classList.add('fas', 'fa-heart');
                 btn.classList.add('liked');
-                btn.style.background = '#ef4444';
-                btn.style.color = 'white';
                 createHeartAnimation(btn);
                 showToast('Ajouté aux favoris ❤️', 'success');
             }
