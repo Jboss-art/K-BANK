@@ -2994,6 +2994,7 @@ function confirmVaultDeposit() {
     
     updateBalanceDisplay();
     renderVaultCarousel();
+    renderVaultGoal();
     renderVaultHistory();
     closeVaultDepositModal();
     
@@ -3041,6 +3042,7 @@ function confirmVaultWithdrawal() {
     
     updateBalanceDisplay();
     renderVaultCarousel();
+    renderVaultGoal();
     renderVaultHistory();
     closeVaultWithdrawModal();
     
