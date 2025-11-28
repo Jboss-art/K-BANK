@@ -532,7 +532,7 @@ window.testBlockedIcon = function() {
 };
 
 // Données des bénéficiaires
-const beneficiaries = [
+let beneficiaries = [
     {
         id: 1,
         name: "Marie Kounga",
@@ -590,8 +590,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser le système d'authentification
     new PinAuth();
     
+    // Initialiser les validations globales
+    initializeGlobalValidations();
+    
     // Le reste de l'initialisation se fera après l'authentification
 });
+
+// Validations globales pour toute l'application
+function initializeGlobalValidations() {
+    // Validation pour tous les champs de montant
+    document.addEventListener('input', function(e) {
+        if (e.target.type === 'number' || e.target.classList.contains('amount-input')) {
+            // Empêcher les valeurs négatives
+            if (e.target.value < 0) {
+                e.target.value = 0;
+            }
+            // Arrondir aux entiers pour les montants
+            if (e.target.step === '1' || !e.target.step) {
+                e.target.value = Math.floor(e.target.value);
+            }
+        }
+        
+        // Validation pour tous les champs téléphone
+        if (e.target.type === 'tel') {
+            e.target.value = e.target.value.replace(/[^0-9\+\s\-]/g, '');
+        }
+    });
+    
+    // Empêcher la soumission de formulaire avec Entrée si les validations échouent
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+            const form = e.target.closest('form');
+            if (form && !form.checkValidity()) {
+                e.preventDefault();
+                e.target.reportValidity();
+            }
+        }
+    });
+}
 
 // Fonction pour initialiser les pages spécifiques
 function initializeSpecificPages() {
@@ -4563,6 +4599,8 @@ function updateWithdrawalPresetButtons(selectedAmount = null) {
 // Fonction pour mettre à jour le plafond de paiement
 function updatePaymentLimit() {
     const inputElement = document.getElementById('new-payment-limit');
+    const submitButton = document.querySelector('.payment-limit-page .primary-button');
+    
     const newLimit = parseInt(inputElement.value);
     
     if (!newLimit || newLimit < 50000 || newLimit > 1000000) {
@@ -4570,24 +4608,49 @@ function updatePaymentLimit() {
         return;
     }
     
-    // Mettre à jour le plafond
-    cardLimits.payment = newLimit;
+    // NE PAS modifier le plafond - juste enregistrer la demande
+    // Les plafonds restent invariables jusqu'à validation par la banque
     
-    // Mettre à jour l'affichage de la page carte
-    updateCardLimitsDisplay();
+    // Marquer qu'une demande est en attente
+    const statusElement = document.querySelector('.payment-limit-page .limit-status');
+    if (statusElement) {
+        statusElement.innerHTML = `
+            <i class="fas fa-clock"></i>
+            <span>Demande en cours d'examen</span>
+        `;
+        statusElement.style.color = '#f59e0b';
+    }
+    
+    // Bloquer le bouton et désactiver les champs
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
+        submitButton.style.cursor = 'not-allowed';
+        submitButton.innerHTML = '<i class="fas fa-lock"></i> Demande en attente';
+    }
+    
+    // Désactiver le champ de saisie
+    inputElement.disabled = true;
+    
+    // Désactiver les boutons de plafonds suggérés
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    });
     
     // Afficher notification de succès
     showNotification(`Demande de modification du plafond de paiement soumise : ${newLimit.toLocaleString('fr-FR')} Fcfa/jour. Votre demande sera étudiée par nos équipes.`, 'success');
     
-    // Retourner à la page cartes
-    setTimeout(() => {
-        switchTab('cards');
-    }, 1500);
+    // Réinitialiser le champ
+    inputElement.value = '';
 }
 
 // Fonction pour mettre à jour le plafond de retrait
 function updateWithdrawalLimit() {
     const inputElement = document.getElementById('new-withdrawal-limit');
+    const submitButton = document.querySelector('.withdrawal-limit-page .primary-button');
+    
     const newLimit = parseInt(inputElement.value);
     
     if (!newLimit || newLimit < 25000 || newLimit > 500000) {
@@ -4595,19 +4658,42 @@ function updateWithdrawalLimit() {
         return;
     }
     
-    // Mettre à jour le plafond
-    cardLimits.withdrawal = newLimit;
+    // NE PAS modifier le plafond - juste enregistrer la demande
+    // Les plafonds restent invariables jusqu'à validation par la banque
     
-    // Mettre à jour l'affichage de la page carte
-    updateCardLimitsDisplay();
+    // Marquer qu'une demande est en attente
+    const statusElement = document.querySelector('.withdrawal-limit-page .limit-status');
+    if (statusElement) {
+        statusElement.innerHTML = `
+            <i class="fas fa-clock"></i>
+            <span>Demande en cours d'examen</span>
+        `;
+        statusElement.style.color = '#f59e0b';
+    }
+    
+    // Bloquer le bouton et désactiver les champs
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.5';
+        submitButton.style.cursor = 'not-allowed';
+        submitButton.innerHTML = '<i class="fas fa-lock"></i> Demande en attente';
+    }
+    
+    // Désactiver le champ de saisie
+    inputElement.disabled = true;
+    
+    // Désactiver tous les boutons de plafonds suggérés
+    document.querySelectorAll('.withdrawal-limit-page .preset-btn').forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    });
     
     // Afficher notification de succès
     showNotification(`Demande de modification du plafond de retrait soumise : ${newLimit.toLocaleString('fr-FR')} Fcfa/jour. Votre demande sera étudiée par nos équipes.`, 'success');
     
-    // Retourner à la page cartes
-    setTimeout(() => {
-        switchTab('cards');
-    }, 1500);
+    // Réinitialiser le champ
+    inputElement.value = '';
 }
 
 // Fonction pour mettre à jour l'affichage des plafonds sur la page carte principale
@@ -4670,10 +4756,17 @@ function showNotification(message, type = 'info') {
         notification.style.transform = 'translateX(-50%) translateY(0)';
     }, 100);
     
-    // Masquer la notification après 3 secondes
+    // Masquer la notification après 4 secondes
     setTimeout(() => {
         notification.style.transform = 'translateX(-50%) translateY(100px)';
-    }, 3000);
+        
+        // Supprimer complètement la notification après l'animation
+        setTimeout(() => {
+            if (notification && notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 4000);
 }
 
 // Initialiser les plafonds au chargement de la page
@@ -4698,6 +4791,85 @@ function initializeBeneficiaryPage() {
     categoryTags.forEach(tag => {
         tag.addEventListener('click', function() {
             toggleCategoryTag(this);
+        });
+    });
+    
+    // Ajouter des validations en temps réel
+    setupInputValidations();
+}
+
+function setupInputValidations() {
+    // Validation du nom - uniquement lettres, espaces, tirets et apostrophes
+    const nameInput = document.getElementById('beneficiary-name');
+    if (nameInput) {
+        nameInput.addEventListener('input', function(e) {
+            // Remplacer tout caractère qui n'est pas une lettre, espace, tiret ou apostrophe
+            this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s\-']/g, '');
+        });
+    }
+    
+    // Validation de l'IBAN - format GA21 + chiffres et espaces (max 27 caractères sans espaces)
+    const ibanInput = document.getElementById('beneficiary-iban');
+    if (ibanInput) {
+        ibanInput.addEventListener('input', function(e) {
+            let value = this.value.toUpperCase().replace(/[^GA0-9\s]/g, '');
+            
+            // Enlever tous les espaces pour compter
+            let withoutSpaces = value.replace(/\s/g, '');
+            
+            // Limiter à 27 caractères (GA21 + 23 chiffres)
+            if (withoutSpaces.length > 27) {
+                withoutSpaces = withoutSpaces.substring(0, 27);
+            }
+            
+            // S'assurer que ça commence par GA21
+            if (withoutSpaces.length > 0 && !withoutSpaces.startsWith('G')) {
+                withoutSpaces = 'GA21' + withoutSpaces;
+            } else if (withoutSpaces.length > 1 && !withoutSpaces.startsWith('GA')) {
+                withoutSpaces = 'GA' + withoutSpaces.substring(1);
+            } else if (withoutSpaces.length > 2 && !withoutSpaces.startsWith('GA2')) {
+                withoutSpaces = 'GA2' + withoutSpaces.substring(2);
+            } else if (withoutSpaces.length > 3 && !withoutSpaces.startsWith('GA21')) {
+                withoutSpaces = 'GA21' + withoutSpaces.substring(3);
+            }
+            
+            // Formater avec des espaces tous les 4 caractères
+            let formatted = '';
+            for (let i = 0; i < withoutSpaces.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formatted += ' ';
+                }
+                formatted += withoutSpaces[i];
+            }
+            
+            this.value = formatted;
+        });
+        
+        // Validation lors de la perte de focus
+        ibanInput.addEventListener('blur', function(e) {
+            let withoutSpaces = this.value.replace(/\s/g, '');
+            if (withoutSpaces.length > 0 && withoutSpaces.length < 27) {
+                showToast('L\'IBAN doit contenir exactement 27 caractères (GA21 + 23 chiffres)', 'error');
+            }
+        });
+    }
+    
+    // Validation du téléphone - uniquement chiffres, +, espaces et tirets
+    const phoneInput = document.getElementById('beneficiary-phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9\+\s\-]/g, '');
+        });
+    }
+    
+    // Validation des montants - uniquement chiffres
+    const amountInputs = document.querySelectorAll('input[type="number"], .amount-input');
+    amountInputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            // Empêcher les valeurs négatives
+            if (this.value < 0) {
+                this.value = 0;
+            }
         });
     });
 }
@@ -4759,46 +4931,86 @@ function startQRScan() {
 }
 
 function saveBeneficiary() {
-    const name = document.getElementById('beneficiary-name').value.trim();
-    const accountType = document.querySelector('input[name="account-type"]:checked').value;
-    const bank = document.getElementById('beneficiary-bank').value;
+    console.log('saveBeneficiary appelée');
     
-    // Validation
-    if (!name) {
+    const nameElement = document.getElementById('beneficiary-name');
+    console.log('nameElement:', nameElement);
+    console.log('name value:', nameElement ? nameElement.value : 'non trouvé');
+    
+    if (!nameElement || !nameElement.value.trim()) {
         showToast('Veuillez saisir le nom du bénéficiaire', 'error');
         return;
     }
     
+    const name = nameElement.value.trim();
+    
+    const accountTypeElement = document.querySelector('input[name="account-type"]:checked');
+    console.log('accountTypeElement:', accountTypeElement);
+    
+    if (!accountTypeElement) {
+        showToast('Veuillez sélectionner un type de compte', 'error');
+        return;
+    }
+    
+    const accountType = accountTypeElement.value;
+    console.log('accountType:', accountType);
+    
+    const bank = document.getElementById('beneficiary-bank').value;
+    
     let accountInfo = '';
     if (accountType === 'iban') {
-        const iban = document.getElementById('beneficiary-iban').value.trim();
-        if (!iban) {
+        const ibanElement = document.getElementById('beneficiary-iban');
+        if (!ibanElement || !ibanElement.value.trim()) {
             showToast('Veuillez saisir l\'IBAN', 'error');
             return;
         }
-        accountInfo = iban;
+        accountInfo = ibanElement.value.trim();
     } else {
-        const phone = document.getElementById('beneficiary-phone').value.trim();
-        if (!phone) {
+        const phoneElement = document.getElementById('beneficiary-phone');
+        if (!phoneElement || !phoneElement.value.trim()) {
             showToast('Veuillez saisir le numéro de téléphone', 'error');
             return;
         }
-        accountInfo = phone;
+        accountInfo = phoneElement.value.trim();
     }
     
     // Récupérer la catégorie sélectionnée
     const selectedCategory = document.querySelector('.category-tag.active');
     const category = selectedCategory ? selectedCategory.dataset.category : 'autre';
     
-    // Simuler l'enregistrement
+    console.log('Tout est OK, enregistrement...');
+    
+    // Créer le nouvel objet bénéficiaire
+    const newBeneficiary = {
+        id: Date.now(),
+        name: name,
+        account: accountInfo,
+        bank: bank || 'K-Bank',
+        avatar: name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase(),
+        lastTransaction: 'Nouveau',
+        category: category
+    };
+    
+    // Ajouter à la liste des bénéficiaires
+    beneficiaries.push(newBeneficiary);
+    
+    // Enregistrer dans localStorage
+    localStorage.setItem('beneficiaries', JSON.stringify(beneficiaries));
+    
+    // Afficher un message de succès
     showToast('Bénéficiaire ajouté avec succès !', 'success');
     
-    // Attendre un peu puis revenir à la page de virement
+    // Attendre un peu puis aller vers la page bénéficiaires
     setTimeout(() => {
-        switchTab('transfer');
-        
         // Réinitialiser le formulaire
         resetBeneficiaryForm();
+        
+        // Rafraîchir la liste des bénéficiaires
+        renderBeneficiaries();
+        renderVirementBeneficiaries();
+        
+        // Rediriger vers la page bénéficiaires
+        switchTab('beneficiaries');
     }, 1500);
 }
 

@@ -931,21 +931,21 @@
                     <div class="input-group">
                         <label>Nom complet</label>
                         <div class="input-field">
-                            <input type="text" placeholder="Nom et prénom" id="beneficiary-name">
+                            <input type="text" placeholder="Nom et prénom" id="old-beneficiary-name">
                         </div>
                     </div>
                     
                     <div class="input-group">
                         <label>Numéro de compte</label>
                         <div class="input-field">
-                            <input type="text" placeholder="Numéro de compte" id="beneficiary-account">
+                            <input type="text" placeholder="Numéro de compte" id="old-beneficiary-account">
                         </div>
                     </div>
                     
                     <div class="input-group">
                         <label>Banque</label>
                         <div class="input-field">
-                            <input type="text" placeholder="Nom de la banque" id="beneficiary-bank">
+                            <input type="text" placeholder="Nom de la banque" id="old-beneficiary-bank">
                         </div>
                     </div>
                     
@@ -1021,7 +1021,7 @@
                                 <label class="form-label">Nom complet <span class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-user input-icon"></i>
-                                    <input type="text" class="modern-input" id="beneficiary-name" placeholder="Ex: Jean Mvoumbi" required>
+                                    <input type="text" class="modern-input" id="beneficiary-name" placeholder="Ex: Jean Mvoumbi" pattern="[A-Za-zÀ-ÿ\s\-']+" title="Veuillez saisir uniquement des lettres" required>
                                 </div>
                             </div>
 
@@ -1051,16 +1051,16 @@
                                 <label class="form-label">IBAN <span class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-credit-card input-icon"></i>
-                                    <input type="text" class="modern-input" id="beneficiary-iban" placeholder="GA21 1234 5678 9012 3456 7890 12" required>
+                                    <input type="text" class="modern-input" id="beneficiary-iban" placeholder="GA21 1234 5678 9012 3456 7890 12" maxlength="33" pattern="GA21\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{2}" title="Format requis: GA21 1234 5678 9012 3456 7890 12" required>
                                 </div>
-                                <div class="input-help">Format: GA21 suivi de 23 chiffres</div>
+                                <div class="input-help">Format: GA21 1234 5678 9012 3456 7890 12</div>
                             </div>
 
                             <div class="form-group" id="phone-group" style="display: none;">
                                 <label class="form-label">Numéro de téléphone <span class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-phone input-icon"></i>
-                                    <input type="tel" class="modern-input" id="beneficiary-phone" placeholder="+241 01 23 45 67">
+                                    <input type="tel" class="modern-input" id="beneficiary-phone" placeholder="+241 01 23 45 67" pattern="[\+]?[0-9\s\-]{8,15}" title="Veuillez saisir un numéro valide">
                                 </div>
                             </div>
 
@@ -1357,7 +1357,7 @@ BP 20000 Libreville</div>
                     <div class="input-group">
                         <label>Montant à transférer</label>
                         <div class="input-field">
-                            <input type="number" id="transfer-amount" placeholder="0">
+                            <input type="number" id="transfer-amount" placeholder="0" min="0" step="1">
                             <span class="currency">F <h6>cfa</h6></span>
                         </div>
                     </div>
@@ -1365,7 +1365,7 @@ BP 20000 Libreville</div>
                     <div class="input-group">
                         <label>Numéro de téléphone du destinataire</label>
                         <div class="input-field">
-                            <input type="tel" id="transfer-phone-number" placeholder="+241">
+                            <input type="tel" id="transfer-phone-number" placeholder="+241" pattern="[\+]?[0-9\s\-]{8,15}" title="Veuillez saisir un numéro valide">
                         </div>
                     </div>
 
