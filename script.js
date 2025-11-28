@@ -4854,11 +4854,16 @@ function setupInputValidations() {
         });
     }
     
-    // Validation du téléphone - uniquement chiffres, +, espaces et tirets
+    // Validation du téléphone - uniquement chiffres, +, espaces et tirets (max 15 caractères)
     const phoneInput = document.getElementById('beneficiary-phone');
     if (phoneInput) {
         phoneInput.addEventListener('input', function(e) {
+            // Supprimer les caractères non autorisés
             this.value = this.value.replace(/[^0-9\+\s\-]/g, '');
+            // Limiter à 15 caractères
+            if (this.value.length > 15) {
+                this.value = this.value.slice(0, 15);
+            }
         });
     }
     
@@ -5000,7 +5005,7 @@ function saveBeneficiary() {
     // Afficher un message de succès
     showToast('Bénéficiaire ajouté avec succès !', 'success');
     
-    // Attendre un peu puis aller vers la page bénéficiaires
+    // Attendre un peu puis aller vers la page virement
     setTimeout(() => {
         // Réinitialiser le formulaire
         resetBeneficiaryForm();
@@ -5009,8 +5014,8 @@ function saveBeneficiary() {
         renderBeneficiaries();
         renderVirementBeneficiaries();
         
-        // Rediriger vers la page bénéficiaires
-        switchTab('beneficiaries');
+        // Rediriger vers la page virement
+        switchTab('virement');
     }, 1500);
 }
 
