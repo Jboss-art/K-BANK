@@ -2716,9 +2716,7 @@ function renderVaultCarousel() {
                     <span class="vault-name">${vault.name}</span>
                 </div>
                 <div class="balance-amount" id="vault-total-${index}">
-                    <span class="currency-symbol">F</span> 
-                    <span class="currency-code">cfa</span> 
-                    ${vault.balance.toLocaleString('fr-FR')},<small>00</small>
+                    ${vault.balance.toLocaleString('fr-FR')},<small>00</small> Fcfa
                 </div>
             </div>
         `;
@@ -2838,7 +2836,7 @@ function renderVaultGoal() {
                     </div>
                     <div class="vault-goal-details">
                         <div class="vault-goal-name">${currentVault.goal.name}</div>
-                        <div class="vault-goal-amount">${currentVault.balance.toLocaleString('fr-FR')} Fcfa / ${currentVault.goal.target.toLocaleString('fr-FR')} Fcfa</div>
+                        <div class="vault-goal-amount">${currentVault.balance.toLocaleString('fr-FR')},00 Fcfa / ${currentVault.goal.target.toLocaleString('fr-FR')},00 Fcfa</div>
                         <div class="vault-progress-bar">
                             <div class="vault-progress-fill" style="width: ${progressPercent}%"></div>
                         </div>
