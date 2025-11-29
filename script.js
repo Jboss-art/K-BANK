@@ -3961,17 +3961,17 @@ function openFAQ() {
                         <div class="modal-faq-question">
                             <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
                                 <i class="fas fa-key" style="color: #7456ff; width: 20px;"></i>
-                                <span style="color: white; font-weight: 600;">Comment changer mon code PIN ?</span>
+                                <span style="color: white; font-weight: 600;">Comment changer mon code de sécurité ?</span>
                             </div>
                             <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
                         </div>
                         <div class="modal-faq-answer" style="display: none;">
-                            <p><strong>Pour modifier votre code PIN :</strong></p>
+                            <p><strong>Pour modifier votre code de sécurité :</strong></p>
                             <ol>
                                 <li>Allez dans "Profil" depuis l'accueil</li>
                                 <li>Sélectionnez "Sécurité"</li>
-                                <li>Choisissez "Changer le code PIN"</li>
-                                <li>Saisissez votre ancien code PIN</li>
+                                <li>Choisissez "Changer le code de sécurité"</li>
+                                <li>Saisissez votre ancien code de sécurité</li>
                                 <li>Créez un nouveau code (8 chiffres)</li>
                                 <li>Confirmez le nouveau code</li>
                             </ol>
