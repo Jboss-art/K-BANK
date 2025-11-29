@@ -3439,6 +3439,10 @@ input[type="number"] {
         gap: 4px;
     }
     
+    .iban-page .detail-item:last-child {
+        border-bottom: none !important;
+    }
+    
     .iban-page .detail-label {
         min-width: auto;
         flex-shrink: 0;
