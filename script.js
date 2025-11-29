@@ -3902,7 +3902,6 @@ function openFAQ() {
                                 <li>Appuyez longuement sur votre carte bancaire sur l'écran d'accueil</li>
                                 <li>Sélectionnez "Geler la carte"</li>
                                 <li>Votre carte sera immédiatement gelée</li>
-                                <li>Votre carte sera immédiatement gelée</li>
                                 <li>Pour dégeler appuyez sur le bouton dégeler</li>
                             </ol>
                         </div>
