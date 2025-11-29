@@ -3988,10 +3988,10 @@ function openFAQ() {
                             <i class="fas fa-chevron-down" style="color: #7456ff; transition: transform 0.3s ease;"></i>
                         </div>
                         <div class="modal-faq-answer" style="display: none;">
-                            <p><strong>Le coffre-fort vous aide à épargner :</strong></p>
+                            <p><strong>Le coffre-fort vous aide à économiser :</strong></p>
                             <h4>Fonctionnalités :</h4>
                             <ul>
-                                <li><strong>Objectifs d'épargne :</strong> Définissez vos projets avec échéances</li>
+                                <li><strong>Objectifs d'économie :</strong> Définissez vos projets avec échéances</li>
                                 <li><strong>Versements automatiques :</strong> Programmez des virements réguliers</li>
                                 <li><strong>Visualisation :</strong> Suivez vos progrès en temps réel</li>
                                 <li><strong>Sécurité :</strong> Fonds bloqués jusqu'à l'objectif atteint</li>
