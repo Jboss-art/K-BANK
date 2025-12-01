@@ -472,19 +472,19 @@
 }
 
 .category-icon {
-    width: 54px;
-    height: 54px;
+    width: 70px;
+    height: 70px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 50%;
     margin: 0 auto 12px;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4), 0 2px 8px rgba(139, 92, 246, 0.3), 0 0 0 3px rgba(99, 102, 241, 0.4), 0 0 0 6px rgba(139, 92, 246, 0.2), 0 0 25px rgba(99, 102, 241, 0.6);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5), 0 4px 12px rgba(139, 92, 246, 0.4), 0 0 0 4px rgba(99, 102, 241, 0.5), 0 0 0 8px rgba(139, 92, 246, 0.3), 0 0 30px rgba(99, 102, 241, 0.7);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 1;
     border: 3px solid rgba(255, 255, 255, 0.95);
-    filter: saturate(1.1) contrast(1.05);
+    filter: saturate(1.15) contrast(1.08);
     animation: categoryShimmer 3s ease-in-out infinite;
 }
 
@@ -494,7 +494,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 24px;
+    font-size: 32px;
 }
 
 .stat-item:hover .stat-icon {
@@ -674,9 +674,9 @@
     
     .stat-icon,
     .category-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 16px;
+        width: 70px;
+        height: 70px;
+        font-size: 32px;
         margin-bottom: 8px;
     }
     
