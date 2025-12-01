@@ -84,8 +84,8 @@
     </div>
 
     <div class="app-container" id="app-container" style="display: none;">
-        <!-- En-tête -->
-        <div class="header">
+        <!-- En-tête pour les autres pages (caché sur home-page) -->
+        <div class="header global-header">
             <div class="header-title">KB</div>
             <div class="header-actions">
                 <div class="header-icon" onclick="switchTab('profile')">
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- Contenu principal -->
         <div class="content" id="content">
             <!-- Page Accueil -->
@@ -105,6 +105,19 @@
                 <!-- Carte de solde principale responsive -->
                 <div class="main-balance-card">
                     <div class="clouds-background"></div>
+                    <!-- En-tête intégré dans la carte -->
+                    <div class="header">
+                        <div class="header-title">KB</div>
+                        <div class="header-actions">
+                            <div class="header-icon" onclick="switchTab('profile')">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="notification-bell" onclick="switchTab('notifications')">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge">3</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="balance-content">
                         <div class="balance-title">Solde principal</div>
                         <div class="balance-amount mobile-crisp-text" id="balance-display">

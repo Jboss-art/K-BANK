@@ -688,8 +688,8 @@ input:focus, textarea:focus, select:focus {
     padding-bottom: var(--mobile-safe-area-bottom);
 }
 
-/* Header fixe mobile */
-.header {
+/* Header fixe mobile pour les autres pages */
+.global-header {
     position: fixed;
     top: 0;
     left: 0;
@@ -700,9 +700,23 @@ input:focus, textarea:focus, select:focus {
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
+    padding: 0 var(--mobile-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
     /* Support safe area pour iPhone */
     padding-top: var(--mobile-safe-area-top);
+}
+
+/* Cacher le header global sur la page d'accueil */
+.home-page.active ~ .global-header,
+.home-page ~ .content .global-header {
+    display: none;
+}
+
+body:has(.home-page.active) .global-header {
+    display: none;
 }
 
 /* Grilles responsive pour mobile */
@@ -771,25 +785,23 @@ input:focus, textarea:focus, select:focus {
     box-sizing: border-box;
 }
 
-/* Header fixe - Optimisé mobile */
-.header {
+/* Header dans la carte (page d'accueil uniquement) */
+.main-balance-card .header {
     height: var(--mobile-header-height);
     padding: 0 var(--mobile-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     width: 100%;
-    background: var(--header-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 1000;
-    border-bottom: 1px solid var(--border-color);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    z-index: 100;
+    border-bottom: none;
     transition: all 0.3s ease;
     box-sizing: border-box;
+    margin-top: -38px;
     
     /* Support safe area pour iPhone */
     padding-top: var(--mobile-safe-area-top);
@@ -801,7 +813,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .header-title {
-    font-size: 20px;
+    font-size: 34px;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: var(--text-light);
@@ -814,6 +826,27 @@ input:focus, textarea:focus, select:focus {
     justify-content: flex-start;
     position: relative;
     z-index: 101;
+}
+
+/* Style blanc pour le header dans la carte */
+.main-balance-card .header-title {
+    color: #ffffff;
+    text-shadow: 
+        0 3px 12px rgba(0, 0, 0, 0.4),
+        0 6px 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.15);
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    filter: contrast(1.15) brightness(1.1);
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
 }
 
 .header-actions {
@@ -834,12 +867,21 @@ input:focus, textarea:focus, select:focus {
     border-radius: var(--mobile-border-radius);
     transition: all 0.2s ease;
     cursor: pointer;
+    color: var(--text-light);
+    font-size: 26px;
     
     /* Optimisations tactiles */
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+/* Style blanc pour les icônes dans la carte */
+.main-balance-card .header-icon,
+.main-balance-card .header-icon i {
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .header-icon:active, .theme-toggle:active {
@@ -909,19 +951,26 @@ input:focus, textarea:focus, select:focus {
 .header-icon,
 .notification-bell {
     position: relative;
-    font-size: 20px;
+    font-size: 26px;
     color: var(--text-light);
     cursor: pointer;
 }
 
 .notification-bell {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     margin-right: 10px; /* Ajoute une marge à droite */
+}
+
+/* Style blanc pour la notification dans la carte */
+.main-balance-card .notification-bell,
+.main-balance-card .notification-bell i {
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .notification-badge {
@@ -947,7 +996,8 @@ input:focus, textarea:focus, select:focus {
 .main-balance-card {
     position: relative;
     width: calc(100% + 40px);
-    margin: 0 -20px;
+    margin: -60px -20px 0 -20px;
+    padding-top: 60px;
     background: linear-gradient(135deg, 
         rgba(106, 17, 203, 0.78) 0%, 
         rgba(37, 117, 252, 0.85) 50%,
@@ -960,7 +1010,7 @@ input:focus, textarea:focus, select:focus {
         0 0 0 1px rgba(255, 255, 255, 0.3),
         inset 0 2px 0 rgba(255, 255, 255, 0.4),
         inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 25px 25px;
+    border-radius: 0;
     overflow: hidden;
     animation: slideDownBalance 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 10;
@@ -1003,7 +1053,7 @@ input:focus, textarea:focus, select:focus {
 .main-balance-card .balance-content {
     position: relative;
     z-index: 2;
-    padding: 25px 20px 30px 20px;
+    padding: 25px 30px 30px 40px;
 }
 
 .main-balance-card .balance-title {
@@ -1136,7 +1186,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Supprimer l'espace au-dessus de la carte de solde */
 .home-page {
-    padding-top: 0;
+    padding: 0 !important;
 }
 
 .home-page .main-balance-card {
@@ -1146,13 +1196,14 @@ input:focus, textarea:focus, select:focus {
 /* Responsive */
 @media screen and (max-width: 768px) {
     .main-balance-card {
-        border-radius: 0 0 20px 20px;
+        border-radius: 0;
         width: calc(100% + 30px);
-        margin: 0 -15px;
+        margin: -60px -15px 0 -15px;
+        padding-top: 60px;
     }
     
     .main-balance-card .balance-content {
-        padding: 20px 15px 25px 15px;
+        padding: 20px 25px 25px 35px;
     }
     
     .main-balance-card .balance-amount {
@@ -1163,13 +1214,14 @@ input:focus, textarea:focus, select:focus {
 
 @media screen and (max-width: 480px) {
     .main-balance-card {
-        border-radius: 0 0 15px 15px;
+        border-radius: 0;
         width: calc(100% + 30px);
-        margin: 0 -15px;
+        margin: -60px -15px 0 -15px;
+        padding-top: 60px;
     }
     
     .main-balance-card .balance-content {
-        padding: 18px 12px 22px 12px;
+        padding: 18px 20px 22px 30px;
     }
     
     .main-balance-card .balance-amount {
@@ -1481,11 +1533,17 @@ input:focus, textarea:focus, select:focus {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    margin-top: 60px; /* Hauteur du header */
+    margin-top: 60px; /* Hauteur du header pour les autres pages */
     margin-bottom: 50px; /* Ajusté pour correspondre à la nouvelle hauteur */
     height: calc(100vh - 110px); /* Ajusté : 60px (header) + 50px (navbar) */
     -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
     scrollbar-width: none;     /* Pour Firefox */
+}
+
+/* Supprimer le margin-top uniquement pour la page d'accueil */
+body:has(.home-page.active) .content {
+    margin-top: 0;
+    height: calc(100vh - 50px);
 }
 
 .content::-webkit-scrollbar {
