@@ -4154,12 +4154,12 @@ function createFirstVault() {
     const target = parseFloat(document.getElementById('first-vault-target').value);
     
     if (!name) {
-        alert('Veuillez entrer un nom pour votre objectif');
+        alert('Veuillez entrer un nom pour votre coffre-fort');
         return;
     }
     
     if (!target || target <= 0) {
-        alert('Veuillez entrer un montant objectif valide');
+        alert('Veuillez entrer un montant du coffre-fort valide');
         return;
     }
     
@@ -4252,7 +4252,7 @@ function createNewVault() {
     }
     
     if (!target || target <= 0) {
-        alert('Veuillez entrer un montant objectif valide');
+        alert('Veuillez entrer un montant du coffre-fort valide');
         return;
     }
     
