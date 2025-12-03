@@ -801,7 +801,7 @@ body:has(.home-page.active) .global-header {
     border-bottom: none;
     transition: all 0.3s ease;
     box-sizing: border-box;
-    margin-top: -38px;
+    margin-top: -43px;
     
     /* Support safe area pour iPhone */
     padding-top: var(--mobile-safe-area-top);
