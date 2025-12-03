@@ -33,7 +33,7 @@
                 </div>
                 <div class="auth-subtitle">Banque digitale sécurisée</div>
                 
-                <h2 class="auth-title">Entrez votre code PIN</h2>
+                <h2 class="auth-title">Entrez votre code de sécurité</h2>
                 
                 <div class="pin-container">
                     <input type="password" class="pin-input" maxlength="1" readonly>
@@ -66,7 +66,7 @@
                     <p style="margin-top: 15px;">Vérification en cours...</p>
                 </div>
 
-                <div class="error-message">Code PIN incorrect. Veuillez réessayer.</div>
+                <div class="error-message">Code de sécurité incorrect. Veuillez réessayer.</div>
 
                 <div id="face-id-option" style="display: none; margin-top: 20px;">
                     <button class="face-id-button" onclick="authenticateWithFaceID()">
@@ -1146,7 +1146,7 @@
 
                     <!-- Boutons d'action -->
                     <div class="form-actions">
-                        <button class="cancel-btn" onclick="switchTab('transfer')">
+                        <button class="cancel-btn" onclick="cancelAddBeneficiary()">
                             <i class="fas fa-times"></i> Annuler
                         </button>
                         <button class="modern-add-beneficiary-btn confirm-style" onclick="saveBeneficiary()">
@@ -1853,18 +1853,18 @@ BP 20000 Libreville</div>
                             </div>
                         </div>
                         <h2>Créez votre premier coffre-fort</h2>
-                        <p>Protégez et faites fructifier votre épargne en toute sécurité</p>
+                        <p>Économisez votre argent en toute sécurité</p>
                         
                         <div class="vault-create-form">
                             <div class="vault-input-group">
-                                <label>Nom de votre objectif</label>
+                                <label>Nom de votre coffre-fort</label>
                                 <div class="vault-input-field">
                                     <input type="text" placeholder="Ex: Vacances, Nouvelle voiture..." id="first-vault-name">
                                 </div>
                             </div>
                             
                             <div class="vault-input-group">
-                                <label>Montant objectif</label>
+                                <label>Montant de votre coffre-fort</label>
                                 <div class="vault-amount-input">
                                     <span class="vault-currency-symbol">Fcfa</span>
                                     <input type="number" placeholder="0,00" id="first-vault-target">
@@ -1933,17 +1933,17 @@ BP 20000 Libreville</div>
                         </div>
                     </div>
 
-                    <!-- Section objectif d'épargne (un seul) -->
+                    <!-- Section objectif (un seul) -->
                     <div class="vault-goal-section">
                         <div class="section-header">
                             <h3>Mon objectif d'économie</h3>
                         </div>
                         <div class="vault-goal-container" id="vault-goal-container">
-                            <!-- L'objectif d'épargne sera généré dynamiquement -->
+                            <!-- L'objectif sera généré dynamiquement -->
                             <div class="no-goal-message" id="no-goal-message">
                                 <i class="fas fa-bullseye" style="font-size: 48px; color: rgba(255,255,255,0.3); margin-bottom: 15px;"></i>
                                 <p>Aucun objectif défini</p>
-                                <p style="font-size: 14px; opacity: 0.7;">Ajoutez un objectif pour mieux épargner</p>
+                                <p style="font-size: 14px; opacity: 0.7;">Ajoutez un objectif pour mieux économiser</p>
                             </div>
                         </div>
                     </div>
@@ -2001,7 +2001,7 @@ BP 20000 Libreville</div>
                     </div>
                     
                     <div class="vault-input-group">
-                        <label>Objectif d'épargne (optionnel)</label>
+                        <label>Objectif (optionnel)</label>
                         <div class="vault-input-field">
                             <select id="vault-deposit-goal">
                                 <option value="">Aucun objectif spécifique</option>
@@ -2069,7 +2069,7 @@ BP 20000 Libreville</div>
             <div class="vault-modal-overlay" id="vault-add-goal-modal">
                 <div class="vault-modal-content">
                     <div class="vault-modal-header">
-                        <h3 class="vault-modal-title">Nouvel objectif d'épargne</h3>
+                        <h3 class="vault-modal-title">Nouvel objectif</h3>
                         <button class="vault-modal-close" onclick="closeVaultAddGoalModal()">
                             <i class="fas fa-times"></i>
                         </button>
@@ -2130,13 +2130,13 @@ BP 20000 Libreville</div>
                     
                     <div class="vault-info-message" id="vault-info-message">
                         <i class="fas fa-info-circle"></i>
-                        <p id="vault-info-text">Vous pouvez créer jusqu'à 2 coffres-forts supplémentaires pour mieux organiser votre épargne.</p>
+                        <p id="vault-info-text">Vous pouvez créer jusqu'à 2 coffres-forts supplémentaires.</p>
                     </div>
                     
                     <div class="vault-input-group">
                         <label>Nom du coffre-fort</label>
                         <div class="vault-input-field">
-                            <input type="text" placeholder="Ex: Épargne Voyage" id="new-vault-name">
+                            <input type="text" placeholder="Ex: Voyage" id="new-vault-name">
                         </div>
                     </div>
                     

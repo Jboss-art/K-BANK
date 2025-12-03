@@ -92,7 +92,7 @@ function performTransaction(amount, type, account = 'main') {
 class PinAuth {
     constructor() {
         this.pin = '';
-        this.correctPin = '123456'; // Code PIN à 6 chiffres
+        this.correctPin = '123456'; // Code de sécurité à 6 chiffres
         this.pinInputs = document.querySelectorAll('.pin-input');
         this.keyButtons = document.querySelectorAll('.key-button');
         this.errorMessage = document.querySelector('.error-message');
@@ -3923,7 +3923,7 @@ function openFAQ() {
                                 <li>Saisissez le montant à transférer</li>
                                 <li>Ajoutez un motif (optionnel)</li>
                                 <li>Vérifiez les informations</li>
-                                <li>Confirmez avec votre code PIN</li>
+                                <li>Confirmez avec votre code de sécurité</li>
                             </ol>
                         </div>
                     </div>
@@ -4199,7 +4199,7 @@ function openNewVaultModal() {
     const infoText = document.getElementById('vault-info-text');
     if (infoText) {
         if (vaults.length === 1) {
-            infoText.textContent = 'Vous pouvez créer jusqu\'à 2 coffres-forts supplémentaires pour mieux organiser votre épargne.';
+            infoText.textContent = 'Vous pouvez créer jusqu\'à 2 coffres-forts supplémentaires.';
         } else if (vaults.length === 2) {
             infoText.textContent = 'Vous ne pouvez plus créer qu\'un seul coffre-fort.';
         }
@@ -4930,6 +4930,31 @@ function toggleCategoryTag(tag) {
 function startQRScan() {
     showToast('Fonctionnalité de scan QR en développement', 'info');
     // TODO: Implémenter le scan QR
+}
+
+function cancelAddBeneficiary() {
+    // Réinitialiser le formulaire
+    const nameElement = document.getElementById('beneficiary-name');
+    const ibanElement = document.getElementById('beneficiary-iban');
+    const phoneElement = document.getElementById('beneficiary-phone');
+    const bankElement = document.getElementById('beneficiary-bank');
+    
+    if (nameElement) nameElement.value = '';
+    if (ibanElement) ibanElement.value = '';
+    if (phoneElement) phoneElement.value = '';
+    if (bankElement) bankElement.value = '';
+    
+    // Remettre le type de compte IBAN par défaut
+    const ibanRadio = document.querySelector('input[name="account-type"][value="iban"]');
+    if (ibanRadio) ibanRadio.checked = true;
+    
+    // Désélectionner toutes les catégories
+    document.querySelectorAll('.category-tag').forEach(tag => {
+        tag.classList.remove('selected');
+    });
+    
+    // Retourner à la page de virement
+    switchTab('virement');
 }
 
 function saveBeneficiary() {
