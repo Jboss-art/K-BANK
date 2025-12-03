@@ -5677,12 +5677,12 @@ input[type="number"] {
 
 .vault-nav-prev {
     left: 50%;
-    margin-left: -45px;
+    margin-left: -90px;
 }
 
 .vault-nav-next {
     right: 50%;
-    margin-right: -45px;
+    margin-right: -90px;
 }
 
 .vault-nav-btn.hidden {
@@ -5778,11 +5778,11 @@ input[type="number"] {
     }
     
     .vault-nav-prev {
-        margin-left: -38px;
+        margin-left: -55px;
     }
     
     .vault-nav-next {
-        margin-right: -38px;
+        margin-right: -55px;
     }
     
     .vault-indicators {
@@ -5819,11 +5819,11 @@ input[type="number"] {
     }
     
     .vault-nav-prev {
-        margin-left: -35px;
+        margin-left: -50px;
     }
     
     .vault-nav-next {
-        margin-right: -35px;
+        margin-right: -50px;
     }
 }
 
