@@ -844,7 +844,7 @@ function confirmVirement() {
     
     showConfirmDialog(
         'Confirmer le virement',
-        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} F <h6>cfa</h6> vers ${beneficiary.name} ?`,
+        `Voulez-vous effectuer un virement de ${Number(amount).toLocaleString()} Fcfa vers ${beneficiary.name} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -944,7 +944,7 @@ function processTransfer() {
     
     showConfirmDialog(
         'Confirmer le transfert',
-        `Transférer ${Number(amount).toLocaleString()} F <h6>cfa</h6> vers ${name} (${phone}) via ${methodNames[selectedTransferMethod]} ?`,
+        `Transférer ${Number(amount).toLocaleString()} Fcfa vers ${name} (${phone}) via ${methodNames[selectedTransferMethod]} ?`,
         'Confirmer',
         'Annuler',
         () => {
@@ -1311,7 +1311,7 @@ function renderTransactions(limit = 10) {
                 <div class="transaction-date">${transaction.date}</div>
             </div>
             <div class="transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}">
-                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} F <h6>CFA</h6>
+                ${transaction.amount > 0 ? '+' : '-'}${Math.abs(transaction.amount).toLocaleString()} Fcfa
             </div>
         `;
         container.appendChild(element);
@@ -2686,7 +2686,7 @@ function initializeVaultPage() {
 function updateVaultBalance() {
     const vaultTotalElement = document.getElementById('vault-total');
     if (vaultTotalElement) {
-        vaultTotalElement.innerHTML = `F <h6>cfa</h6> ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
+        vaultTotalElement.innerHTML = `Fcfa ${vaultBalance.toLocaleString('fr-FR')},<small>00</small>`;
     }
 }
 
@@ -3352,7 +3352,7 @@ function openBudgetCalculator() {
 }
 
 function openExchangeRates() {
-    showToast('Taux de change - USD: 656 F <h6>cfa</h6> | EUR: 724 F <h6>cfa</h6>', 'info');
+    showToast('Taux de change - USD: 656 Fcfa | EUR: 724 Fcfa', 'info');
     // Ici vous pourriez afficher les vrais taux
 }
 
@@ -4698,13 +4698,13 @@ function updateCardLimitsDisplay() {
     // Mettre à jour le plafond de paiement
     const paymentLimitElement = document.querySelector('[onclick="adjustPaymentLimit()"] .card-meta');
     if (paymentLimitElement) {
-        paymentLimitElement.innerHTML = `F<h6>cfa</h6> ${cardLimits.payment.toLocaleString('fr-FR')} / jour`;
+        paymentLimitElement.innerHTML = `Fcfa ${cardLimits.payment.toLocaleString('fr-FR')} / jour`;
     }
     
     // Mettre à jour le plafond de retrait
     const withdrawalLimitElement = document.querySelector('[onclick="adjustWithdrawalLimit()"] .card-meta');
     if (withdrawalLimitElement) {
-        withdrawalLimitElement.innerHTML = `F<h6>cfa</h6> ${cardLimits.withdrawal.toLocaleString('fr-FR')} / jour`;
+        withdrawalLimitElement.innerHTML = `Fcfa ${cardLimits.withdrawal.toLocaleString('fr-FR')} / jour`;
     }
 }
 
@@ -5402,7 +5402,7 @@ function createCrispBalanceText() {
                 display: inline-block;
                 transform: translateZ(0);
                 will-change: auto;
-            ">FCFA 780 245,</span><small style="
+            ">Fcfa 780 245,</span><small style="
                 font-size: 18px;
                 color: rgb(255, 255, 255);
                 opacity: 0.9;
@@ -5410,7 +5410,7 @@ function createCrispBalanceText() {
         `;
     } else {
         // Version desktop normale
-        balanceDisplay.innerHTML = 'FCFA 780 245,<small>00</small>';
+        balanceDisplay.innerHTML = 'Fcfa 780 245,<small>00</small>';
     }
 }
 
