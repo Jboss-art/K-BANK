@@ -1110,7 +1110,7 @@ const appData = {
         {
             id: 101,
             title: "Offre weekend",
-            message: "Réduction de 10 pourcent valable chez nos partenaires ce weekend",
+            message: "Réduction de -10 % chez tous nos partenaires",
             date: "Il y a 1 jour",
             read: true,
             type: "promotion"
@@ -1175,8 +1175,8 @@ function renderNotifications() {
 // Génère le HTML pour une liste de notifications
 function renderNotificationItems(notifications) {
     return notifications.map((notification, index) => {
-        // Extraire le montant du message s'il y en a un
-        const amountMatch = notification.message.match(/(-?\d+(?:[.,]\d{2})?)/);
+        // Extraire le montant du message s'il y en a un (uniquement les montants avec décimales)
+        const amountMatch = notification.message.match(/(-?\d+[.,]\d{2})/);
         let formattedMessage = notification.message;
         
         if (amountMatch) {
