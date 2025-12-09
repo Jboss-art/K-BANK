@@ -9,6 +9,13 @@
     height: 0 !important;
 }
 
+/* ===============================================
+   EMPÊCHER LA TRANSFORMATION DES LABELS EN MAJUSCULES
+   =============================================== */
+label, .input-group label {
+    text-transform: none !important;
+}
+
 *::-webkit-scrollbar-track,
 *::-webkit-scrollbar-thumb,
 *::-webkit-scrollbar-corner {
@@ -7426,6 +7433,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     font-size: 16px;
     margin-bottom: 10px;
     display: block;
+    text-transform: none;
 }
 
 [data-theme="light"] .virement-page .input-field {
@@ -9785,6 +9793,7 @@ input[type="checkbox"]:checked + .toggle-slider::before {
     color: var(--text-light);
     font-weight: 500;
     font-size: 14px;
+    text-transform: none;
 }
 
 .topup-form #topup-button:disabled {
