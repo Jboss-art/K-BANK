@@ -1108,10 +1108,10 @@ const appData = {
             type: "security"
         },
         {
-            id: 4,
-            title: "Offre spéciale",
-            message: "Profitez de -15% chez nos partenaires ce week-end",
-            date: "Il y a 2 jours",
+            id: 101,
+            title: "Offre weekend",
+            message: "Réduction de 10 pourcent valable chez nos partenaires ce weekend",
+            date: "Il y a 1 jour",
             read: true,
             type: "promotion"
         }
@@ -1120,6 +1120,8 @@ const appData = {
 
 // Initialisation des notifications
 function initializeNotifications() {
+    // Forcer la réinitialisation des notifications depuis les données par défaut
+    localStorage.removeItem('notifications');
     renderNotifications();
     updateNotificationBadge();
 }
