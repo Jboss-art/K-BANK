@@ -1558,6 +1558,25 @@ BP 20000 Libreville</div>
                                     <input type="number" placeholder="Ex: 10" id="first-tontine-members" min="2" max="50">
                                 </div>
                             </div>
+
+                            <div class="tontine-input-group">
+                                <label>Fréquence de versement</label>
+                                <div class="tontine-input-field">
+                                    <select id="first-tontine-frequency">
+                                        <option value="">Sélectionner...</option>
+                                        <option value="weekly">Chaque semaine</option>
+                                        <option value="monthly">Chaque fin de mois</option>
+                                        <option value="custom">Date personnalisée</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="tontine-input-group" id="custom-date-group" style="display: none;">
+                                <label>Jour de versement</label>
+                                <div class="tontine-input-field">
+                                    <input type="number" placeholder="Ex: 15 (pour le 15 du mois)" id="first-tontine-custom-day" min="1" max="31">
+                                </div>
+                            </div>
                             
                             <button class="tontine-primary-button" onclick="createFirstTontine()">
                                 <i class="fas fa-plus"></i> Créer ma tontine
@@ -1630,12 +1649,6 @@ BP 20000 Libreville</div>
 
                     <!-- Actions rapides -->
                     <div class="tontine-quick-actions">
-                        <div class="tontine-action-card" onclick="showInviteMembersModal()">
-                            <div class="action-icon">
-                                <i class="fas fa-user-plus"></i>
-                            </div>
-                            <div class="action-label">Inviter</div>
-                        </div>
                         <div class="tontine-action-card" onclick="payTontineContribution()">
                             <div class="action-icon">
                                 <i class="fas fa-money-bill-wave"></i>
@@ -1653,76 +1666,6 @@ BP 20000 Libreville</div>
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="action-label">Nouvelle</div>
-                        </div>
-                    </div>
-
-                    <!-- Section Invitations en attente -->
-                    <div class="tontine-invitations-section" id="tontine-invitations">
-                        <h3>Invitations en attente</h3>
-                        <div class="invitation-card">
-                            <div class="invitation-info">
-                                <h4>Tontine Collègues</h4>
-                                <p>Invité par Jean Dupont</p>
-                                <span class="invitation-amount">25 000 Fcfa/mois • 8 membres</span>
-                            </div>
-                            <div class="invitation-actions">
-                                <button class="btn-invitation decline" onclick="declineInvitation(1)">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button class="btn-invitation accept" onclick="acceptInvitation(1)">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Inviter des membres -->
-                <div class="modal" id="invite-members-modal">
-                    <div class="modal-content modal-invite">
-                        <div class="modal-header">
-                            <h3>Inviter des membres</h3>
-                            <i class="fas fa-times" onclick="closeInviteMembersModal()"></i>
-                        </div>
-                        <div class="modal-body">
-                            <div class="invite-methods">
-                                <button class="invite-method-btn" onclick="shareInviteLink()">
-                                    <i class="fas fa-link"></i>
-                                    <span>Partager le lien</span>
-                                </button>
-                                <button class="invite-method-btn" onclick="shareQRCode()">
-                                    <i class="fas fa-qrcode"></i>
-                                    <span>Code QR</span>
-                                </button>
-                                <button class="invite-method-btn" onclick="inviteByPhone()">
-                                    <i class="fas fa-sms"></i>
-                                    <span>Par SMS</span>
-                                </button>
-                            </div>
-                            
-                            <div class="invite-link-container">
-                                <label>Lien d'invitation</label>
-                                <div class="invite-link-field">
-                                    <input type="text" value="https://k-bank.app/tontine/invite/abc123" readonly id="invite-link">
-                                    <button onclick="copyInviteLink()">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="invite-or-divider">
-                                <span>OU</span>
-                            </div>
-
-                            <div class="invite-phone-section">
-                                <label>Inviter par téléphone</label>
-                                <div class="phone-invite-field">
-                                    <input type="tel" placeholder="+241 XX XX XX XX" id="invite-phone">
-                                    <button class="btn-send-invite" onclick="sendPhoneInvite()">
-                                        Envoyer
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

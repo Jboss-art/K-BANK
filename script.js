@@ -5433,13 +5433,36 @@ function toggleMenu() {
 // ===============================================
 // FONCTIONS TONTINE
 // ===============================================
+
+// Afficher/masquer le champ de date personnalisée
+document.addEventListener('DOMContentLoaded', function() {
+    const frequencySelect = document.getElementById('first-tontine-frequency');
+    if (frequencySelect) {
+        frequencySelect.addEventListener('change', function() {
+            const customDateGroup = document.getElementById('custom-date-group');
+            if (this.value === 'custom') {
+                customDateGroup.style.display = 'block';
+            } else {
+                customDateGroup.style.display = 'none';
+            }
+        });
+    }
+});
+
 function createFirstTontine() {
     const name = document.getElementById('first-tontine-name').value;
     const amount = document.getElementById('first-tontine-amount').value;
     const members = document.getElementById('first-tontine-members').value;
+    const frequency = document.getElementById('first-tontine-frequency').value;
+    const customDay = document.getElementById('first-tontine-custom-day').value;
     
-    if (!name || !amount || !members) {
+    if (!name || !amount || !members || !frequency) {
         alert('Veuillez remplir tous les champs');
+        return;
+    }
+    
+    if (frequency === 'custom' && !customDay) {
+        alert('Veuillez spécifier le jour de versement');
         return;
     }
     
@@ -5447,7 +5470,10 @@ function createFirstTontine() {
     document.getElementById('tontine-empty-state').style.display = 'none';
     document.getElementById('tontine-main-view').style.display = 'block';
     
-    showNotification('Tontine créée avec succès !', 'success');
+    let frequencyText = frequency === 'weekly' ? 'chaque semaine' : 
+                        frequency === 'monthly' ? 'chaque fin de mois' : 'date personnalisée';
+    
+    showNotification(`Tontine "${name}" créée avec succès ! Versements ${frequencyText}.`, 'success');
 }
 
 function showCreateTontineModal() {
@@ -5464,6 +5490,118 @@ function payTontineContribution() {
 
 function viewTontineMembers() {
     alert('Affichage de la liste des membres');
+}
+
+// Gestion des invitations K-Bank
+let invitedMembers = [];
+
+function showInviteKBankMembersModal() {
+    document.getElementById('invite-kbank-members-modal').style.display = 'flex';
+    invitedMembers = [];
+    updateInvitedMembersDisplay();
+}
+
+function closeInviteKBankMembersModal() {
+    document.getElementById('invite-kbank-members-modal').style.display = 'none';
+}
+
+function searchKBankMembers() {
+    const searchTerm = document.getElementById('search-kbank-member-input').value.toLowerCase();
+    const memberItems = document.querySelectorAll('.kbank-member-item');
+    
+    memberItems.forEach(item => {
+        const name = item.querySelector('.member-name').textContent.toLowerCase();
+        const username = item.querySelector('.member-username').textContent.toLowerCase();
+        
+        if (name.includes(searchTerm) || username.includes(searchTerm)) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function inviteMember(userId) {
+    const memberItem = event.target.closest('.kbank-member-item');
+    const memberName = memberItem.querySelector('.member-name').textContent;
+    const memberUsername = memberItem.querySelector('.member-username').textContent;
+    
+    // Vérifier si déjà invité
+    if (invitedMembers.some(m => m.id === userId)) {
+        showNotification('Membre déjà invité', 'info');
+        return;
+    }
+    
+    invitedMembers.push({
+        id: userId,
+        name: memberName,
+        username: memberUsername
+    });
+    
+    // Changer le bouton
+    const btn = memberItem.querySelector('.btn-invite-member');
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+    btn.style.backgroundColor = '#4CAF50';
+    btn.style.cursor = 'default';
+    btn.onclick = null;
+    
+    updateInvitedMembersDisplay();
+    showNotification(`${memberName} invité(e)`, 'success');
+}
+
+function updateInvitedMembersDisplay() {
+    const section = document.getElementById('invited-members-section');
+    const count = document.getElementById('invited-count');
+    const tagsContainer = document.getElementById('invited-members-tags');
+    
+    if (invitedMembers.length > 0) {
+        section.style.display = 'block';
+        count.textContent = invitedMembers.length;
+        
+        tagsContainer.innerHTML = invitedMembers.map(member => `
+            <div class="invited-member-tag">
+                <span>${member.name}</span>
+                <i class="fas fa-times" onclick="removeInvitedMember('${member.id}')"></i>
+            </div>
+        `).join('');
+    } else {
+        section.style.display = 'none';
+    }
+}
+
+function removeInvitedMember(userId) {
+    invitedMembers = invitedMembers.filter(m => m.id !== userId);
+    updateInvitedMembersDisplay();
+    
+    // Réinitialiser le bouton dans la liste
+    const memberItems = document.querySelectorAll('.kbank-member-item');
+    memberItems.forEach(item => {
+        const btn = item.querySelector('.btn-invite-member');
+        if (btn && btn.closest('.kbank-member-item').querySelector('.member-username')) {
+            const itemUserId = btn.getAttribute('onclick')?.match(/inviteMember\('([^']+)'\)/)?.[1];
+            if (itemUserId === userId) {
+                btn.innerHTML = '<i class="fas fa-user-plus"></i>';
+                btn.style.backgroundColor = '';
+                btn.style.cursor = 'pointer';
+                btn.onclick = () => inviteMember(userId);
+            }
+        }
+    });
+}
+
+function finishTontineCreation() {
+    if (invitedMembers.length === 0) {
+        alert('Veuillez inviter au moins un membre');
+        return;
+    }
+    
+    // Fermer le modal
+    closeInviteKBankMembersModal();
+    
+    showNotification(`${invitedMembers.length} invitation(s) envoyée(s) avec succès !`, 'success');
+    
+    // Réinitialiser la liste des invités
+    invitedMembers = [];
 }
 
 function acceptInvitation(invitationId) {
