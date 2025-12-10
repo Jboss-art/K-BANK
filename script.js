@@ -5422,3 +5422,108 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFaceID();
 });
 
+// ===============================================
+// MENU HAMBURGER
+// ===============================================
+function toggleMenu() {
+    const menu = document.getElementById('hamburger-menu');
+    menu.classList.toggle('active');
+}
+
+// ===============================================
+// FONCTIONS TONTINE
+// ===============================================
+function createFirstTontine() {
+    const name = document.getElementById('first-tontine-name').value;
+    const amount = document.getElementById('first-tontine-amount').value;
+    const members = document.getElementById('first-tontine-members').value;
+    
+    if (!name || !amount || !members) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+    
+    // Masquer l'état vide et afficher la vue principale
+    document.getElementById('tontine-empty-state').style.display = 'none';
+    document.getElementById('tontine-main-view').style.display = 'block';
+    
+    showNotification('Tontine créée avec succès !', 'success');
+}
+
+function showCreateTontineModal() {
+    alert('Fonctionnalité de création de nouvelle tontine en cours de développement');
+}
+
+function viewTontineDetails(tontineId) {
+    alert(`Affichage des détails de la tontine ${tontineId}`);
+}
+
+function payTontineContribution() {
+    alert('Paiement de la cotisation en cours...');
+}
+
+function viewTontineMembers() {
+    alert('Affichage de la liste des membres');
+}
+
+function acceptInvitation(invitationId) {
+    showNotification('Invitation acceptée !', 'success');
+    // Logique pour accepter l'invitation
+}
+
+function declineInvitation(invitationId) {
+    showNotification('Invitation refusée', 'info');
+    // Logique pour refuser l'invitation
+}
+
+// Modal Invitation
+function showInviteMembersModal() {
+    document.getElementById('invite-members-modal').style.display = 'flex';
+}
+
+function closeInviteMembersModal() {
+    document.getElementById('invite-members-modal').style.display = 'none';
+}
+
+function shareInviteLink() {
+    const link = document.getElementById('invite-link').value;
+    if (navigator.share) {
+        navigator.share({
+            title: 'Rejoignez ma tontine',
+            text: 'Je vous invite à rejoindre ma tontine sur K-Bank',
+            url: link
+        }).then(() => {
+            showNotification('Lien partagé avec succès', 'success');
+        }).catch(() => {
+            copyInviteLink();
+        });
+    } else {
+        copyInviteLink();
+    }
+}
+
+function copyInviteLink() {
+    const link = document.getElementById('invite-link');
+    link.select();
+    document.execCommand('copy');
+    showNotification('Lien copié !', 'success');
+}
+
+function shareQRCode() {
+    alert('Génération du code QR en cours...');
+}
+
+function inviteByPhone() {
+    document.getElementById('invite-phone').focus();
+}
+
+function sendPhoneInvite() {
+    const phone = document.getElementById('invite-phone').value;
+    if (!phone) {
+        alert('Veuillez entrer un numéro de téléphone');
+        return;
+    }
+    showNotification('Invitation envoyée par SMS', 'success');
+    document.getElementById('invite-phone').value = '';
+}
+

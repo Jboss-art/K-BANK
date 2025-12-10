@@ -13081,3 +13081,1071 @@ select,
         transform: translateX(-50%) translateY(0);
     }
 }
+
+/* ===============================================
+   MENU HAMBURGER
+   =============================================== */
+.hamburger-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hamburger-menu.active {
+    display: flex;
+    opacity: 1;
+}
+
+.menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 85%;
+    height: 100%;
+    background: var(--card-bg);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.hamburger-menu.active .menu-content {
+    transform: translateX(0);
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--primary-gradient);
+}
+
+.menu-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.menu-header i {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.menu-header i:hover {
+    transform: scale(1.1);
+}
+
+.menu-section {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.menu-section:last-child {
+    border-bottom: none;
+}
+
+.menu-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.menu-section-title i {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: var(--primary-color);
+}
+
+.menu-item > i:first-child {
+    font-size: 18px;
+    width: 25px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.menu-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.menu-item-content span {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.menu-item-content small {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.menu-item .fa-chevron-right {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-indicator.online {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* Toggle switch petit pour le menu */
+.toggle-switch-small {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toggle-switch-small input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider-small {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.toggle-slider-small:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.toggle-switch-small input:checked + .toggle-slider-small {
+    background: var(--primary-gradient);
+}
+
+.toggle-switch-small input:checked + .toggle-slider-small:before {
+    transform: translateX(18px);
+}
+
+/* ===============================================
+   PAGE TONTINE
+   =============================================== */
+.tontine-page {
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+/* État vide - Création première tontine */
+.tontine-page .tontine-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.page:not(.active) .tontine-empty-state {
+    display: none;
+}
+
+.tontine-empty-content {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Animation tontine */
+.tontine-animation-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 30px;
+    position: relative;
+}
+
+.tontine-circle-group {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.tontine-member {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    animation: tontinePulse 2s ease-in-out infinite;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+}
+
+.member-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0s;
+}
+
+.member-2 {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    animation-delay: 0.5s;
+}
+
+.member-3 {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 1s;
+}
+
+.member-4 {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    animation-delay: 1.5s;
+}
+
+.tontine-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    box-shadow: 0 8px 24px rgba(251, 191, 36, 0.4);
+    animation: tontineRotate 3s linear infinite;
+}
+
+.tontine-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    animation: tontinePulseRing 2s ease-out infinite;
+}
+
+@keyframes tontinePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes tontineRotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes tontinePulseRing {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+    }
+}
+
+.tontine-empty-content h2 {
+    color: var(--text-color);
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.tontine-empty-content p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+.tontine-create-form {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.tontine-input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.tontine-input-group label {
+    display: block;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.tontine-input-field {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tontine-input-field input {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.tontine-amount-input {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 15px;
+}
+
+.tontine-currency-symbol {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.tontine-amount-input input {
+    flex: 1;
+    padding: 15px 0;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.tontine-primary-button {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+}
+
+.tontine-primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(67, 97, 238, 0.4);
+}
+
+.tontine-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.tontine-feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.tontine-feature-item i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.tontine-feature-item span {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* Vue principale tontines */
+.tontine-main-view {
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+.tontine-carousel-container {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.tontine-carousel-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.tontine-card-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.tontine-card-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+}
+
+.tontine-card-header h3 {
+    color: var(--text-color);
+    font-size: 20px;
+    margin: 0 0 10px 0;
+}
+
+.tontine-status-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tontine-status-badge.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.tontine-members-preview {
+    display: flex;
+    justify-content: center;
+    gap: -10px;
+    margin-bottom: 25px;
+}
+
+.member-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border: 3px solid var(--card-bg);
+    margin-left: -10px;
+}
+
+.member-avatar:first-child {
+    margin-left: 0;
+}
+
+.tontine-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.stat-value {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tontine-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.tontine-indicators .indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tontine-indicators .indicator.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--primary-color);
+}
+
+/* Actions rapides */
+.tontine-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.tontine-action-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tontine-action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.tontine-action-card .action-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 10px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+}
+
+.tontine-action-card .action-label {
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Section invitations */
+.tontine-invitations-section {
+    margin-top: 30px;
+}
+
+.tontine-invitations-section h3 {
+    color: var(--text-color);
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.tontine-container {
+    padding: 20px;
+}
+
+.tontine-section {
+    margin-bottom: 30px;
+}
+
+.tontine-section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tontine-section .section-header h3 {
+    font-size: 18px;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.tontine-section .section-header .badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-add-tontine {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary-gradient);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+}
+
+.btn-add-tontine:hover {
+    transform: scale(1.1);
+}
+
+/* Carte Tontine */
+.tontine-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tontine-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.tontine-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.tontine-info {
+    flex: 1;
+}
+
+.tontine-info h4 {
+    margin: 0 0 4px 0;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.tontine-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.tontine-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tontine-status.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.tontine-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+}
+
+.tontine-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tontine-detail span {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.tontine-detail strong {
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.tontine-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-tontine-action {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-tontine-action:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-tontine-action.primary {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+}
+
+.btn-tontine-action.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+}
+
+/* Invitations */
+.invitation-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.invitation-info h4 {
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.invitation-info p {
+    margin: 0 0 8px 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.invitation-amount {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.invitation-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-invitation {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.btn-invitation.decline {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.btn-invitation.decline:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: scale(1.1);
+}
+
+.btn-invitation.accept {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.btn-invitation.accept:hover {
+    background: rgba(34, 197, 94, 0.3);
+    transform: scale(1.1);
+}
+
+/* Modal Invitation */
+.modal-invite {
+    max-width: 500px;
+}
+
+.invite-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.invite-method-btn {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+}
+
+.invite-method-btn:hover {
+    background: rgba(67, 97, 238, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.invite-method-btn i {
+    font-size: 28px;
+    color: var(--primary-color);
+}
+
+.invite-method-btn span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.invite-link-container {
+    margin-bottom: 20px;
+}
+
+.invite-link-container label {
+    display: block;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.invite-link-field {
+    display: flex;
+    gap: 10px;
+}
+
+.invite-link-field input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.invite-link-field button {
+    padding: 12px 20px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.invite-link-field button:hover {
+    transform: scale(1.05);
+}
+
+.invite-or-divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.invite-or-divider::before,
+.invite-or-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.invite-or-divider::before {
+    left: 0;
+}
+
+.invite-or-divider::after {
+    right: 0;
+}
+
+.invite-or-divider span {
+    background: var(--card-bg);
+    padding: 0 15px;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.invite-phone-section label {
+    display: block;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.phone-invite-field {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-invite-field input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.btn-send-invite {
+    padding: 12px 25px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-send-invite:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .tontine-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .invite-methods {
+        grid-template-columns: 1fr;
+    }
+    
+    .tontine-animation-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .tontine-member {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .tontine-center {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}
