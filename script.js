@@ -5469,7 +5469,10 @@ function createFirstTontine() {
         memberCount: 1,
         members: ['Vous'],
         cagnotte: parseInt(amount),
-        createdDate: new Date()
+        createdDate: new Date(),
+        contributions: {
+            'Vous': parseInt(amount)
+        }
     };
     
     // Calculer la prochaine date
@@ -5646,15 +5649,25 @@ function updateTontineMembersList() {
             </div>
             <div class="member-info-detail">
                 <span class="member-name-detail">Vous</span>
-                <span class="member-status-detail">Créateur</span>
+                <span class="member-status-detail">Créateur • ${(currentTontineData?.contributions?.['Vous'] || 0).toLocaleString()} Fcfa versés</span>
             </div>
             <div class="member-badge crown">
                 <i class="fas fa-crown"></i>
+            </div>
+            <div class="member-payment-status paid">
+                <i class="fas fa-check-circle"></i>
+                <span>Payé</span>
             </div>
         </div>
     `;
     
     currentTontineMembers.forEach(member => {
+        const contributed = currentTontineData?.contributions?.[member.name] || 0;
+        const hasPaid = contributed >= currentTontineData.amount;
+        const statusClass = hasPaid ? 'paid' : 'pending';
+        const statusIcon = hasPaid ? 'fa-check-circle' : 'fa-clock';
+        const statusText = hasPaid ? 'Payé' : 'En attente';
+        
         membersHTML += `
             <div class="member-card">
                 <div class="member-avatar-detail">
@@ -5662,10 +5675,11 @@ function updateTontineMembersList() {
                 </div>
                 <div class="member-info-detail">
                     <span class="member-name-detail">${member.name}</span>
-                    <span class="member-status-detail">Membre</span>
+                    <span class="member-status-detail">Membre • ${contributed.toLocaleString()} Fcfa versés</span>
                 </div>
-                <div class="member-badge active">
-                    <i class="fas fa-check-circle"></i>
+                <div class="member-payment-status ${statusClass}">
+                    <i class="fas ${statusIcon}"></i>
+                    <span>${statusText}</span>
                 </div>
             </div>
         `;
@@ -5706,11 +5720,17 @@ function addMemberToTontine() {
     const memberName = selectedContact.split(' - ')[0];
     currentTontineData.memberCount++;
     currentTontineData.members.push(memberName);
-    currentTontineData.cagnotte += currentTontineData.amount;
+    
+    // Initialiser la contribution du membre à 0
+    if (!currentTontineData.contributions) {
+        currentTontineData.contributions = {};
+    }
+    currentTontineData.contributions[memberName] = 0;
     
     currentTontineMembers.push({
         name: memberName,
-        id: Date.now()
+        id: Date.now(),
+        contributed: 0
     });
     
     // Mettre à jour l'affichage
