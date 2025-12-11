@@ -5468,10 +5468,10 @@ function createFirstTontine() {
         frequency: frequency,
         memberCount: 1,
         members: ['Vous'],
-        cagnotte: parseInt(amount),
+        cagnotte: 0,
         createdDate: new Date(),
         contributions: {
-            'Vous': parseInt(amount)
+            'Vous': 0
         }
     };
     
@@ -5491,10 +5491,10 @@ function createFirstTontine() {
     document.getElementById('detail-members-count').textContent = '1/5 personnes';
     document.getElementById('detail-next-date').textContent = nextDateFormatted;
     document.getElementById('detail-next-recipient').textContent = 'Vous';
-    document.getElementById('detail-total-balance').textContent = `${parseInt(amount).toLocaleString()} Fcfa`;
+    document.getElementById('detail-total-balance').textContent = '0 Fcfa';
     
     const frequencyText = frequency === 'weekly' ? '/semaine' : '/mois';
-    document.getElementById('detail-my-contribution').textContent = `${parseInt(amount).toLocaleString()} Fcfa${frequencyText}`;
+    document.getElementById('detail-my-contribution').textContent = `0 Fcfa${frequencyText}`;
     
     // Mettre à jour remaining slots
     document.getElementById('remaining-slots').textContent = '4';
