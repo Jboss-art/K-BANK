@@ -5454,8 +5454,9 @@ function createFirstTontine() {
     const name = document.getElementById('first-tontine-name').value;
     const amount = document.getElementById('first-tontine-amount').value;
     const frequency = document.getElementById('first-tontine-frequency').value;
+    const startDate = document.getElementById('first-tontine-start-date').value;
     
-    if (!name || !amount || !frequency) {
+    if (!name || !amount || !frequency || !startDate) {
         alert('Veuillez remplir tous les champs');
         return;
     }
@@ -5470,17 +5471,20 @@ function createFirstTontine() {
         members: ['Vous'],
         cagnotte: 0,
         createdDate: new Date(),
+        startDate: new Date(startDate),
         contributions: {
             'Vous': 0
         }
     };
     
-    // Calculer la prochaine date
-    let nextDate = new Date();
+    // Calculer la prochaine date (prochain tour)
+    let nextDate = new Date(startDate);
     if (frequency === 'weekly') {
         nextDate.setDate(nextDate.getDate() + 7);
     } else if (frequency === 'monthly') {
+        // Pour mensuel, mettre la date de fin du mois
         nextDate.setMonth(nextDate.getMonth() + 1);
+        nextDate.setDate(0); // Dernier jour du mois
     }
     
     const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
