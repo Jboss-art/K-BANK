@@ -5770,7 +5770,20 @@ function confirmDeposit() {
     
     if (currentTontineData) {
         currentTontineData.cagnotte += parseInt(amount);
+        
+        // Mettre à jour la contribution de l'utilisateur
+        if (!currentTontineData.contributions) {
+            currentTontineData.contributions = {};
+        }
+        if (!currentTontineData.contributions['Vous']) {
+            currentTontineData.contributions['Vous'] = 0;
+        }
+        currentTontineData.contributions['Vous'] += parseInt(amount);
+        
         document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+        
+        // Mettre à jour la liste des membres pour afficher le nouveau montant versé
+        updateTontineMembersList();
         
         // Mettre à jour la tontine dans la liste
         const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
