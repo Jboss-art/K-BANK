@@ -1330,6 +1330,16 @@ function switchTab(tab) {
         item.classList.remove('active');
     });
     
+    // Gestion spéciale pour l'onglet Tontine
+    if (tab === 'tontine') {
+        // Si une tontine existe, aller directement sur la page de détails
+        if (hasTontines && tontinesList.length > 0) {
+            openTontineDetail(0); // Ouvrir la première tontine
+            document.querySelector(`.nav-item[onclick="switchTab('${tab}')"]`).classList.add('active');
+            return;
+        }
+    }
+    
     document.getElementById(`${tab}-page`).classList.add('active');
     document.querySelector(`.nav-item[onclick="switchTab('${tab}')"]`).classList.add('active');
     
@@ -5434,46 +5444,386 @@ function toggleMenu() {
 // FONCTIONS TONTINE
 // ===============================================
 
-// Afficher/masquer le champ de date personnalisée
-document.addEventListener('DOMContentLoaded', function() {
-    const frequencySelect = document.getElementById('first-tontine-frequency');
-    if (frequencySelect) {
-        frequencySelect.addEventListener('change', function() {
-            const customDateGroup = document.getElementById('custom-date-group');
-            if (this.value === 'custom') {
-                customDateGroup.style.display = 'block';
-            } else {
-                customDateGroup.style.display = 'none';
-            }
-        });
-    }
-});
+// Variables globales pour la tontine
+let currentTontineData = null;
+let currentTontineMembers = [];
+let tontinesList = []; // Liste de toutes les tontines créées
+let hasTontines = false; // Indicateur si l'utilisateur a des tontines
 
 function createFirstTontine() {
     const name = document.getElementById('first-tontine-name').value;
     const amount = document.getElementById('first-tontine-amount').value;
-    const members = document.getElementById('first-tontine-members').value;
     const frequency = document.getElementById('first-tontine-frequency').value;
-    const customDay = document.getElementById('first-tontine-custom-day').value;
     
-    if (!name || !amount || !members || !frequency) {
+    if (!name || !amount || !frequency) {
         alert('Veuillez remplir tous les champs');
         return;
     }
     
-    if (frequency === 'custom' && !customDay) {
-        alert('Veuillez spécifier le jour de versement');
+    // Initialiser les données de la tontine
+    currentTontineMembers = [];
+    currentTontineData = {
+        name: name,
+        amount: parseInt(amount),
+        frequency: frequency,
+        memberCount: 1,
+        members: ['Vous'],
+        cagnotte: parseInt(amount),
+        createdDate: new Date()
+    };
+    
+    // Calculer la prochaine date
+    let nextDate = new Date();
+    if (frequency === 'weekly') {
+        nextDate.setDate(nextDate.getDate() + 7);
+    } else if (frequency === 'monthly') {
+        nextDate.setMonth(nextDate.getMonth() + 1);
+    }
+    
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const nextDateFormatted = nextDate.toLocaleDateString('fr-FR', dateOptions);
+    
+    // Mettre à jour la page de détails
+    document.getElementById('detail-tontine-name').textContent = name;
+    document.getElementById('detail-members-count').textContent = '1/5 personnes';
+    document.getElementById('detail-next-date').textContent = nextDateFormatted;
+    document.getElementById('detail-next-recipient').textContent = 'Vous';
+    document.getElementById('detail-total-balance').textContent = `${parseInt(amount).toLocaleString()} Fcfa`;
+    
+    const frequencyText = frequency === 'weekly' ? '/semaine' : '/mois';
+    document.getElementById('detail-my-contribution').textContent = `${parseInt(amount).toLocaleString()} Fcfa${frequencyText}`;
+    
+    // Mettre à jour remaining slots
+    document.getElementById('remaining-slots').textContent = '4';
+    
+    // Mettre à jour la liste des membres
+    updateTontineMembersList();
+    
+    // Ajouter la tontine à la liste
+    tontinesList.push(currentTontineData);
+    hasTontines = true;
+    
+    // Cacher toutes les pages
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    // Afficher la page de détails
+    document.getElementById('tontine-detail-page').classList.add('active');
+    
+    let frequencyNotif = frequency === 'weekly' ? 'chaque semaine' : 
+                        frequency === 'monthly' ? 'chaque fin de mois' : 'date personnalisée';
+    
+    showNotification(`Tontine "${name}" créée avec succès ! Versements ${frequencyNotif}.`, 'success');
+}
+
+function goBackToTontine() {
+    // Retourner à la page d'accueil
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    document.getElementById('home-page').classList.add('active');
+    
+    // Réactiver le nav item home
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    const homeNavItem = document.querySelector('.nav-item[onclick="switchTab(\'home\')"]');
+    if (homeNavItem) {
+        homeNavItem.classList.add('active');
+    }
+}
+
+function updateTontinesList() {
+    const carousel = document.getElementById('tontine-carousel');
+    if (!carousel || tontinesList.length === 0) return;
+    
+    let carouselHTML = '';
+    
+    tontinesList.forEach((tontine, index) => {
+        const frequencyText = tontine.frequency === 'weekly' ? '/semaine' : '/mois';
+        const nextDate = new Date();
+        if (tontine.frequency === 'weekly') {
+            nextDate.setDate(nextDate.getDate() + 7);
+        } else {
+            nextDate.setMonth(nextDate.getMonth() + 1);
+        }
+        const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+        const nextDateFormatted = nextDate.toLocaleDateString('fr-FR', dateOptions);
+        
+        carouselHTML += `
+            <div class="tontine-carousel-card ${index === 0 ? 'active' : ''}" onclick="openTontineDetail(${index})">
+                <div class="tontine-card-header">
+                    <div class="tontine-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>${tontine.name}</h3>
+                    <span class="tontine-status-badge active">Active</span>
+                </div>
+                
+                <div class="tontine-card-body">
+                    <div class="tontine-members-preview">
+                        <div class="member-avatar">Vous</div>
+                        ${tontine.memberCount > 1 ? `<div class="member-avatar">+${tontine.memberCount - 1}</div>` : ''}
+                    </div>
+                    
+                    <div class="tontine-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Membres</span>
+                            <span class="stat-value">${tontine.memberCount}/5 personnes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Cagnotte totale</span>
+                            <span class="stat-value">${tontine.cagnotte.toLocaleString()} Fcfa</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Ma cotisation</span>
+                            <span class="stat-value">${tontine.amount.toLocaleString()} Fcfa${frequencyText}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Prochain tour</span>
+                            <span class="stat-value">${nextDateFormatted}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    carousel.innerHTML = carouselHTML;
+}
+
+function openTontineDetail(index) {
+    if (index < 0 || index >= tontinesList.length) return;
+    
+    currentTontineData = tontinesList[index];
+    currentTontineMembers = currentTontineData.members.slice(1).map((name, idx) => ({
+        name: name,
+        id: Date.now() + idx
+    }));
+    
+    // Calculer la prochaine date
+    let nextDate = new Date();
+    if (currentTontineData.frequency === 'weekly') {
+        nextDate.setDate(nextDate.getDate() + 7);
+    } else {
+        nextDate.setMonth(nextDate.getMonth() + 1);
+    }
+    
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const nextDateFormatted = nextDate.toLocaleDateString('fr-FR', dateOptions);
+    
+    // Mettre à jour la page de détails
+    document.getElementById('detail-tontine-name').textContent = currentTontineData.name;
+    document.getElementById('detail-members-count').textContent = `${currentTontineData.memberCount}/5 personnes`;
+    document.getElementById('detail-next-date').textContent = nextDateFormatted;
+    document.getElementById('detail-next-recipient').textContent = currentTontineData.members[0];
+    document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    
+    const frequencyText = currentTontineData.frequency === 'weekly' ? '/semaine' : '/mois';
+    document.getElementById('detail-my-contribution').textContent = `${currentTontineData.amount.toLocaleString()} Fcfa${frequencyText}`;
+    
+    document.getElementById('remaining-slots').textContent = 5 - currentTontineData.memberCount;
+    document.getElementById('withdraw-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    
+    // Mettre à jour la liste des membres
+    updateTontineMembersList();
+    
+    // Afficher la page de détails
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById('tontine-detail-page').classList.add('active');
+}
+
+function updateTontineMembersList() {
+    const membersList = document.getElementById('detail-members-list');
+    let membersHTML = `
+        <div class="member-card">
+            <div class="member-avatar-detail">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="member-info-detail">
+                <span class="member-name-detail">Vous</span>
+                <span class="member-status-detail">Créateur</span>
+            </div>
+            <div class="member-badge crown">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+    `;
+    
+    currentTontineMembers.forEach(member => {
+        membersHTML += `
+            <div class="member-card">
+                <div class="member-avatar-detail">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="member-info-detail">
+                    <span class="member-name-detail">${member.name}</span>
+                    <span class="member-status-detail">Membre</span>
+                </div>
+                <div class="member-badge active">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        `;
+    });
+    
+    membersList.innerHTML = membersHTML;
+}
+
+function showAddMemberModal() {
+    if (!currentTontineData || currentTontineData.memberCount >= 5) {
+        showNotification('Maximum 5 membres atteint', 'info');
+        return;
+    }
+    document.getElementById('add-member-modal').style.display = 'flex';
+}
+
+function closeAddMemberModal() {
+    document.getElementById('add-member-modal').style.display = 'none';
+    document.getElementById('contact-select').value = '';
+}
+
+function addMemberToTontine() {
+    const contactSelect = document.getElementById('contact-select');
+    const selectedContact = contactSelect.options[contactSelect.selectedIndex].text;
+    
+    if (!contactSelect.value) {
+        alert('Veuillez sélectionner un contact');
         return;
     }
     
-    // Masquer l'état vide et afficher la vue principale
-    document.getElementById('tontine-empty-state').style.display = 'none';
-    document.getElementById('tontine-main-view').style.display = 'block';
+    if (!currentTontineData || currentTontineData.memberCount >= 5) {
+        showNotification('Maximum 5 membres atteint', 'info');
+        closeAddMemberModal();
+        return;
+    }
     
-    let frequencyText = frequency === 'weekly' ? 'chaque semaine' : 
-                        frequency === 'monthly' ? 'chaque fin de mois' : 'date personnalisée';
+    // Ajouter le membre
+    const memberName = selectedContact.split(' - ')[0];
+    currentTontineData.memberCount++;
+    currentTontineData.members.push(memberName);
+    currentTontineData.cagnotte += currentTontineData.amount;
     
-    showNotification(`Tontine "${name}" créée avec succès ! Versements ${frequencyText}.`, 'success');
+    currentTontineMembers.push({
+        name: memberName,
+        id: Date.now()
+    });
+    
+    // Mettre à jour l'affichage
+    document.getElementById('detail-members-count').textContent = `${currentTontineData.memberCount}/5 personnes`;
+    document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    document.getElementById('remaining-slots').textContent = 5 - currentTontineData.memberCount;
+    
+    // Mettre à jour la tontine dans la liste
+    const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
+    if (tontineIndex !== -1) {
+        tontinesList[tontineIndex] = currentTontineData;
+    }
+    
+    // Mettre à jour la liste des membres
+    updateTontineMembersList();
+    
+    showNotification(`${memberName} ajouté(e) à la tontine`, 'success');
+    closeAddMemberModal();
+}
+
+function showDepositModal() {
+    document.getElementById('deposit-modal').style.display = 'flex';
+    document.getElementById('deposit-amount').value = '';
+}
+
+function closeDepositModal() {
+    document.getElementById('deposit-modal').style.display = 'none';
+}
+
+function confirmDeposit() {
+    const amount = document.getElementById('deposit-amount').value;
+    
+    if (!amount || amount <= 0) {
+        alert('Veuillez entrer un montant valide');
+        return;
+    }
+    
+    if (currentTontineData) {
+        currentTontineData.cagnotte += parseInt(amount);
+        document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+        
+        // Mettre à jour la tontine dans la liste
+        const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
+        if (tontineIndex !== -1) {
+            tontinesList[tontineIndex] = currentTontineData;
+        }
+    }
+    
+    showNotification(`Dépôt de ${parseInt(amount).toLocaleString()} Fcfa effectué`, 'success');
+    closeDepositModal();
+}
+
+function showWithdrawModal() {
+    document.getElementById('withdraw-modal').style.display = 'flex';
+    document.getElementById('withdraw-amount').value = '';
+    
+    if (currentTontineData) {
+        document.getElementById('withdraw-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    }
+}
+
+function closeWithdrawModal() {
+    document.getElementById('withdraw-modal').style.display = 'none';
+}
+
+function confirmWithdraw() {
+    const amount = document.getElementById('withdraw-amount').value;
+    
+    if (!amount || amount <= 0) {
+        alert('Veuillez entrer un montant valide');
+        return;
+    }
+    
+    if (currentTontineData) {
+        if (parseInt(amount) > currentTontineData.cagnotte) {
+            alert('Montant supérieur à la cagnotte disponible');
+            return;
+        }
+        currentTontineData.cagnotte -= parseInt(amount);
+        document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+        
+        // Mettre à jour la tontine dans la liste
+        const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
+        if (tontineIndex !== -1) {
+            tontinesList[tontineIndex] = currentTontineData;
+        }
+    }
+    
+    showNotification(`Retrait de ${parseInt(amount).toLocaleString()} Fcfa effectué`, 'success');
+    closeWithdrawModal();
+}
+
+function scrollToMembers() {
+    const membersSection = document.querySelector('.members-section');
+    if (membersSection) {
+        membersSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function goBackFromTontine() {
+    // Retourner à la page d'accueil
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById('home-page').classList.add('active');
+    
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    const homeNavItem = document.querySelector('.nav-item[onclick="switchTab(\'home\')"]');
+    if (homeNavItem) {
+        homeNavItem.classList.add('active');
+    }
 }
 
 function showCreateTontineModal() {

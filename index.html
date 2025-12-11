@@ -1553,13 +1553,6 @@ BP 20000 Libreville</div>
                             </div>
 
                             <div class="tontine-input-group">
-                                <label>Nombre de membres</label>
-                                <div class="tontine-input-field">
-                                    <input type="number" placeholder="Ex: 10" id="first-tontine-members" min="2" max="50">
-                                </div>
-                            </div>
-
-                            <div class="tontine-input-group">
                                 <label>Fréquence de versement</label>
                                 <div class="tontine-input-field">
                                     <select id="first-tontine-frequency">
@@ -1568,13 +1561,6 @@ BP 20000 Libreville</div>
                                         <option value="monthly">Chaque fin de mois</option>
                                         <option value="custom">Date personnalisée</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="tontine-input-group" id="custom-date-group" style="display: none;">
-                                <label>Jour de versement</label>
-                                <div class="tontine-input-field">
-                                    <input type="number" placeholder="Ex: 15 (pour le 15 du mois)" id="first-tontine-custom-day" min="1" max="31">
                                 </div>
                             </div>
                             
@@ -1667,6 +1653,225 @@ BP 20000 Libreville</div>
                             </div>
                             <div class="action-label">Nouvelle</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page Détails Tontine (après création) -->
+            <div class="page tontine-detail-page" id="tontine-detail-page">
+                <div class="page-header">
+                    <button class="btn-back" onclick="goBackToTontine()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 id="detail-tontine-name">Ma Tontine</h2>
+                        <div class="header-subtitle">Gestion de votre tontine</div>
+                    </div>
+                </div>
+
+                <div class="tontine-detail-content">
+                    <!-- Compteur de membres -->
+                    <div class="members-count-card">
+                        <div class="members-count-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="members-count-info">
+                            <span class="members-count-label">Membres</span>
+                            <span class="members-count-value" id="detail-members-count">1/5 personnes</span>
+                        </div>
+                        <div class="tontine-status-active">
+                            <i class="fas fa-circle"></i>
+                            <span>Active</span>
+                        </div>
+                    </div>
+
+                    <!-- Prochain tour -->
+                    <div class="next-turn-section">
+                        <h3><i class="fas fa-calendar-check"></i> Prochain Tour</h3>
+                        <div class="next-turn-card">
+                            <div class="turn-item">
+                                <div class="turn-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="turn-details">
+                                    <span class="turn-label">Date</span>
+                                    <span class="turn-value" id="detail-next-date">--</span>
+                                </div>
+                            </div>
+                            <div class="turn-item">
+                                <div class="turn-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="turn-details">
+                                    <span class="turn-label">Bénéficiaire</span>
+                                    <span class="turn-value" id="detail-next-recipient">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div class="stats-section">
+                        <div class="stat-card-detail">
+                            <div class="stat-icon-detail piggy">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <div class="stat-content-detail">
+                                <span class="stat-label-detail">Cagnotte totale</span>
+                                <span class="stat-value-detail" id="detail-total-balance">0 Fcfa</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-detail">
+                            <div class="stat-icon-detail wallet">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="stat-content-detail">
+                                <span class="stat-label-detail">Ma cotisation</span>
+                                <span class="stat-value-detail" id="detail-my-contribution">0 Fcfa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="action-buttons-grid">
+                        <button class="action-btn primary" onclick="showAddMemberModal()">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Ajouter un membre</span>
+                        </button>
+                        <button class="action-btn secondary" onclick="showDepositModal()">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>Déposer</span>
+                        </button>
+                        <button class="action-btn tertiary" onclick="showWithdrawModal()">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>Retirer</span>
+                        </button>
+                        <button class="action-btn quaternary" onclick="scrollToMembers()">
+                            <i class="fas fa-users"></i>
+                            <span>Voir membres</span>
+                        </button>
+                    </div>
+
+                    <!-- Liste des membres -->
+                    <div class="members-section">
+                        <h3><i class="fas fa-users-cog"></i> Membres de la tontine</h3>
+                        <div class="members-list-detail" id="detail-members-list">
+                            <div class="member-card">
+                                <div class="member-avatar-detail">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="member-info-detail">
+                                    <span class="member-name-detail">Vous</span>
+                                    <span class="member-status-detail">Créateur</span>
+                                </div>
+                                <div class="member-badge crown">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Ajouter Membre -->
+            <div class="modal-overlay" id="add-member-modal">
+                <div class="modal-container">
+                    <div class="modal-header-custom">
+                        <h3>Ajouter un membre</h3>
+                        <button class="modal-close-btn" onclick="closeAddMemberModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body-custom">
+                        <p class="modal-info">Sélectionnez un contact K-Bank à inviter</p>
+                        
+                        <div class="input-group-modal">
+                            <label>Contacts K-Bank</label>
+                            <select id="contact-select" class="select-input">
+                                <option value="">Sélectionner un contact...</option>
+                                <option value="contact1">Jean Dupont - @jeandupont</option>
+                                <option value="contact2">Marie Bongo - @marieb</option>
+                                <option value="contact3">Sophie Koumba - @sophiek</option>
+                                <option value="contact4">Paul Martin - @paulm</option>
+                            </select>
+                        </div>
+
+                        <div class="info-badge">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Maximum 5 membres (<span id="remaining-slots">4</span> places restantes)</span>
+                        </div>
+
+                        <button class="btn-modal-action" onclick="addMemberToTontine()">
+                            <i class="fas fa-user-plus"></i>
+                            Ajouter ce membre
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Déposer -->
+            <div class="modal-overlay" id="deposit-modal">
+                <div class="modal-container">
+                    <div class="modal-header-custom">
+                        <h3>Déposer dans la tontine</h3>
+                        <button class="modal-close-btn" onclick="closeDepositModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body-custom">
+                        <div class="balance-info-modal">
+                            <span class="balance-label">Solde disponible</span>
+                            <span class="balance-value">780 245 Fcfa</span>
+                        </div>
+
+                        <div class="input-group-modal">
+                            <label>Montant à déposer</label>
+                            <div class="amount-input-wrapper">
+                                <input type="number" id="deposit-amount" placeholder="0">
+                                <span class="currency-label">Fcfa</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-modal-action" onclick="confirmDeposit()">
+                            <i class="fas fa-check-circle"></i>
+                            Confirmer le dépôt
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Retirer -->
+            <div class="modal-overlay" id="withdraw-modal">
+                <div class="modal-container">
+                    <div class="modal-header-custom">
+                        <h3>Retirer de la tontine</h3>
+                        <button class="modal-close-btn" onclick="closeWithdrawModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body-custom">
+                        <div class="balance-info-modal">
+                            <span class="balance-label">Cagnotte tontine</span>
+                            <span class="balance-value" id="withdraw-balance">0 Fcfa</span>
+                        </div>
+
+                        <div class="warning-badge">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Le retrait est possible uniquement lors de votre tour</span>
+                        </div>
+
+                        <div class="input-group-modal">
+                            <label>Montant à retirer</label>
+                            <div class="amount-input-wrapper">
+                                <input type="number" id="withdraw-amount" placeholder="0">
+                                <span class="currency-label">Fcfa</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-modal-action" onclick="confirmWithdraw()">
+                            <i class="fas fa-check-circle"></i>
+                            Confirmer le retrait
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2066,7 +2271,7 @@ BP 20000 Libreville</div>
                         </div>
                         <div class="partner-logo-item">
                             <div class="logo-container">
-                                <img src="https://logo.clearbit.com/airfrance.com" alt="Air France" class="partner-brand-logo">
+                                <img src="assets/air-france.jpg" alt="Air France" class="partner-brand-logo">
                                 <div class="partner-discount-badge">-5%</div>
                             </div>
                             <span class="partner-brand-name">Air France</span>
