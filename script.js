@@ -5494,7 +5494,7 @@ function createFirstTontine() {
     document.getElementById('detail-total-balance').textContent = '0 Fcfa';
     
     const frequencyText = frequency === 'weekly' ? '/semaine' : '/mois';
-    document.getElementById('detail-my-contribution').textContent = `0 Fcfa${frequencyText}`;
+    document.getElementById('detail-my-contribution').textContent = `${parseInt(amount).toLocaleString()} Fcfa${frequencyText}`;
     
     // Mettre à jour remaining slots
     document.getElementById('remaining-slots').textContent = '4';
