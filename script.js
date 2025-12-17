@@ -5430,6 +5430,13 @@ function createCrispBalanceText() {
 document.addEventListener('DOMContentLoaded', function() {
     createCrispBalanceText();
     initializeFaceID();
+    
+    // Définir la date minimum pour le champ de date de début de tontine
+    const today = new Date().toISOString().split('T')[0];
+    const startDateInput = document.getElementById('first-tontine-start-date');
+    if (startDateInput) {
+        startDateInput.setAttribute('min', today);
+    }
 });
 
 // ===============================================
@@ -5497,7 +5504,7 @@ function createFirstTontine() {
     document.getElementById('detail-next-recipient').textContent = 'Vous';
     document.getElementById('detail-total-balance').textContent = '0 Fcfa';
     
-    const frequencyText = frequency === 'weekly' ? '/semaine' : '/mois';
+    const frequencyText = frequency === 'weekly' ? ' / semaine' : ' / mois';
     document.getElementById('detail-my-contribution').textContent = `${parseInt(amount).toLocaleString()} Fcfa${frequencyText}`;
     
     // Mettre à jour remaining slots
@@ -5628,7 +5635,7 @@ function openTontineDetail(index) {
     document.getElementById('detail-next-recipient').textContent = currentTontineData.members[0];
     document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
     
-    const frequencyText = currentTontineData.frequency === 'weekly' ? '/semaine' : '/mois';
+    const frequencyText = currentTontineData.frequency === 'weekly' ? ' / semaine' : ' / mois';
     document.getElementById('detail-my-contribution').textContent = `${currentTontineData.amount.toLocaleString()} Fcfa${frequencyText}`;
     
     document.getElementById('remaining-slots').textContent = 5 - currentTontineData.memberCount;
