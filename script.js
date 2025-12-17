@@ -5844,6 +5844,60 @@ function confirmWithdraw() {
     closeWithdrawModal();
 }
 
+function showSendCagnotteModal() {
+    if (!currentTontineData || currentTontineData.cagnotte <= 0) {
+        alert('La cagnotte est vide');
+        return;
+    }
+    
+    document.getElementById('send-cagnotte-modal').style.display = 'flex';
+    document.getElementById('send-amount').value = '';
+    document.getElementById('send-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    
+    // Afficher le bénéficiaire du tour actuel
+    const recipient = document.getElementById('detail-next-recipient').textContent;
+    document.getElementById('send-recipient-name').textContent = recipient;
+}
+
+function closeSendCagnotteModal() {
+    document.getElementById('send-cagnotte-modal').style.display = 'none';
+}
+
+function confirmSendCagnotte() {
+    const amount = document.getElementById('send-amount').value;
+    
+    if (!amount || amount <= 0) {
+        alert('Veuillez entrer un montant valide');
+        return;
+    }
+    
+    if (!currentTontineData) {
+        alert('Erreur: données de tontine introuvables');
+        return;
+    }
+    
+    if (parseInt(amount) > currentTontineData.cagnotte) {
+        alert('Montant supérieur à la cagnotte disponible');
+        return;
+    }
+    
+    // Récupérer le bénéficiaire
+    const recipient = document.getElementById('detail-next-recipient').textContent;
+    
+    // Déduire le montant de la cagnotte
+    currentTontineData.cagnotte -= parseInt(amount);
+    document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
+    
+    // Mettre à jour la tontine dans la liste
+    const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
+    if (tontineIndex !== -1) {
+        tontinesList[tontineIndex] = currentTontineData;
+    }
+    
+    showNotification(`${parseInt(amount).toLocaleString()} Fcfa envoyés à ${recipient}`, 'success');
+    closeSendCagnotteModal();
+}
+
 function scrollToMembers() {
     const membersSection = document.querySelector('.members-section');
     if (membersSection) {

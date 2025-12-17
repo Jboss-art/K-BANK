@@ -1764,6 +1764,10 @@ BP 20000 Libreville</div>
                             <i class="fas fa-arrow-up"></i>
                             <span>Retirer</span>
                         </button>
+                        <button class="action-btn quaternary" onclick="showSendCagnotteModal()">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Envoyer cagnotte</span>
+                        </button>
                     </div>
 
                     <!-- Liste des membres -->
@@ -1885,6 +1889,42 @@ BP 20000 Libreville</div>
                         <button class="btn-modal-action" onclick="confirmWithdraw()">
                             <i class="fas fa-check-circle"></i>
                             Confirmer le retrait
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Envoyer Cagnotte -->
+            <div class="modal-overlay" id="send-cagnotte-modal">
+                <div class="modal-container">
+                    <div class="modal-header-custom">
+                        <h3>Envoyer la cagnotte</h3>
+                        <button class="modal-close-btn" onclick="closeSendCagnotteModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body-custom">
+                        <div class="balance-info-modal">
+                            <span class="balance-label">Cagnotte disponible</span>
+                            <span class="balance-value" id="send-balance">0 Fcfa</span>
+                        </div>
+
+                        <div class="info-badge">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Envoi au bénéficiaire du tour actuel : <strong id="send-recipient-name">--</strong></span>
+                        </div>
+
+                        <div class="input-group-modal">
+                            <label>Montant à envoyer</label>
+                            <div class="amount-input-wrapper">
+                                <input type="number" id="send-amount" placeholder="0">
+                                <span class="currency-label">Fcfa</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-modal-action" onclick="confirmSendCagnotte()">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer la cagnotte
                         </button>
                     </div>
                 </div>
