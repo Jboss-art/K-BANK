@@ -2422,16 +2422,13 @@ function updateKShopBadge(count) {
 }
 
 function openKShop() {
-    switchTab('kshop');
+    // Fermer le menu hamburger s'il est ouvert
+    const menu = document.getElementById('hamburger-menu');
+    if (menu && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+    }
     
-    // Double vérification pour s'assurer que le bouton est caché
-    setTimeout(() => {
-        const kshopFloat = document.querySelector('.kshop-float');
-        if (kshopFloat) {
-            kshopFloat.style.display = 'none';
-            console.log('Bouton K-Shop forcé à se cacher via openKShop()');
-        }
-    }, 100);
+    switchTab('kshop');
 }
 
 
