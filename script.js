@@ -5762,6 +5762,12 @@ function addMemberToTontine() {
 function showDepositModal() {
     document.getElementById('deposit-modal').style.display = 'flex';
     document.getElementById('deposit-amount').value = '';
+    
+    // Mettre à jour le solde disponible
+    const balanceElement = document.getElementById('deposit-available-balance');
+    if (balanceElement) {
+        balanceElement.textContent = `${userBalances.main.toLocaleString('fr-FR')} Fcfa`;
+    }
 }
 
 function closeDepositModal() {
@@ -5776,7 +5782,16 @@ function confirmDeposit() {
         return;
     }
     
+    // Vérifier si le solde est suffisant
+    if (userBalances.main < parseInt(amount)) {
+        alert('Solde insuffisant dans le compte principal');
+        return;
+    }
+    
     if (currentTontineData) {
+        // Déduire du solde principal
+        userBalances.main -= parseInt(amount);
+        
         currentTontineData.cagnotte += parseInt(amount);
         
         // Mettre à jour la contribution de l'utilisateur
@@ -5799,6 +5814,9 @@ function confirmDeposit() {
             tontinesList[tontineIndex] = currentTontineData;
         }
     }
+    
+    // Mettre à jour l'affichage du solde
+    updateBalanceDisplay();
     
     showNotification(`Dépôt de ${parseInt(amount).toLocaleString()} Fcfa effectué`, 'success');
     closeDepositModal();
@@ -5833,12 +5851,18 @@ function confirmWithdraw() {
         currentTontineData.cagnotte -= parseInt(amount);
         document.getElementById('detail-total-balance').textContent = `${currentTontineData.cagnotte.toLocaleString()} Fcfa`;
         
+        // Ajouter au solde principal
+        userBalances.main += parseInt(amount);
+        
         // Mettre à jour la tontine dans la liste
         const tontineIndex = tontinesList.findIndex(t => t.name === currentTontineData.name && t.createdDate === currentTontineData.createdDate);
         if (tontineIndex !== -1) {
             tontinesList[tontineIndex] = currentTontineData;
         }
     }
+    
+    // Mettre à jour l'affichage du solde
+    updateBalanceDisplay();
     
     showNotification(`Retrait de ${parseInt(amount).toLocaleString()} Fcfa effectué`, 'success');
     closeWithdrawModal();
