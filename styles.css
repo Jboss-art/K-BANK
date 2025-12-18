@@ -3228,9 +3228,13 @@ input[type="number"] {
 }
 
 .transaction-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .transaction-date {
