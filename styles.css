@@ -3172,6 +3172,7 @@ input[type="number"] {
 .transactions-section {
     padding: 0 15px;
     margin-top: 10px;
+    padding-bottom: 15px;
 }
 
 .section-header {
