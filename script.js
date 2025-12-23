@@ -1233,13 +1233,13 @@ function markNotificationAsRead(id) {
 
 // Met à jour le badge de notifications
 function updateNotificationBadge() {
-    const badge = document.querySelector('.notification-badge');
+    const badges = document.querySelectorAll('.notification-badge');
     const unreadCount = appData.notifications.filter(n => !n.read).length;
     
-    if (badge) {
+    badges.forEach(badge => {
         badge.textContent = unreadCount;
         badge.style.display = unreadCount > 0 ? 'flex' : 'none';
-    }
+    });
 }
 
 // Marque toutes les notifications comme lues
