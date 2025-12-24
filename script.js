@@ -1358,6 +1358,10 @@ function switchTab(tab) {
 
     if (tab === 'notifications') {
         setTimeout(() => {
+            // Marquer toutes les notifications comme lues dès l'entrée sur la page
+            appData.notifications.forEach(notification => {
+                notification.read = true;
+            });
             initializeNotifications();
         }, 100);
     }
