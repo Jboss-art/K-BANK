@@ -91,9 +91,9 @@
                 <div class="header-icon" onclick="switchTab('profile')">
                     <i class="fas fa-user"></i>
                 </div>
-                <div class="notification-bell" onclick="switchTab('notifications')">
+                <div class="notification-bell" onclick="goToNotifications()">
                     <i class="fas fa-bell"></i>
-                    <span class="notification-badge">3</span>
+                    <span class="notification-badge">2</span>
                 </div>
                 <div class="header-icon" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
@@ -232,9 +232,9 @@
                             <div class="header-icon" onclick="switchTab('profile')">
                                 <i class="fas fa-user"></i>
                             </div>
-                            <div class="notification-bell" onclick="switchTab('notifications')">
+                            <div class="notification-bell" onclick="goToNotifications()">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge">3</span>
+                                <span class="notification-badge">2</span>
                             </div>
                             <div class="header-icon" onclick="toggleMenu()">
                                 <i class="fas fa-bars"></i>
@@ -713,38 +713,77 @@
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <h2>Notifications</h2>
-                    <div class="header-actions">
-                        <button class="mark-all-read-btn" onclick="markAllAsRead()" title="Marquer tout comme lu">
-                            <i class="fas fa-check-double"></i>
-                        </button>
-                    </div>
                 </div>
                 
                 <div class="notifications-content">
-                    <!-- Section des notifications non lues -->
-                    <div class="notification-section" id="unread-section">
-                        <div class="section-header">
-                            <h3>
-                                <i class="fas fa-bell"></i>
-                                Nouvelles notifications
-                                <span class="unread-count" id="unread-count">0</span>
-                            </h3>
+                    <!-- Liste de toutes les notifications -->
+                    <div class="notifications-list" id="all-notifications">
+                        <!-- Notification 1 -->
+                        <div class="notification-item" data-id="1">
+                            <div class="notification-content">
+                                <div class="notification-icon transaction">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="notification-text">
+                                    <div class="notification-title">Virement reçu</div>
+                                    <div class="notification-message">Vous avez reçu <strong>15 000 Fcfa</strong> de Jean Mvoumbi</div>
+                                    <div class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        Il y a 2 heures
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="notifications-list" id="unread-notifications">
-                            <!-- Notifications non lues -->
-                        </div>
-                    </div>
 
-                    <!-- Section des notifications lues -->
-                    <div class="notification-section" id="read-section">
-                        <div class="section-header">
-                            <h3>
-                                <i class="fas fa-check-circle"></i>
-                                Notifications lues
-                            </h3>
+                        <!-- Notification 2 -->
+                        <div class="notification-item" data-id="2">
+                            <div class="notification-content">
+                                <div class="notification-icon transaction">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="notification-text">
+                                    <div class="notification-title">Paiement effectué</div>
+                                    <div class="notification-message">Paiement de <strong>35 000 Fcfa</strong> à Supermarché ABC</div>
+                                    <div class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        Il y a 5 heures
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="notifications-list" id="read-notifications">
-                            <!-- Notifications lues -->
+
+                        <!-- Notification 3 -->
+                        <div class="notification-item" data-id="3">
+                            <div class="notification-content">
+                                <div class="notification-icon security">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="notification-text">
+                                    <div class="notification-title">Alerte de sécurité</div>
+                                    <div class="notification-message">Nouvelle connexion détectée sur votre compte</div>
+                                    <div class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        Hier
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification 4 -->
+                        <div class="notification-item" data-id="101">
+                            <div class="notification-content">
+                                <div class="notification-icon promotion">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="notification-text">
+                                    <div class="notification-title">Offre weekend</div>
+                                    <div class="notification-message">Réduction de -10 % chez tous nos partenaires</div>
+                                    <div class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        Il y a 1 jour
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

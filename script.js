@@ -1120,62 +1120,33 @@ const appData = {
 
 // Initialisation des notifications
 function initializeNotifications() {
-    // Forcer la réinitialisation des notifications depuis les données par défaut
-    localStorage.removeItem('notifications');
     renderNotifications();
     updateNotificationBadge();
 }
 
-// Affiche les notifications dans les sections appropriées
+// Affiche les notifications dans la page
 function renderNotifications() {
-    const unreadContainer = document.getElementById('unread-notifications');
-    const readContainer = document.getElementById('read-notifications');
+    const container = document.getElementById('all-notifications');
     const emptyState = document.getElementById('empty-notifications');
-    const unreadSection = document.getElementById('unread-section');
-    const readSection = document.getElementById('read-section');
-    const unreadCountElement = document.getElementById('unread-count');
     
-    if (!unreadContainer || !readContainer) return;
-    
-    // Séparer les notifications lues et non lues
-    const unreadNotifications = appData.notifications.filter(n => !n.read);
-    const readNotifications = appData.notifications.filter(n => n.read);
-    
-    // Mettre à jour le compteur de notifications non lues
-    if (unreadCountElement) {
-        unreadCountElement.textContent = unreadNotifications.length;
-        unreadCountElement.style.display = unreadNotifications.length > 0 ? 'inline-block' : 'none';
-    }
-    
-    // Si aucune notification
-    if (appData.notifications.length === 0) {
-        emptyState.style.display = 'block';
-        unreadSection.style.display = 'none';
-        readSection.style.display = 'none';
+    if (!container) {
+        console.error('Container all-notifications not found');
         return;
     }
     
-    emptyState.style.display = 'none';
+    // Si aucune notification
+    if (!appData.notifications || appData.notifications.length === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        container.style.display = 'none';
+        return;
+    }
     
-    // Afficher/masquer les sections selon le contenu
-    unreadSection.style.display = unreadNotifications.length > 0 ? 'block' : 'none';
-    readSection.style.display = readNotifications.length > 0 ? 'block' : 'none';
+    if (emptyState) emptyState.style.display = 'none';
+    container.style.display = 'block';
     
-    // Rendre les notifications non lues
-    unreadContainer.innerHTML = unreadNotifications.length > 0 
-        ? renderNotificationItems(unreadNotifications) 
-        : '<div class="no-notifications"><p>Aucune nouvelle notification</p></div>';
-    
-    // Rendre les notifications lues
-    readContainer.innerHTML = readNotifications.length > 0 
-        ? renderNotificationItems(readNotifications) 
-        : '<div class="no-notifications"><p>Aucune notification lue</p></div>';
-}
-
-// Génère le HTML pour une liste de notifications
-function renderNotificationItems(notifications) {
-    return notifications.map((notification, index) => {
-        // Extraire le montant du message s'il y en a un (uniquement les montants avec décimales)
+    // Afficher toutes les notifications
+    const html = appData.notifications.map((notification, index) => {
+        // Extraire le montant du message s'il y en a un
         const amountMatch = notification.message.match(/(-?\d+[.,]\d{2})/);
         let formattedMessage = notification.message;
         
@@ -1186,10 +1157,9 @@ function renderNotificationItems(notifications) {
         }
 
         return `
-            <div class="notification-item ${notification.read ? '' : 'unread'}" 
+            <div class="notification-item" 
                  data-id="${notification.id}" 
-                 style="animation-delay: ${index * 0.1}s"
-                 onclick="markNotificationAsRead(${notification.id})">
+                 style="animation: slideInRight 0.3s ease-out ${index * 0.05}s both;">
                 <div class="notification-content">
                     <div class="notification-icon ${notification.type}">
                         <i class="${getNotificationIcon(notification.type)}"></i>
@@ -1206,6 +1176,9 @@ function renderNotificationItems(notifications) {
             </div>
         `;
     }).join('');
+    
+    container.innerHTML = html;
+    console.log('Notifications rendered:', appData.notifications.length);
 }
 
 // Retourne l'icône appropriée selon le type de notification
@@ -1236,10 +1209,37 @@ function updateNotificationBadge() {
     const badges = document.querySelectorAll('.notification-badge');
     const unreadCount = appData.notifications.filter(n => !n.read).length;
     
+    console.log('updateNotificationBadge called');
+    console.log('Badges found:', badges.length);
+    console.log('Unread count:', unreadCount);
+    console.log('Notifications:', appData.notifications.map(n => ({id: n.id, read: n.read})));
+    
     badges.forEach(badge => {
         badge.textContent = unreadCount;
         badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+        console.log('Badge updated:', badge.textContent, 'display:', badge.style.display);
     });
+}
+
+// Fonction pour cacher les badges manuellement
+function hideBadges() {
+    console.log('hideBadges called');
+    const badges = document.querySelectorAll('.notification-badge');
+    console.log('Found badges:', badges.length);
+    badges.forEach(badge => {
+        console.log('Hiding badge:', badge);
+        badge.style.display = 'none';
+        badge.style.opacity = '0';
+        badge.style.visibility = 'hidden';
+        badge.textContent = '';
+    });
+}
+
+// Fonction pour aller aux notifications et cacher le badge
+function goToNotifications() {
+    console.log('goToNotifications called');
+    hideBadges();
+    switchTab('notifications');
 }
 
 // Marque toutes les notifications comme lues
@@ -1285,9 +1285,6 @@ function showToast(message) {
 document.addEventListener('DOMContentLoaded', () => {
     renderTransactions();
     updateNotificationBadge();
-    
-    // Toujours initialiser les notifications au chargement
-    initializeNotifications();
     
     // Initialiser les notifications si on est sur la page notifications
     if (document.getElementById('notifications-page').classList.contains('active')) {
@@ -1357,12 +1354,21 @@ function switchTab(tab) {
     }
 
     if (tab === 'notifications') {
+        // Marquer automatiquement toutes les notifications comme lues
+        appData.notifications.forEach(notification => {
+            notification.read = true;
+        });
+        
+        // Mettre à jour tous les badges immédiatement
+        const badges = document.querySelectorAll('.notification-badge');
+        badges.forEach(badge => {
+            badge.textContent = '0';
+            badge.style.display = 'none';
+        });
+        
+        // Puis afficher les notifications
         setTimeout(() => {
-            // Marquer toutes les notifications comme lues dès l'entrée sur la page
-            appData.notifications.forEach(notification => {
-                notification.read = true;
-            });
-            initializeNotifications();
+            renderNotifications();
         }, 100);
     }
 
@@ -2307,42 +2313,14 @@ function deleteNotification(id) {
     appData.notifications = appData.notifications.filter(n => n.id !== id);
     renderNotifications();
     updateNotificationBadge();
-    initializeSwipeListeners();
-    
-    // Animation de confirmation
     showToast('Notification supprimée');
 }
 
-// Marque une notification comme lue
+// Marque une notification comme lue (pour compatibilité)
 function markAsRead(id) {
-    const notification = appData.notifications.find(n => n.id === id);
-    if (notification && !notification.read) {
-        notification.read = true;
-        renderNotifications();
-        updateNotificationBadge();
-        initializeSwipeListeners();
-    }
+    markNotificationAsRead(id);
 }
 
-// Marque toutes les notifications comme lues
-function markAllAsRead() {
-    let hasUnread = false;
-    
-    appData.notifications.forEach(notification => {
-        if (!notification.read) {
-            notification.read = true;
-            hasUnread = true;
-        }
-    });
-    
-    if (hasUnread) {
-        renderNotifications();
-        updateNotificationBadge();
-        showToast('Toutes les notifications marquées comme lues');
-    } else {
-        showToast('Toutes les notifications sont déjà lues');
-    }
-}
 // Initialisation de l'application
 document.addEventListener('DOMContentLoaded', () => {
     renderTransactions();
@@ -2351,7 +2329,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser les notifications si on est sur la page notifications
     if (document.getElementById('notifications-page').classList.contains('active')) {
         renderNotifications();
-        initializeSwipeListeners();
     }
 });
 
